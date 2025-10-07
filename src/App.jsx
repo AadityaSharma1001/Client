@@ -8,6 +8,13 @@ import Navbar from './components/Navbar'
 import './index.css'
 
 function App() {
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    const timer = setTimeout(() => setLoading(false), 5000);
+    return () => clearTimeout(timer);
+  }, []);
+
   return (
     <Router>
       <Navbar />
@@ -21,4 +28,4 @@ function App() {
   )
 }
 
-export default App
+export default App;
