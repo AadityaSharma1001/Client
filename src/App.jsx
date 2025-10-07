@@ -6,6 +6,7 @@ import About from "./pages/About";
 import Events from "./pages/Events";
 import Contact from "./pages/Contact";
 import Loader from "./components/loader";
+import Navbar from "./components/Navbar";
 import "./index.css";
 
 
@@ -40,6 +41,7 @@ function App() {
           transition={{ duration: 0.8 }}
         >
           <Router>
+            <Navbar />
             <Routes>
               <Route path="/" element={<Home />} />
               <Route path="/about" element={<About />} />
