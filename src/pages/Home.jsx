@@ -33,18 +33,35 @@ const HomePage = () => {
     return () => clearInterval(interval);
   }, []);
 
+  // Prevent body scroll when modal is open
+  useEffect(() => {
+    if (showModal) {
+      document.body.style.overflow = 'hidden';
+    } else {
+      document.body.style.overflow = 'unset';
+    }
+    return () => {
+      document.body.style.overflow = 'unset';
+    };
+  }, [showModal]);
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    // Add your form submission logic here
+    console.log("Form submitted");
+    setShowModal(false);
+  };
+
   return (
-    <div className="homepage">
+    <div className="homepage" style={{ display: 'flex', justifyContent: 'center', alignItems: 'center'}}>
       <div className="overlay"></div>
 
-      {/* Hero */}
-      <div className="hero">
-        <header>
-          <h2 className="hero-title">VARCHAS</h2>
+      <div className="hero" style={{ textAlign: 'center' }}>
+        <header className="hero-header">
+          <h1 className="hero-title">VARCHAS</h1>
           <p className="hero-subtitle">IIT Jodhpur's Annual Sports Fest</p>
         </header>
 
-        {/* Countdown */}
         <section className="hero-middle">
           <div className="countdown">
             {timeLeft.expired ? (
@@ -76,63 +93,60 @@ const HomePage = () => {
           </div>
         </section>
 
-        {/* Date + Register Button */}
-        <footer className="hero-bottom">
-          <span className="date-badge">7th – 9th November, 2025</span>
+        <footer className="hero-bottom" style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '1rem' }}>
+          <span className="date-badge">7th - 9th November, 2025</span>
           <button onClick={() => setShowModal(true)} className="pre-register-btn">
             Pre-Register Now
           </button>
         </footer>
       </div>
 
-      {/* Social Links */}
-      <div className="social-icons">
-        <a href="https://instagram.com" target="_blank" rel="noreferrer" className="social-link">
+      <div className="social-icons" style={{ position: 'absolute', bottom: '20px', display: 'flex', gap: '1rem', justifyContent: 'center' }}>
+        <a href="https://instagram.com" target="_blank" rel="noreferrer" className="social-link" aria-label="Instagram">
           <FaInstagram />
         </a>
-        <a href="https://facebook.com" target="_blank" rel="noreferrer" className="social-link">
+        <a href="https://facebook.com" target="_blank" rel="noreferrer" className="social-link" aria-label="Facebook">
           <FaFacebook />
         </a>
-        <a href="https://twitter.com" target="_blank" rel="noreferrer" className="social-link">
+        <a href="https://twitter.com" target="_blank" rel="noreferrer" className="social-link" aria-label="Twitter">
           <FaTwitter />
         </a>
-        <a href="https://youtube.com" target="_blank" rel="noreferrer" className="social-link">
+        <a href="https://youtube.com" target="_blank" rel="noreferrer" className="social-link" aria-label="YouTube">
           <FaYoutube />
         </a>
       </div>
 
-      {/* Modal */}
       {showModal && (
         <div className="modal-overlay" onClick={() => setShowModal(false)}>
           <div className="modal" onClick={(e) => e.stopPropagation()}>
-            <button className="close-btn" onClick={() => setShowModal(false)}>
+            <button className="close-btn" onClick={() => setShowModal(false)} aria-label="Close modal">
               ✕
             </button>
 
-            <div className="modal-header">
-              <h3 className="modal-title">Registration</h3>
+            <div className="modal-header" style={{ textAlign: 'center' }}>
+              <h2 className="modal-title">Registration</h2>
               <p className="modal-subtitle">Join us for VARCHAS 2025</p>
             </div>
 
-            {/* Tabs */}
-            <div className="tabs">
+            <div className="tabs" style={{ display: 'flex', justifyContent: 'center', gap: '1rem' }}>
               <button
                 className={`tab-btn ${activeTab === "team" ? "active" : ""}`}
                 onClick={() => setActiveTab("team")}
               >
-                👥 Team
+                <span className="tab-icon">👥</span>
+                <span className="tab-text">Team</span>
               </button>
               <button
                 className={`tab-btn ${activeTab === "contingent" ? "active" : ""}`}
                 onClick={() => setActiveTab("contingent")}
               >
-                🏆 Contingent
+                <span className="tab-icon">🏆</span>
+                <span className="tab-text">Contingent</span>
               </button>
             </div>
 
-            {/* Team Form */}
             {activeTab === "team" && (
-              <form className="form">
+              <form className="form" onSubmit={handleSubmit} style={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
                 <input type="text" placeholder="Full Name" required className="form-input" />
                 <input type="email" placeholder="Email Address" required className="form-input" />
                 <input type="text" placeholder="College Name" required className="form-input" />
@@ -151,9 +165,8 @@ const HomePage = () => {
               </form>
             )}
 
-            {/* Contingent Form */}
             {activeTab === "contingent" && (
-              <form className="form">
+              <form className="form" onSubmit={handleSubmit} style={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
                 <input type="text" placeholder="Contingent Leader Name" required className="form-input" />
                 <input type="email" placeholder="Email Address" required className="form-input" />
                 <input type="text" placeholder="College Name" required className="form-input" />

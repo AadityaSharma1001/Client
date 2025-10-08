@@ -37,6 +37,18 @@ const Navbar = () => {
     setIsMenuOpen(false);
   }, [location]);
 
+  // Prevent body scroll when mobile menu is open
+  useEffect(() => {
+    if (isMenuOpen) {
+      document.body.style.overflow = 'hidden';
+    } else {
+      document.body.style.overflow = 'unset';
+    }
+    return () => {
+      document.body.style.overflow = 'unset';
+    };
+  }, [isMenuOpen]);
+
   const toggleMenu = () => {
     setIsMenuOpen(!isMenuOpen);
   };
@@ -48,25 +60,33 @@ const Navbar = () => {
 
   return (
     <>
-      <nav className={`navbar ${isScrolled ? 'scrolled' : ''}`}>
+      <nav 
+        className={`navbar ${isScrolled ? 'scrolled' : ''}`}
+        role="navigation"
+        aria-label="Main navigation"
+      >
         <div className="navbar-container">
-          {/* Logo */}
           <div className="logo-section">
-            <Link to="/" className="logo">
+            <Link to="/" className="logo" aria-label="VARCHAS 2025 Home">
               <span className="logo-text">VARCHAS</span>
               <span className="logo-year">2025</span>
             </Link>
           </div>
 
-          {/* Desktop Navigation */}
           <div className="nav-center">
-            <ul className="nav-links">
+            <ul className="nav-links" role="menubar">
               {navItems.map((item, index) => (
-                <li key={index} className={activeIndex === index ? 'active' : ''}>
+                <li 
+                  key={index} 
+                  className={activeIndex === index ? 'active' : ''}
+                  role="none"
+                >
                   <Link 
                     to={item.path}
                     onClick={() => handleNavClick(index)}
                     className="nav-link"
+                    role="menuitem"
+                    aria-current={activeIndex === index ? 'page' : undefined}
                   >
                     {item.label}
                   </Link>
@@ -75,17 +95,17 @@ const Navbar = () => {
             </ul>
           </div>
 
-          {/* Right Section */}
           <div className="nav-right">
-            <button className="cta-button">
+            <Link to="/register" className="cta-button" aria-label="Register for VARCHAS 2025">
               Register
-            </button>
+            </Link>
 
-            {/* Mobile Menu Toggle */}
             <button 
               className={`hamburger ${isMenuOpen ? 'active' : ''}`}
               onClick={toggleMenu}
-              aria-label="Toggle menu"
+              aria-label={isMenuOpen ? "Close menu" : "Open menu"}
+              aria-expanded={isMenuOpen}
+              aria-controls="mobile-menu"
             >
               <span></span>
               <span></span>
@@ -94,27 +114,52 @@ const Navbar = () => {
           </div>
         </div>
 
-        {/* Mobile Menu */}
-        <div className={`mobile-menu ${isMenuOpen ? 'active' : ''}`}>
-          <ul className="mobile-nav-links">
+        <div 
+          id="mobile-menu"
+          className={`mobile-menu ${isMenuOpen ? 'active' : ''}`}
+          aria-hidden={!isMenuOpen}
+        >
+          <ul className="mobile-nav-links" role="menu">
             {navItems.map((item, index) => (
-              <li key={index} className={activeIndex === index ? 'active' : ''}>
+              <li 
+                key={index} 
+                className={activeIndex === index ? 'active' : ''}
+                role="none"
+              >
                 <Link 
                   to={item.path}
                   onClick={() => handleNavClick(index)}
                   className="mobile-nav-link"
+                  role="menuitem"
+                  tabIndex={isMenuOpen ? 0 : -1}
+                  aria-current={activeIndex === index ? 'page' : undefined}
                 >
+                  <span className="mobile-link-icon">›</span>
                   {item.label}
                 </Link>
               </li>
             ))}
           </ul>
-          <button className="mobile-cta">Register for Varchas 2025</button>
+          <Link 
+            to="/register" 
+            className="mobile-cta"
+            tabIndex={isMenuOpen ? 0 : -1}
+            onClick={() => setIsMenuOpen(false)}
+          >
+            Register for Varchas 2025
+          </Link>
         </div>
       </nav>
 
       <div className="navbar-spacer"></div>
-      {isMenuOpen && <div className="mobile-overlay" onClick={() => setIsMenuOpen(false)} />}
+      
+      {isMenuOpen && (
+        <div 
+          className="mobile-overlay" 
+          onClick={() => setIsMenuOpen(false)}
+          aria-hidden="true"
+        />
+      )}
     </>
   );
 };
