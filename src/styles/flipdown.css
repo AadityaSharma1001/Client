@@ -270,3 +270,9 @@
     box-shadow: 0 0 10px rgba(250, 204, 21, 0.4);
   }
 }
+
+@media (max-width: 480px) {
+  .flipdown.flipdown__theme-dark .rotor-group {
+    top: -50%;
+  }
+}

@@ -13,7 +13,7 @@ const Loader = () => {
     useEffect(() => {
         const isMobile = /Mobi|Android|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(
             navigator.userAgent
-        ) || window.innerWidth < 480;
+        ) || window.innerWidth <= 480;
 
         if (isMobile) setImgaa(var2);
         else setImgaa(var1);

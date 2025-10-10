@@ -691,6 +691,15 @@ body {
   .modal-icon {
     font-size: 2.5rem;
   }
+  .hero-subtitle {
+    top: 20%;
+  }
+  .pre-register-btn {
+    top: 78%;
+  }
+  .hero-title {
+    -webkit-text-stroke: 2px #fff;
+  }
 }
 
 @media only screen and (min-width: 768px) {
