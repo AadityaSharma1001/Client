@@ -7,7 +7,7 @@ import {
 } from "react-icons/fi";
 import { IoMdFootball } from "react-icons/io";
 import "../styles/Home.css";
-import bg1 from "/Designer-1.jpeg";
+import bg1 from "/bg.jpg";
 
 const HomePage = () => {
   const mountRef = useRef(null);
@@ -220,7 +220,7 @@ const HomePage = () => {
       <div className="overlay"></div>
       <div className="hero" style={{ textAlign: 'center' }}>
         <header className="hero-header">
-          <h1 className="hero-title">VARCHAS</h1>
+          <h1 className="hero-title">VARCHAS'25 </h1>
           <p className="hero-subtitle">IIT Jodhpur's Annual Sports Fest</p>
         </header>
         <section className="hero-middle">
