@@ -1,24 +1,35 @@
-import { useEffect, useRef } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import '../styles/loader.css';
-import '../../var.png';
-const imgaa = '../../var.png';
+import var1 from '/var.png';
+import var2 from '/var2.png';
+
 const Loader = () => {
+    const [imgaa, setImgaa] = useState(var1);
     const scriptRef1 = useRef(null);
     const scriptRef2 = useRef(null);
     const psRef = useRef(null);
     const animationFrameRef = useRef(null);
 
     useEffect(() => {
+        const isMobile = /Mobi|Android|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(
+            navigator.userAgent
+        ) || window.innerWidth < 480;
+
+        if (isMobile) setImgaa(var2);
+        else setImgaa(var1);
+
         const loadScripts = async () => {
             const script1 = document.createElement('script');
             script1.src = 'https://cdn.jsdelivr.net/npm/dat.gui@0.7.7/build/dat.gui.min.js';
             document.body.appendChild(script1);
-            await new Promise((resolve) => script1.onload = resolve);
+            scriptRef1.current = script1;
+            await new Promise((resolve) => (script1.onload = resolve));
 
             const script2 = document.createElement('script');
             script2.src = 'https://s3-us-west-2.amazonaws.com/s.cdpn.io/23500/ps-0.9.js';
             document.body.appendChild(script2);
-            await new Promise((resolve) => script2.onload = resolve);
+            scriptRef2.current = script2;
+            await new Promise((resolve) => (script2.onload = resolve));
 
             initParticles();
         };
@@ -35,7 +46,7 @@ const Loader = () => {
     const initParticles = () => {
         if (!window.ParticleSlider) return;
 
-        const canvasWidth = window.innerWidth*100;
+        const canvasWidth = window.innerWidth * 100;
 
         psRef.current = new window.ParticleSlider({
             ptlGap: 1,
