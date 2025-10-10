@@ -649,65 +649,6 @@ body {
 }
 
 @media only screen and (max-width: 480px) {
-  .hero-title {
-    position: fixed;
-    top: 12%;
-    left: 50%;
-    transform: translate(-50%, 0);
-  }
-
-  .hero-subtitle {
-    position: fixed;
-    top: 18%;
-    left: 50%;
-    transform: translate(-50%, 0);
-  }
-
-  .hero-middle {
-    position: fixed;
-    top: 30%;
-  }
-
-  .pre-register-btn {
-    position: fixed;
-    top: 78%;
-    left: 50%;
-    transform: translate(-50%, 0);
-  }
-
-  .date-badge {
-    position: fixed;
-    top: 70%;
-    left: 50%;
-    transform: translate(-50%, 0);
-  }
-
-  .hero {
-    padding: 1.5rem 0.8rem 1rem;
-  }
-
-  .countdown {
-    grid-template-columns: repeat(2, 1fr);
-    gap: 0.8rem;
-    max-width: 280px;
-  }
-
-  .countdown-item {
-    padding: 0.8rem 0.5rem;
-  }
-
-  .social-icons {
-    bottom: 1rem;
-    right: 0.8rem;
-    gap: 0.6rem;
-  }
-
-  .social-link {
-    width: 38px;
-    height: 38px;
-    font-size: 1.1rem;
-  }
-
   .modal {
     padding: 1.5rem 1rem;
     border-radius: 12px;
@@ -747,67 +688,6 @@ body {
 }
 
 @media only screen and (min-width: 768px) {
-  .hero {
-    padding: 3rem 2rem 2rem;
-  }
-
-  .hero-title {
-    position: fixed;
-    top: 12%;
-    left: 50%;
-    transform: translate(-50%, 0);
-  }
-
-  .hero-subtitle {
-    position: fixed;
-    top: 18%;
-    left: 50%;
-    transform: translate(-50%, 0);
-  }
-
-  .hero-middle {
-    position: fixed;
-    top: 35%;
-  }
-
-  .pre-register-btn {
-    position: fixed;
-    top: 78%;
-    left: 50%;
-    font-size: 1.5em;
-    transform: translate(-50%, 0);
-  }
-
-  .date-badge {
-    position: fixed;
-    top: 70%;
-    font-size: 1.5em;
-    left: 50%;
-    transform: translate(-50%, 0);
-  }
-
-  .countdown {
-    grid-template-columns: repeat(4, 1fr);
-    gap: 1.5rem;
-    max-width: 600px;
-  }
-
-  .countdown-item {
-    padding: 1.2rem 1rem;
-  }
-
-  .social-icons {
-    bottom: 2rem;
-    right: 2rem;
-    gap: 1rem;
-  }
-
-  .social-link {
-    width: 45px;
-    height: 45px;
-    font-size: 1.3rem;
-  }
-
   .modal {
     padding: 2.5rem 2rem;
   }
@@ -819,61 +699,6 @@ body {
 
   .sports-grid {
     grid-template-columns: repeat(3, 1fr);
-  }
-}
-
-@media only screen and (min-width: 1200px) {
-  .hero {
-    padding: 4rem 3rem 3rem;
-  }
-
-  .countdown {
-    max-width: 700px;
-    gap: 2rem;
-  }
-
-  .countdown-item {
-    padding: 1.5rem 1.5rem;
-  }
-}
-
-@media only screen and (max-height: 600px) and (orientation: landscape) {
-  .hero {
-    min-height: auto;
-    padding: 1rem;
-  }
-
-  .hero-title {
-    font-size: 2rem;
-  }
-
-  .countdown {
-    grid-template-columns: repeat(4, 1fr);
-    gap: 0.8rem;
-    max-width: 450px;
-  }
-
-  .countdown-item {
-    padding: 0.6rem 0.5rem;
-  }
-
-  .countdown-number {
-    font-size: 1.2rem;
-  }
-
-  .countdown-icon {
-    font-size: 1rem;
-  }
-
-  .social-icons {
-    flex-direction: row;
-    bottom: auto;
-    top: 1rem;
-    right: 1rem;
-  }
-
-  .modal {
-    max-height: 95vh;
   }
 }
 
