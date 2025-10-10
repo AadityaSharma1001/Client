@@ -19,8 +19,8 @@
 .flipdown.flipdown__theme-dark .rotor-bottom,
 .flipdown.flipdown__theme-dark .rotor-leaf-rear {
   color: #fbbf24;
-  background-color: #1a1a1a;
-  box-shadow: inset 0 0 2px rgba(250, 204, 21, 0.1);
+  background-color: #0a0a0a;
+  box-shadow: inset 0 0 2px rgba(250, 204, 21, 1);
 }
 
 .flipdown.flipdown__theme-dark .rotor:after {

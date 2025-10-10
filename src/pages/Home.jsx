@@ -1,15 +1,16 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
+import * as THREE from "three";
 import { FaInstagram, FaFacebook, FaTwitter, FaYoutube } from "react-icons/fa";
-import { BsHourglassSplit, BsClock, BsStopwatch, BsAlarm } from "react-icons/bs";
 import {
   FiUser, FiMail, FiPhone, FiMapPin,
   FiUsers, FiTrendingUp, FiCheckCircle, FiAlertCircle
 } from "react-icons/fi";
 import { IoMdFootball } from "react-icons/io";
 import "../styles/Home.css";
+import bg1 from "/Designer-1.jpeg";
 
 const HomePage = () => {
-  const [timeLeft, setTimeLeft] = useState({});
+  const mountRef = useRef(null);
   const [showModal, setShowModal] = useState(false);
   const [activeTab, setActiveTab] = useState("team");
   const [formData, setFormData] = useState({
@@ -59,6 +60,53 @@ const HomePage = () => {
     "Table Tennis (Men Singles)", "Table Tennis (Women Singles)", "Table Tennis (Men Team)",
     "Table Tennis (Women Team)", "Kabaddi", "Athletics (Men)", "Athletics (Women)", "Squash (Men)", "Squash (Women)", "ESports (BGMI)", "ESports (Free Fire)", "Powerlifting"
   ];
+  
+  useEffect(() => {
+    const currentMount = mountRef.current;
+    const scene = new THREE.Scene();
+    const camera = new THREE.PerspectiveCamera(70, currentMount.clientWidth / currentMount.clientHeight, 0.1, 1000);
+    const renderer = new THREE.WebGLRenderer();
+    renderer.setSize(currentMount.clientWidth, currentMount.clientHeight);
+    currentMount.appendChild(renderer.domElement);
+
+    const loader = new THREE.TextureLoader();
+    const geometry = new THREE.PlaneGeometry(18, 10, 15, 9);
+    const material = new THREE.MeshBasicMaterial({ map: loader.load(bg1) });
+    const mesh = new THREE.Mesh(geometry, material);
+    scene.add(mesh);
+    camera.position.z = 5;
+
+    const count = geometry.attributes.position.count;
+    const clock = new THREE.Clock();
+
+    const animate = () => {
+      const time = clock.getElapsedTime();
+      for (let i = 0; i < count; i++) {
+        const x = geometry.attributes.position.getX(i);
+        const y = geometry.attributes.position.getY(i);
+        const anim1 = 0.25 * Math.sin(x + time * 0.7);
+        const anim2 = 0.35 * Math.sin(x * 1 + time * 0.7);
+        const anim3 = 0.1 * Math.sin(y * 15 + time * 0.7);
+        geometry.attributes.position.setZ(i, anim1 + anim2 + anim3);
+      }
+      geometry.attributes.position.needsUpdate = true;
+      requestAnimationFrame(animate);
+      renderer.render(scene, camera);
+    };
+    animate();
+
+    const handleResize = () => {
+      camera.aspect = currentMount.clientWidth / currentMount.clientHeight;
+      camera.updateProjectionMatrix();
+      renderer.setSize(currentMount.clientWidth, currentMount.clientHeight);
+    };
+    window.addEventListener('resize', handleResize);
+
+    return () => {
+      window.removeEventListener('resize', handleResize);
+      currentMount.removeChild(renderer.domElement);
+    };
+  }, []);
 
   useEffect(() => {
     if (showModal) {
@@ -131,7 +179,6 @@ const HomePage = () => {
   const handleInputChange = (e) => {
     const { name, value } = e.target;
     setFormData(prev => ({ ...prev, [name]: value }));
-
     const error = validateField(name, value);
     setErrors(prev => ({ ...prev, [name]: error }));
   };
@@ -139,7 +186,6 @@ const HomePage = () => {
   const handleSportChange = (e) => {
     const selectedSport = e.target.value;
     setFormData(prev => ({ ...prev, sport: selectedSport, contingentSize: "" }));
-
     if (selectedSport && sportConstraints[selectedSport]) {
       setTeamSizeConstraints(sportConstraints[selectedSport]);
       setErrors(prev => ({ ...prev, contingentSize: "" }));
@@ -155,32 +201,28 @@ const HomePage = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-
     const newErrors = {};
     Object.keys(formData).forEach(key => {
       const error = validateField(key, formData[key]);
       if (error) newErrors[key] = error;
     });
-
     if (Object.keys(newErrors).length > 0) {
       setErrors(newErrors);
       return;
     }
-
     console.log("Form submitted:", formData);
     setShowModal(false);
   };
 
   return (
-    <div className="homepage" style={{ display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
+    <div className="homepage">
+      <div className="three_bg" ref={mountRef}></div>
       <div className="overlay"></div>
-
       <div className="hero" style={{ textAlign: 'center' }}>
         <header className="hero-header">
           <h1 className="hero-title">VARCHAS</h1>
           <p className="hero-subtitle">IIT Jodhpur's Annual Sports Fest</p>
         </header>
-
         <section className="hero-middle">
           <div id="flipdown" className="flipdown"></div>
         </section>
@@ -191,7 +233,6 @@ const HomePage = () => {
           </button>
         </footer>
       </div>
-
       <div className="social-icons" style={{ position: 'absolute', bottom: '20px', display: 'flex', gap: '1rem', justifyContent: 'center' }}>
         <a href="https://www.instagram.com/varchas_iitj" target="_blank" rel="noreferrer" className="social-link" aria-label="Instagram">
           <FaInstagram />
@@ -203,14 +244,12 @@ const HomePage = () => {
           <FaYoutube />
         </a>
       </div>
-
       {showModal && (
         <div className="modal-overlay" onClick={() => setShowModal(false)}>
           <div className="modal" onClick={(e) => e.stopPropagation()}>
             <button className="close-btn" onClick={() => setShowModal(false)} aria-label="Close modal">
               ✕
             </button>
-
             <div className="modal-header">
               <div className="modal-icon-wrapper">
                 <IoMdFootball className="modal-icon" />
@@ -219,7 +258,6 @@ const HomePage = () => {
               <p className="modal-subtitle">Join us for VARCHAS 2025 - Where Champions Rise</p>
               <div className="modal-divider"></div>
             </div>
-
             <div className="tabs">
               <button
                 className={`tab-btn ${activeTab === "team" ? "active" : ""}`}
@@ -236,12 +274,10 @@ const HomePage = () => {
                 <span className="tab-text">Contingent</span>
               </button>
             </div>
-
             {activeTab === "team" && (
               <form className="form" onSubmit={handleSubmit}>
                 <div className="form-section">
                   <h3 className="section-title">Team / Individual Information</h3>
-
                   <div className={`input-group ${focusedField === 'name' ? 'focused' : ''} ${errors.name ? 'error' : ''}`}>
                     <label htmlFor="name" className="input-label">
                       <FiUser className="label-icon" />
@@ -260,7 +296,6 @@ const HomePage = () => {
                       onBlur={() => setFocusedField(null)}
                     />
                   </div>
-
                   <div className={`input-group ${focusedField === 'email' ? 'focused' : ''} ${errors.email ? 'error' : ''}`}>
                     <label htmlFor="email" className="input-label">
                       <FiMail className="label-icon" />
@@ -284,7 +319,6 @@ const HomePage = () => {
                       </span>
                     )}
                   </div>
-
                   <div className={`input-group ${focusedField === 'phone' ? 'focused' : ''} ${errors.phone ? 'error' : ''}`}>
                     <label htmlFor="phone" className="input-label">
                       <FiPhone className="label-icon" />
@@ -308,7 +342,6 @@ const HomePage = () => {
                       </span>
                     )}
                   </div>
-
                   <div className={`input-group ${focusedField === 'college' ? 'focused' : ''}`}>
                     <label htmlFor="college" className="input-label">
                       <FiMapPin className="label-icon" />
@@ -328,10 +361,8 @@ const HomePage = () => {
                     />
                   </div>
                 </div>
-
                 <div className="form-section">
                   <h3 className="section-title">Sport Selection</h3>
-
                   <div className={`input-group ${focusedField === 'sport' ? 'focused' : ''}`}>
                     <label htmlFor="sport" className="input-label">
                       <FiTrendingUp className="label-icon" />
@@ -354,7 +385,6 @@ const HomePage = () => {
                       ))}
                     </select>
                   </div>
-
                   <div className={`input-group ${focusedField === 'contingentSize' ? 'focused' : ''} ${errors.contingentSize ? 'error' : ''}`}>
                     <label htmlFor="contingent-size" className="input-label">
                       <FiUsers className="label-icon" />
@@ -389,23 +419,19 @@ const HomePage = () => {
                     )}
                   </div>
                 </div>
-
                 <button type="submit" className="submit-btn">
                   <FiCheckCircle className="btn-icon" />
                   Complete Pre-Registration
                 </button>
-
                 <p className="form-footer-text">
                   By registering, you agree to our terms and conditions
                 </p>
               </form>
             )}
-
             {activeTab === "contingent" && (
               <form className="form" onSubmit={handleSubmit}>
                 <div className="form-section">
                   <h3 className="section-title">Contingent Leader Details</h3>
-
                   <div className={`input-group ${focusedField === 'name' ? 'focused' : ''}`}>
                     <label htmlFor="contingent-name" className="input-label">
                       <FiUsers className="label-icon" />
@@ -424,7 +450,6 @@ const HomePage = () => {
                       onBlur={() => setFocusedField(null)}
                     />
                   </div>
-
                   <div className={`input-group ${focusedField === 'email' ? 'focused' : ''} ${errors.email ? 'error' : ''}`}>
                     <label htmlFor="contingent-email" className="input-label">
                       <FiMail className="label-icon" />
@@ -448,7 +473,6 @@ const HomePage = () => {
                       </span>
                     )}
                   </div>
-
                   <div className={`input-group ${focusedField === 'phone' ? 'focused' : ''} ${errors.phone ? 'error' : ''}`}>
                     <label htmlFor="contingent-phone" className="input-label">
                       <FiPhone className="label-icon" />
@@ -472,7 +496,6 @@ const HomePage = () => {
                       </span>
                     )}
                   </div>
-
                   <div className={`input-group ${focusedField === 'college' ? 'focused' : ''}`}>
                     <label htmlFor="contingent-college" className="input-label">
                       <FiMapPin className="label-icon" />
@@ -492,10 +515,8 @@ const HomePage = () => {
                     />
                   </div>
                 </div>
-
                 <div className="form-section">
                   <h3 className="section-title">Sports Selection</h3>
-
                   <div className="input-group">
                     <label htmlFor="sports-select" className="input-label">
                       <FiTrendingUp className="label-icon" />
@@ -524,12 +545,10 @@ const HomePage = () => {
                     </div>
                   </div>
                 </div>
-
                 <button type="submit" className="submit-btn">
                   <FiCheckCircle className="btn-icon" />
                   Register Contingent
                 </button>
-
                 <p className="form-footer-text">
                   By registering, you agree to our terms and conditions
                 </p>
