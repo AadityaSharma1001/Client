@@ -1,9 +1,9 @@
 import React, { useState, useEffect } from "react";
 import { FaInstagram, FaFacebook, FaTwitter, FaYoutube } from "react-icons/fa";
 import { BsHourglassSplit, BsClock, BsStopwatch, BsAlarm } from "react-icons/bs";
-import { 
-  FiUser, FiMail, FiPhone, FiMapPin, 
-  FiUsers, FiTrendingUp, FiCheckCircle, FiAlertCircle 
+import {
+  FiUser, FiMail, FiPhone, FiMapPin,
+  FiUsers, FiTrendingUp, FiCheckCircle, FiAlertCircle
 } from "react-icons/fi";
 import { IoMdFootball } from "react-icons/io";
 import "../styles/Home.css";
@@ -54,35 +54,11 @@ const HomePage = () => {
 
   const sports = [
     "Cricket", "Football", "Basketball (Men)", "Basketball (Women)", "Badminton (Men)",
-    "Badminton (Women)", "Badminton (Mixed)",  
-    "Volleyball (Men)", "Volleyball (Women)", "Chess", "Hockey", "Tennis", 
-    "Table Tennis (Men Singles)", "Table Tennis (Women Singles)", "Table Tennis (Men Team)", 
+    "Badminton (Women)", "Badminton (Mixed)",
+    "Volleyball (Men)", "Volleyball (Women)", "Chess", "Hockey", "Tennis",
+    "Table Tennis (Men Singles)", "Table Tennis (Women Singles)", "Table Tennis (Men Team)",
     "Table Tennis (Women Team)", "Kabaddi", "Athletics (Men)", "Athletics (Women)", "Squash (Men)", "Squash (Women)", "ESports (BGMI)", "ESports (Free Fire)", "Powerlifting"
   ];
-
-  useEffect(() => {
-    const targetDate = new Date("2025-11-07T00:00:00").getTime();
-
-    const interval = setInterval(() => {
-      const now = new Date().getTime();
-      const distance = targetDate - now;
-
-      if (distance <= 0) {
-        clearInterval(interval);
-        setTimeLeft({ expired: true });
-        return;
-      }
-
-      setTimeLeft({
-        days: Math.floor(distance / (1000 * 60 * 60 * 24)),
-        hours: Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60)),
-        minutes: Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60)),
-        seconds: Math.floor((distance % (1000 * 60)) / 1000),
-      });
-    }, 1000);
-
-    return () => clearInterval(interval);
-  }, []);
 
   useEffect(() => {
     if (showModal) {
@@ -110,6 +86,25 @@ const HomePage = () => {
     setTeamSizeConstraints({ min: 1, max: 100 });
   }, [activeTab]);
 
+  useEffect(() => {
+    const targetDate = new Date("2025-11-07T00:00:00").getTime() / 1000;
+    let flipdown;
+    if (window.FlipDown) {
+      flipdown = new window.FlipDown(targetDate, "flipdown", {
+        theme: "dark",
+        headings: ["Days", "Hours", "Minutes", "Seconds"],
+      })
+        .start()
+        .ifEnded(() => console.log("Countdown finished"));
+    }
+    return () => {
+      if (flipdown && flipdown.element) {
+        clearInterval(flipdown.countdown);
+        flipdown.element.innerHTML = "";
+      }
+    };
+  }, []);
+
   const validateField = (name, value) => {
     let error = "";
     switch (name) {
@@ -136,7 +131,7 @@ const HomePage = () => {
   const handleInputChange = (e) => {
     const { name, value } = e.target;
     setFormData(prev => ({ ...prev, [name]: value }));
-    
+
     const error = validateField(name, value);
     setErrors(prev => ({ ...prev, [name]: error }));
   };
@@ -144,7 +139,7 @@ const HomePage = () => {
   const handleSportChange = (e) => {
     const selectedSport = e.target.value;
     setFormData(prev => ({ ...prev, sport: selectedSport, contingentSize: "" }));
-    
+
     if (selectedSport && sportConstraints[selectedSport]) {
       setTeamSizeConstraints(sportConstraints[selectedSport]);
       setErrors(prev => ({ ...prev, contingentSize: "" }));
@@ -160,7 +155,7 @@ const HomePage = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    
+
     const newErrors = {};
     Object.keys(formData).forEach(key => {
       const error = validateField(key, formData[key]);
@@ -177,7 +172,7 @@ const HomePage = () => {
   };
 
   return (
-    <div className="homepage" style={{ display: 'flex', justifyContent: 'center', alignItems: 'center'}}>
+    <div className="homepage" style={{ display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
       <div className="overlay"></div>
 
       <div className="hero" style={{ textAlign: 'center' }}>
@@ -187,36 +182,8 @@ const HomePage = () => {
         </header>
 
         <section className="hero-middle">
-          <div className="countdown">
-            {timeLeft.expired ? (
-              <p className="expired">Event Started!</p>
-            ) : (
-              <>
-                <div className="countdown-item">
-                  <BsHourglassSplit className="countdown-icon" />
-                  <div className="countdown-number">{timeLeft.days || 0}</div>
-                  <p className="countdown-label">Days</p>
-                </div>
-                <div className="countdown-item">
-                  <BsClock className="countdown-icon" />
-                  <div className="countdown-number">{timeLeft.hours || 0}</div>
-                  <p className="countdown-label">Hours</p>
-                </div>
-                <div className="countdown-item">
-                  <BsStopwatch className="countdown-icon" />
-                  <div className="countdown-number">{timeLeft.minutes || 0}</div>
-                  <p className="countdown-label">Minutes</p>
-                </div>
-                <div className="countdown-item">
-                  <BsAlarm className="countdown-icon" />
-                  <div className="countdown-number">{timeLeft.seconds || 0}</div>
-                  <p className="countdown-label">Seconds</p>
-                </div>
-              </>
-            )}
-          </div>
+          <div id="flipdown" className="flipdown"></div>
         </section>
-
         <footer className="hero-bottom">
           <span className="date-badge">7th - 9th November, 2025</span>
           <button onClick={() => setShowModal(true)} className="pre-register-btn">
@@ -274,7 +241,7 @@ const HomePage = () => {
               <form className="form" onSubmit={handleSubmit}>
                 <div className="form-section">
                   <h3 className="section-title">Team / Individual Information</h3>
-                  
+
                   <div className={`input-group ${focusedField === 'name' ? 'focused' : ''} ${errors.name ? 'error' : ''}`}>
                     <label htmlFor="name" className="input-label">
                       <FiUser className="label-icon" />
@@ -364,7 +331,7 @@ const HomePage = () => {
 
                 <div className="form-section">
                   <h3 className="section-title">Sport Selection</h3>
-                  
+
                   <div className={`input-group ${focusedField === 'sport' ? 'focused' : ''}`}>
                     <label htmlFor="sport" className="input-label">
                       <FiTrendingUp className="label-icon" />
@@ -395,7 +362,7 @@ const HomePage = () => {
                     </label>
                     {formData.sport && (
                       <p className="helper-text constraint-info">
-                        Required team size: {teamSizeConstraints.min === teamSizeConstraints.max 
+                        Required team size: {teamSizeConstraints.min === teamSizeConstraints.max
                           ? `${teamSizeConstraints.min} player${teamSizeConstraints.min > 1 ? 's' : ''}`
                           : `${teamSizeConstraints.min}-${teamSizeConstraints.max} players`}
                       </p>
@@ -438,7 +405,7 @@ const HomePage = () => {
               <form className="form" onSubmit={handleSubmit}>
                 <div className="form-section">
                   <h3 className="section-title">Contingent Leader Details</h3>
-                  
+
                   <div className={`input-group ${focusedField === 'name' ? 'focused' : ''}`}>
                     <label htmlFor="contingent-name" className="input-label">
                       <FiUsers className="label-icon" />
@@ -528,7 +495,7 @@ const HomePage = () => {
 
                 <div className="form-section">
                   <h3 className="section-title">Sports Selection</h3>
-                  
+
                   <div className="input-group">
                     <label htmlFor="sports-select" className="input-label">
                       <FiTrendingUp className="label-icon" />
