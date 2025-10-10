@@ -662,6 +662,19 @@ body {
   background: linear-gradient(180deg, #fbbf24, #facc15);
 }
 
+@media only screen and (max-width: 840px) {
+  .hero-subtitle {
+    top: 25%;
+    font-size: clamp(1.2rem, 3vw, 2.2rem);
+  }
+  .date-badge {
+    top: 68%;
+  }
+  .pre-register-btn {
+    top: 75%;
+  }
+}
+
 @media only screen and (max-width: 480px) {
   .modal {
     padding: 1.5rem 1rem;
@@ -693,9 +706,10 @@ body {
   }
   .hero-subtitle {
     top: 20%;
+    font-size: clamp(0.9rem, 2.5vw, 1.8rem);
   }
   .pre-register-btn {
-    top: 78%;
+    top: 75%;
   }
   .hero-title {
     -webkit-text-stroke: 2px #fff;
