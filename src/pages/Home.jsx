@@ -9,12 +9,41 @@ import { IoMdFootball } from "react-icons/io";
 import "../styles/Home.css";
 import bg1 from "/bg.jpg";
 
-const BACKEND_URL = "https://convenient-computation-dom-dome.trycloudflare.com";
+const BACKEND_URL = import.meta.env.VITE_URL_BACKEND || "/api";
+
+const SuccessScreen = ({ onClose, registrationType }) => {
+  return (
+    <div className="success-screen">
+      <div className="success-animation">
+        <div className="success-checkmark">
+          <FiCheckCircle className="success-icon" />
+        </div>
+      </div>
+      <h2 className="success-title">Successfully Pre-Registered! 🎉</h2>
+      <p className="success-message">
+        Welcome to VARCHAS 2025 - Where Champions Rise
+      </p>
+      <div className="success-details">
+        <p>
+          {registrationType === "team" 
+            ? "Your team has been successfully registered." 
+            : "Your contingent has been successfully registered."}
+        </p>
+        <p>Check your email for confirmation details.</p>
+      </div>
+      <button onClick={onClose} className="success-close-btn">
+        <FiCheckCircle /> Continue
+      </button>
+    </div>
+  );
+};
 
 const HomePage = () => {
   const mountRef = useRef(null);
   const [showModal, setShowModal] = useState(false);
   const [activeTab, setActiveTab] = useState("team");
+  const [showSuccessScreen, setShowSuccessScreen] = useState(false);
+  const [registrationType, setRegistrationType] = useState("");
   const [formData, setFormData] = useState({
     name: "",
     email: "",
@@ -139,6 +168,7 @@ const HomePage = () => {
     setFocusedField(null);
     setTeamSizeConstraints({ min: 1, max: 100 });
     setSubmissionStatus({ loading: false, success: false, error: null });
+    setShowSuccessScreen(false);
   }, [activeTab]);
 
   useEffect(() => {
@@ -152,32 +182,30 @@ const HomePage = () => {
         .start()
         .ifEnded(() => console.log("Countdown finished"));
     }
-    // return () => {
-    //   if (flipdown && flipdown.element) {
-    //     clearInterval(flipdown.countdown);
-    //     flipdown.element.innerHTML = "";
-    //   }
-    // };
   }, []);
 
   const validateField = (name, value) => {
     let error = "";
     switch (name) {
       case "email":
+        if (!value) return "";
         const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
         if (!emailRegex.test(value)) error = "Invalid email format";
         break;
       case "phone":
-        const phoneRegex = /^\+?[\d\s-]{10,}$/;
-        if (!phoneRegex.test(value)) error = "Invalid phone number";
+        if (!value) return "";
+        const phoneRegex = /^\d{10}$/;
+        if (!phoneRegex.test(value.replace(/[\s\-+]/g, ''))) error = "Invalid phone number (10 digits required)";
         break;
       case "teamSize":
+        if (!value) return "";
         const teamSize = parseInt(value);
         if (isNaN(teamSize) || teamSize < teamSizeConstraints.min || teamSize > teamSizeConstraints.max) {
           error = `Team size must be between ${teamSizeConstraints.min} and ${teamSizeConstraints.max}`;
         }
         break;
       case "contingentSize":
+        if (!value) return "";
         const contingentSize = parseInt(value);
         if (isNaN(contingentSize) || contingentSize < 1) {
           error = "Contingent size must be at least 1";
@@ -207,59 +235,105 @@ const HomePage = () => {
     }
   };
 
-  const handleSportsChange = (e) => {
-    const options = Array.from(e.target.selectedOptions, option => option.value);
-    setFormData(prev => ({ ...prev, sports: options }));
-  };
-
   const registerTeam = async (teamData) => {
-    const response = await fetch(`${BACKEND_URL}/register/team`, {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify(teamData),
-    });
-    
-    if (!response.ok) {
-      const errorData = await response.json();
-      throw new Error(errorData.message || 'Registration failed');
+    try {
+      const response = await fetch(`${BACKEND_URL}/register/team`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(teamData),
+      });
+      
+      if (!response.ok) {
+        const errorData = await response.json().catch(() => ({}));
+        throw new Error(errorData.message || 'Registration failed');
+      }
+      
+      return await response.json();
+    } catch (error) {
+      console.error('API Error:', error);
+      throw error;
     }
-    
-    return await response.json();
   };
 
   const registerContingent = async (contingentData) => {
-    const response = await fetch(`${BACKEND_URL}/register/contingent`, {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify(contingentData),
-    });
-    
-    if (!response.ok) {
-      const errorData = await response.json();
-      throw new Error(errorData.message || 'Registration failed');
+    try {
+      const response = await fetch(`${BACKEND_URL}/register/contingent`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(contingentData),
+      });
+      
+      if (!response.ok) {
+        const errorData = await response.json().catch(() => ({}));
+        throw new Error(errorData.message || 'Registration failed');
+      }
+      
+      return await response.json();
+    } catch (error) {
+      console.error('API Error:', error);
+      throw error;
     }
-    
-    return await response.json();
   };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     
+    console.log("Form submitted!", { formData, activeTab });
     const newErrors = {};
-    Object.keys(formData).forEach(key => {
-      const error = validateField(key, formData[key]);
-      if (error) newErrors[key] = error;
-    });
+    
+    if (activeTab === "team") {
+      if (!formData.name) newErrors.name = "Name is required";
+      if (!formData.email) newErrors.email = "Email is required";
+      if (!formData.phone) newErrors.phone = "Phone is required";
+      if (!formData.college) newErrors.college = "College is required";
+      if (!formData.sport) newErrors.sport = "Sport selection is required";
+      if (!formData.teamSize) newErrors.teamSize = "Team size is required";
+      if (formData.email) {
+        const emailError = validateField('email', formData.email);
+        if (emailError) newErrors.email = emailError;
+      }
+      if (formData.phone) {
+        const phoneError = validateField('phone', formData.phone);
+        if (phoneError) newErrors.phone = phoneError;
+      }
+      if (formData.teamSize) {
+        const sizeError = validateField('teamSize', formData.teamSize);
+        if (sizeError) newErrors.teamSize = sizeError;
+      }
+    } else {
+      if (!formData.name) newErrors.name = "Name is required";
+      if (!formData.email) newErrors.email = "Email is required";
+      if (!formData.phone) newErrors.phone = "Phone is required";
+      if (!formData.college) newErrors.college = "College is required";
+      if (formData.sports.length === 0) newErrors.sports = "Select at least one sport";
+      if (!formData.contingentSize) newErrors.contingentSize = "Contingent size is required";
+      if (formData.email) {
+        const emailError = validateField('email', formData.email);
+        if (emailError) newErrors.email = emailError;
+      }
+      if (formData.phone) {
+        const phoneError = validateField('phone', formData.phone);
+        if (phoneError) newErrors.phone = phoneError;
+      }
+      if (formData.contingentSize) {
+        const sizeError = validateField('contingentSize', formData.contingentSize);
+        if (sizeError) newErrors.contingentSize = sizeError;
+      }
+    }
+    
+    console.log("Validation errors:", newErrors);
     
     if (Object.keys(newErrors).length > 0) {
       setErrors(newErrors);
+      console.log("Form has errors, stopping submission");
       return;
     }
 
+    console.log("Validation passed, starting submission");
     setSubmissionStatus({ loading: true, success: false, error: null });
 
     try {
@@ -273,6 +347,7 @@ const HomePage = () => {
           teamSize: parseInt(formData.teamSize)
         };
         
+        console.log("Sending team data:", teamData);
         const response = await registerTeam(teamData);
         console.log("Team registered successfully:", response);
         
@@ -281,10 +356,10 @@ const HomePage = () => {
           success: true, 
           error: null 
         });
-        setTimeout(() => {
-          setShowModal(false);
-          setSubmissionStatus({ loading: false, success: false, error: null });
-        }, 3000);
+        
+        console.log("Setting success screen for team");
+        setRegistrationType("team");
+        setShowSuccessScreen(true);
         
       } else {
         const contingentData = {
@@ -296,6 +371,7 @@ const HomePage = () => {
           contingentSize: parseInt(formData.contingentSize)
         };
         
+        console.log("Sending contingent data:", contingentData);
         const response = await registerContingent(contingentData);
         console.log("Contingent registered successfully:", response);
         
@@ -304,10 +380,10 @@ const HomePage = () => {
           success: true, 
           error: null 
         });
-        setTimeout(() => {
-          setShowModal(false);
-          setSubmissionStatus({ loading: false, success: false, error: null });
-        }, 3000);
+        
+        console.log("Setting success screen for contingent");
+        setRegistrationType("contingent");
+        setShowSuccessScreen(true);
       }
       
     } catch (error) {
@@ -318,6 +394,22 @@ const HomePage = () => {
         error: error.message || 'Registration failed. Please try again.' 
       });
     }
+  };
+
+  const handleCloseSuccessScreen = () => {
+    setShowSuccessScreen(false);
+    setShowModal(false);
+    setSubmissionStatus({ loading: false, success: false, error: null });
+    setFormData({
+      name: "",
+      email: "",
+      college: "",
+      phone: "",
+      sport: "",
+      teamSize: "",
+      contingentSize: "",
+      sports: []
+    });
   };
 
   return (
@@ -351,363 +443,397 @@ const HomePage = () => {
         </a>
       </div>
       {showModal && (
-        <div className="modal-overlay" onClick={() => setShowModal(false)}>
+        <div className="modal-overlay" onClick={() => !showSuccessScreen && setShowModal(false)}>
           <div className="modal" onClick={(e) => e.stopPropagation()}>
-            <button className="close-btn" onClick={() => setShowModal(false)} aria-label="Close modal">
-              ✕
-            </button>
-            <div className="modal-header">
-              <div className="modal-icon-wrapper">
-                <IoMdFootball className="modal-icon" />
-              </div>
-              <h2 className="modal-title">Registration</h2>
-              <p className="modal-subtitle">Join us for VARCHAS 2025 - Where Champions Rise</p>
-              <div className="modal-divider"></div>
-            </div>
-            {submissionStatus.loading && (
-              <div className="status-message loading">
-                <FiAlertCircle /> Submitting registration...
-              </div>
-            )}
-            {submissionStatus.success && (
-              <div className="status-message success">
-                <FiCheckCircle /> Pre-Registration successful! Welcome to VARCHAS 2025!
-              </div>
-            )}
-            {submissionStatus.error && (
-              <div className="status-message error">
-                <FiAlertCircle /> {submissionStatus.error}
-              </div>
-            )}
+            {!showSuccessScreen ? (
+              <>
+                <button className="close-btn" onClick={() => setShowModal(false)} aria-label="Close modal">
+                  ✕
+                </button>
+                <div className="modal-header">
+                  <div className="modal-icon-wrapper">
+                    <IoMdFootball className="modal-icon" />
+                  </div>
+                  <h2 className="modal-title">Registration</h2>
+                  <p className="modal-subtitle">Join us for VARCHAS 2025 - Where Champions Rise</p>
+                  <div className="modal-divider"></div>
+                </div>
+                {submissionStatus.loading && (
+                  <div className="status-message loading">
+                    <FiAlertCircle /> Submitting registration...
+                  </div>
+                )}
+                {submissionStatus.error && (
+                  <div className="status-message error">
+                    <FiAlertCircle /> {submissionStatus.error}
+                  </div>
+                )}
 
-            <div className="tabs">
-              <button
-                className={`tab-btn ${activeTab === "team" ? "active" : ""}`}
-                onClick={() => setActiveTab("team")}
-              >
-                <span className="tab-text">Team/Individual</span>
-              </button>
-              <button
-                className={`tab-btn ${activeTab === "contingent" ? "active" : ""}`}
-                onClick={() => setActiveTab("contingent")}
-              >
-                <span className="tab-text">Contingent</span>
-              </button>
-            </div>
-            {activeTab === "team" && (
-              <form className="form" onSubmit={handleSubmit}>
-                <div className="form-section">
-                  <h3 className="section-title">Team / Individual Information</h3>
-                  <div className={`input-group ${focusedField === 'name' ? 'focused' : ''} ${errors.name ? 'error' : ''}`}>
-                    <label htmlFor="name" className="input-label">
-                      <FiUser className="label-icon" />
-                      Full Name / Leader's Name
-                    </label>
-                    <input
-                      id="name"
-                      name="name"
-                      type="text"
-                      placeholder="Enter your full name/ leader's name"
-                      required
-                      className="form-input"
-                      value={formData.name}
-                      onChange={handleInputChange}
-                      onFocus={() => setFocusedField('name')}
-                      onBlur={() => setFocusedField(null)}
-                    />
-                  </div>
-                  <div className={`input-group ${focusedField === 'email' ? 'focused' : ''} ${errors.email ? 'error' : ''}`}>
-                    <label htmlFor="email" className="input-label">
-                      <FiMail className="label-icon" />
-                      Email Address
-                    </label>
-                    <input
-                      id="email"
-                      name="email"
-                      type="email"
-                      placeholder="Enter Email Address"
-                      required
-                      className="form-input"
-                      value={formData.email}
-                      onChange={handleInputChange}
-                      onFocus={() => setFocusedField('email')}
-                      onBlur={() => setFocusedField(null)}
-                    />
-                    {errors.email && (
-                      <span className="error-message">
-                        <FiAlertCircle /> {errors.email}
-                      </span>
-                    )}
-                  </div>
-                  <div className={`input-group ${focusedField === 'phone' ? 'focused' : ''} ${errors.phone ? 'error' : ''}`}>
-                    <label htmlFor="phone" className="input-label">
-                      <FiPhone className="label-icon" />
-                      Phone Number
-                    </label>
-                    <input
-                      id="phone"
-                      name="phone"
-                      type="tel"
-                      placeholder="XXXXXXXXXX"
-                      required
-                      className="form-input"
-                      value={formData.phone}
-                      onChange={handleInputChange}
-                      onFocus={() => setFocusedField('phone')}
-                      onBlur={() => setFocusedField(null)}
-                    />
-                    {errors.phone && (
-                      <span className="error-message">
-                        <FiAlertCircle /> {errors.phone}
-                      </span>
-                    )}
-                  </div>
-                  <div className={`input-group ${focusedField === 'college' ? 'focused' : ''}`}>
-                    <label htmlFor="college" className="input-label">
-                      <FiMapPin className="label-icon" />
-                      College/University Name
-                    </label>
-                    <input
-                      id="college"
-                      name="college"
-                      type="text"
-                      placeholder="Enter your institution name"
-                      required
-                      className="form-input"
-                      value={formData.college}
-                      onChange={handleInputChange}
-                      onFocus={() => setFocusedField('college')}
-                      onBlur={() => setFocusedField(null)}
-                    />
-                  </div>
+                <div className="tabs">
+                  <button
+                    className={`tab-btn ${activeTab === "team" ? "active" : ""}`}
+                    onClick={() => setActiveTab("team")}
+                  >
+                    <span className="tab-text">Team/Individual</span>
+                  </button>
+                  <button
+                    className={`tab-btn ${activeTab === "contingent" ? "active" : ""}`}
+                    onClick={() => setActiveTab("contingent")}
+                  >
+                    <span className="tab-text">Contingent</span>
+                  </button>
                 </div>
-                <div className="form-section">
-                  <h3 className="section-title">Sport Selection</h3>
-                  <div className={`input-group ${focusedField === 'sport' ? 'focused' : ''}`}>
-                    <label htmlFor="sport" className="input-label">
-                      <FiTrendingUp className="label-icon" />
-                      Choose Your Sport
-                    </label>
-                    <p className="helper-text">Note: In athletics a player cannot participate in more than 3 events.</p>
-                    <select
-                      id="sport"
-                      name="sport"
-                      required
-                      className="form-input"
-                      value={formData.sport}
-                      onChange={handleSportChange}
-                      onFocus={() => setFocusedField('sport')}
-                      onBlur={() => setFocusedField(null)}
-                    >
-                      <option value="">Select a sport</option>
-                      {sports.map(sport => (
-                        <option key={sport} value={sport}>{sport}</option>
-                      ))}
-                    </select>
-                  </div>
-                  <div className={`input-group ${focusedField === 'teamSize' ? 'focused' : ''} ${errors.teamSize ? 'error' : ''}`}>
-                    <label htmlFor="team-size" className="input-label">
-                      <FiUsers className="label-icon" />
-                      Team Size
-                    </label>
-                    {formData.sport && (
-                      <p className="helper-text constraint-info">
-                        Required team size: {teamSizeConstraints.min === teamSizeConstraints.max
-                          ? `${teamSizeConstraints.min} player${teamSizeConstraints.min > 1 ? 's' : ''}`
-                          : `${teamSizeConstraints.min}-${teamSizeConstraints.max} players`}
-                      </p>
-                    )}
-                    <input
-                      id="team-size"
-                      name="teamSize"
-                      type="number"
-                      min={teamSizeConstraints.min}
-                      max={teamSizeConstraints.max}
-                      placeholder={formData.sport ? `Enter number of players` : "Select a sport first"}
-                      required
-                      className="form-input"
-                      value={formData.teamSize}
-                      onChange={handleInputChange}
-                      onFocus={() => setFocusedField('teamSize')}
-                      onBlur={() => setFocusedField(null)}
-                      disabled={!formData.sport}
-                    />
-                    {errors.teamSize && (
-                      <span className="error-message">
-                        <FiAlertCircle /> {errors.teamSize}
-                      </span>
-                    )}
-                  </div>
-                </div>
-                <button 
-                  type="submit" 
-                  className="submit-btn"
-                  disabled={submissionStatus.loading}
-                >
-                  <FiCheckCircle className="btn-icon" />
-                  {submissionStatus.loading ? 'Submitting...' : 'Complete Pre-Registration'}
-                </button>
-                <p className="form-footer-text">
-                  By registering, you agree to our terms and conditions
-                </p>
-              </form>
-            )}
-            {activeTab === "contingent" && (
-              <form className="form" onSubmit={handleSubmit}>
-                <div className="form-section">
-                  <h3 className="section-title">Contingent Leader Details</h3>
-                  <div className={`input-group ${focusedField === 'name' ? 'focused' : ''}`}>
-                    <label htmlFor="contingent-name" className="input-label">
-                      <FiUsers className="label-icon" />
-                      Contingent Leader's Name
-                    </label>
-                    <input
-                      id="contingent-name"
-                      name="name"
-                      type="text"
-                      placeholder="Enter leader's full name"
-                      required
-                      className="form-input"
-                      value={formData.name}
-                      onChange={handleInputChange}
-                      onFocus={() => setFocusedField('name')}
-                      onBlur={() => setFocusedField(null)}
-                    />
-                  </div>
-                  <div className={`input-group ${focusedField === 'email' ? 'focused' : ''} ${errors.email ? 'error' : ''}`}>
-                    <label htmlFor="contingent-email" className="input-label">
-                      <FiMail className="label-icon" />
-                      Email Address
-                    </label>
-                    <input
-                      id="contingent-email"
-                      name="email"
-                      type="email"
-                      placeholder="Enter leader's email address"
-                      required
-                      className="form-input"
-                      value={formData.email}
-                      onChange={handleInputChange}
-                      onFocus={() => setFocusedField('email')}
-                      onBlur={() => setFocusedField(null)}
-                    />
-                    {errors.email && (
-                      <span className="error-message">
-                        <FiAlertCircle /> {errors.email}
-                      </span>
-                    )}
-                  </div>
-                  <div className={`input-group ${focusedField === 'phone' ? 'focused' : ''} ${errors.phone ? 'error' : ''}`}>
-                    <label htmlFor="contingent-phone" className="input-label">
-                      <FiPhone className="label-icon" />
-                      Phone Number
-                    </label>
-                    <input
-                      id="contingent-phone"
-                      name="phone"
-                      type="tel"
-                      placeholder="+91 XXXXX XXXXX"
-                      required
-                      className="form-input"
-                      value={formData.phone}
-                      onChange={handleInputChange}
-                      onFocus={() => setFocusedField('phone')}
-                      onBlur={() => setFocusedField(null)}
-                    />
-                    {errors.phone && (
-                      <span className="error-message">
-                        <FiAlertCircle /> {errors.phone}
-                      </span>
-                    )}
-                  </div>
-                  <div className={`input-group ${focusedField === 'college' ? 'focused' : ''}`}>
-                    <label htmlFor="contingent-college" className="input-label">
-                      <FiMapPin className="label-icon" />
-                      College/University Name
-                    </label>
-                    <input
-                      id="contingent-college"
-                      name="college"
-                      type="text"
-                      placeholder="Enter institution name"
-                      required
-                      className="form-input"
-                      value={formData.college}
-                      onChange={handleInputChange}
-                      onFocus={() => setFocusedField('college')}
-                      onBlur={() => setFocusedField(null)}
-                    />
-                  </div>
-                </div>
-                <div className="form-section">
-                  <h3 className="section-title">Sports Selection</h3>
-                  <div className="input-group">
-                    <label htmlFor="sports-select" className="input-label">
-                      <FiTrendingUp className="label-icon" />
-                      Select Sports (Multiple)
-                    </label>
-                    <div className="sports-grid">
-                      {sports.map(sport => (
-                        <label key={sport} className="sport-checkbox">
-                          <input
-                            type="checkbox"
-                            value={sport}
-                            checked={formData.sports.includes(sport)}
-                            onChange={(e) => {
-                              const value = e.target.value;
-                              setFormData(prev => ({
-                                ...prev,
-                                sports: e.target.checked
-                                  ? [...prev.sports, value]
-                                  : prev.sports.filter(s => s !== value)
-                              }));
-                            }}
-                          />
-                          <span className="checkbox-label">{sport}</span>
+                {activeTab === "team" && (
+                  <form className="form" onSubmit={handleSubmit}>
+                    <div className="form-section">
+                      <h3 className="section-title">Team / Individual Information</h3>
+                      <div className={`input-group ${focusedField === 'name' ? 'focused' : ''} ${errors.name ? 'error' : ''}`}>
+                        <label htmlFor="name" className="input-label">
+                          <FiUser className="label-icon" />
+                          Full Name / Leader's Name
                         </label>
-                      ))}
+                        <input
+                          id="name"
+                          name="name"
+                          type="text"
+                          placeholder="Enter your full name/ leader's name"
+                          required
+                          className="form-input"
+                          value={formData.name}
+                          onChange={handleInputChange}
+                          onFocus={() => setFocusedField('name')}
+                          onBlur={() => setFocusedField(null)}
+                        />
+                        {errors.name && (
+                          <span className="error-message">
+                            <FiAlertCircle /> {errors.name}
+                          </span>
+                        )}
+                      </div>
+                      <div className={`input-group ${focusedField === 'email' ? 'focused' : ''} ${errors.email ? 'error' : ''}`}>
+                        <label htmlFor="email" className="input-label">
+                          <FiMail className="label-icon" />
+                          Email Address
+                        </label>
+                        <input
+                          id="email"
+                          name="email"
+                          type="email"
+                          placeholder="Enter Email Address"
+                          required
+                          className="form-input"
+                          value={formData.email}
+                          onChange={handleInputChange}
+                          onFocus={() => setFocusedField('email')}
+                          onBlur={() => setFocusedField(null)}
+                        />
+                        {errors.email && (
+                          <span className="error-message">
+                            <FiAlertCircle /> {errors.email}
+                          </span>
+                        )}
+                      </div>
+                      <div className={`input-group ${focusedField === 'phone' ? 'focused' : ''} ${errors.phone ? 'error' : ''}`}>
+                        <label htmlFor="phone" className="input-label">
+                          <FiPhone className="label-icon" />
+                          Phone Number
+                        </label>
+                        <input
+                          id="phone"
+                          name="phone"
+                          type="tel"
+                          placeholder="XXXXXXXXXX"
+                          required
+                          className="form-input"
+                          value={formData.phone}
+                          onChange={handleInputChange}
+                          onFocus={() => setFocusedField('phone')}
+                          onBlur={() => setFocusedField(null)}
+                        />
+                        {errors.phone && (
+                          <span className="error-message">
+                            <FiAlertCircle /> {errors.phone}
+                          </span>
+                        )}
+                      </div>
+                      <div className={`input-group ${focusedField === 'college' ? 'focused' : ''} ${errors.college ? 'error' : ''}`}>
+                        <label htmlFor="college" className="input-label">
+                          <FiMapPin className="label-icon" />
+                          College/University Name
+                        </label>
+                        <input
+                          id="college"
+                          name="college"
+                          type="text"
+                          placeholder="Enter your institution name"
+                          required
+                          className="form-input"
+                          value={formData.college}
+                          onChange={handleInputChange}
+                          onFocus={() => setFocusedField('college')}
+                          onBlur={() => setFocusedField(null)}
+                        />
+                        {errors.college && (
+                          <span className="error-message">
+                            <FiAlertCircle /> {errors.college}
+                          </span>
+                        )}
+                      </div>
                     </div>
-                  </div>
-                  
-                  {/* NEW: Contingent Size Input Field */}
-                  <div className={`input-group ${focusedField === 'contingentSize' ? 'focused' : ''} ${errors.contingentSize ? 'error' : ''}`}>
-                    <label htmlFor="contingent-size-input" className="input-label">
-                      <FiUsers className="label-icon" />
-                      Contingent Size
-                    </label>
-                    <p className="helper-text">Total number of participants in your contingent</p>
-                    <input
-                      id="contingent-size-input"
-                      name="contingentSize"
-                      type="number"
-                      min="1"
-                      placeholder="Enter total number of participants"
-                      required
-                      className="form-input"
-                      value={formData.contingentSize}
-                      onChange={handleInputChange}
-                      onFocus={() => setFocusedField('contingentSize')}
-                      onBlur={() => setFocusedField(null)}
-                    />
-                    {errors.contingentSize && (
-                      <span className="error-message">
-                        <FiAlertCircle /> {errors.contingentSize}
-                      </span>
-                    )}
-                  </div>
-                </div>
-                <button 
-                  type="submit" 
-                  className="submit-btn"
-                  disabled={submissionStatus.loading}
-                >
-                  <FiCheckCircle className="btn-icon" />
-                  {submissionStatus.loading ? 'Submitting...' : 'Register Contingent'}
-                </button>
-                <p className="form-footer-text">
-                  By registering, you agree to our terms and conditions
-                </p>
-              </form>
+                    <div className="form-section">
+                      <h3 className="section-title">Sport Selection</h3>
+                      <div className={`input-group ${focusedField === 'sport' ? 'focused' : ''} ${errors.sport ? 'error' : ''}`}>
+                        <label htmlFor="sport" className="input-label">
+                          <FiTrendingUp className="label-icon" />
+                          Choose Your Sport
+                        </label>
+                        <p className="helper-text">Note: In athletics a player cannot participate in more than 3 events.</p>
+                        <select
+                          id="sport"
+                          name="sport"
+                          required
+                          className="form-input"
+                          value={formData.sport}
+                          onChange={handleSportChange}
+                          onFocus={() => setFocusedField('sport')}
+                          onBlur={() => setFocusedField(null)}
+                        >
+                          <option value="">Select a sport</option>
+                          {sports.map(sport => (
+                            <option key={sport} value={sport}>{sport}</option>
+                          ))}
+                        </select>
+                        {errors.sport && (
+                          <span className="error-message">
+                            <FiAlertCircle /> {errors.sport}
+                          </span>
+                        )}
+                      </div>
+                      <div className={`input-group ${focusedField === 'teamSize' ? 'focused' : ''} ${errors.teamSize ? 'error' : ''}`}>
+                        <label htmlFor="team-size" className="input-label">
+                          <FiUsers className="label-icon" />
+                          Team Size
+                        </label>
+                        {formData.sport && (
+                          <p className="helper-text constraint-info">
+                            Required team size: {teamSizeConstraints.min === teamSizeConstraints.max
+                              ? `${teamSizeConstraints.min} player${teamSizeConstraints.min > 1 ? 's' : ''}`
+                              : `${teamSizeConstraints.min}-${teamSizeConstraints.max} players`}
+                          </p>
+                        )}
+                        <input
+                          id="team-size"
+                          name="teamSize"
+                          type="number"
+                          min={teamSizeConstraints.min}
+                          max={teamSizeConstraints.max}
+                          placeholder={formData.sport ? `Enter number of players` : "Select a sport first"}
+                          required
+                          className="form-input"
+                          value={formData.teamSize}
+                          onChange={handleInputChange}
+                          onFocus={() => setFocusedField('teamSize')}
+                          onBlur={() => setFocusedField(null)}
+                          disabled={!formData.sport}
+                        />
+                        {errors.teamSize && (
+                          <span className="error-message">
+                            <FiAlertCircle /> {errors.teamSize}
+                          </span>
+                        )}
+                      </div>
+                    </div>
+                    <button 
+                      type="submit" 
+                      className="submit-btn"
+                      disabled={submissionStatus.loading}
+                    >
+                      <FiCheckCircle className="btn-icon" />
+                      {submissionStatus.loading ? 'Submitting...' : 'Complete Pre-Registration'}
+                    </button>
+                    <p className="form-footer-text">
+                      By registering, you agree to our terms and conditions
+                    </p>
+                  </form>
+                )}
+                {activeTab === "contingent" && (
+                  <form className="form" onSubmit={handleSubmit}>
+                    <div className="form-section">
+                      <h3 className="section-title">Contingent Leader Details</h3>
+                      <div className={`input-group ${focusedField === 'name' ? 'focused' : ''} ${errors.name ? 'error' : ''}`}>
+                        <label htmlFor="contingent-name" className="input-label">
+                          <FiUsers className="label-icon" />
+                          Contingent Leader's Name
+                        </label>
+                        <input
+                          id="contingent-name"
+                          name="name"
+                          type="text"
+                          placeholder="Enter leader's full name"
+                          required
+                          className="form-input"
+                          value={formData.name}
+                          onChange={handleInputChange}
+                          onFocus={() => setFocusedField('name')}
+                          onBlur={() => setFocusedField(null)}
+                        />
+                        {errors.name && (
+                          <span className="error-message">
+                            <FiAlertCircle /> {errors.name}
+                          </span>
+                        )}
+                      </div>
+                      <div className={`input-group ${focusedField === 'email' ? 'focused' : ''} ${errors.email ? 'error' : ''}`}>
+                        <label htmlFor="contingent-email" className="input-label">
+                          <FiMail className="label-icon" />
+                          Email Address
+                        </label>
+                        <input
+                          id="contingent-email"
+                          name="email"
+                          type="email"
+                          placeholder="Enter leader's email address"
+                          required
+                          className="form-input"
+                          value={formData.email}
+                          onChange={handleInputChange}
+                          onFocus={() => setFocusedField('email')}
+                          onBlur={() => setFocusedField(null)}
+                        />
+                        {errors.email && (
+                          <span className="error-message">
+                            <FiAlertCircle /> {errors.email}
+                          </span>
+                        )}
+                      </div>
+                      <div className={`input-group ${focusedField === 'phone' ? 'focused' : ''} ${errors.phone ? 'error' : ''}`}>
+                        <label htmlFor="contingent-phone" className="input-label">
+                          <FiPhone className="label-icon" />
+                          Phone Number
+                        </label>
+                        <input
+                          id="contingent-phone"
+                          name="phone"
+                          type="tel"
+                          placeholder="+91 XXXXX XXXXX"
+                          required
+                          className="form-input"
+                          value={formData.phone}
+                          onChange={handleInputChange}
+                          onFocus={() => setFocusedField('phone')}
+                          onBlur={() => setFocusedField(null)}
+                        />
+                        {errors.phone && (
+                          <span className="error-message">
+                            <FiAlertCircle /> {errors.phone}
+                          </span>
+                        )}
+                      </div>
+                      <div className={`input-group ${focusedField === 'college' ? 'focused' : ''} ${errors.college ? 'error' : ''}`}>
+                        <label htmlFor="contingent-college" className="input-label">
+                          <FiMapPin className="label-icon" />
+                          College/University Name
+                        </label>
+                        <input
+                          id="contingent-college"
+                          name="college"
+                          type="text"
+                          placeholder="Enter institution name"
+                          required
+                          className="form-input"
+                          value={formData.college}
+                          onChange={handleInputChange}
+                          onFocus={() => setFocusedField('college')}
+                          onBlur={() => setFocusedField(null)}
+                        />
+                        {errors.college && (
+                          <span className="error-message">
+                            <FiAlertCircle /> {errors.college}
+                          </span>
+                        )}
+                      </div>
+                    </div>
+                    <div className="form-section">
+                      <h3 className="section-title">Sports Selection</h3>
+                      <div className="input-group">
+                        <label htmlFor="sports-select" className="input-label">
+                          <FiTrendingUp className="label-icon" />
+                          Select Sports (Multiple)
+                        </label>
+                        {errors.sports && (
+                          <span className="error-message">
+                            <FiAlertCircle /> {errors.sports}
+                          </span>
+                        )}
+                        <div className="sports-grid">
+                          {sports.map(sport => (
+                            <label key={sport} className="sport-checkbox">
+                              <input
+                                type="checkbox"
+                                value={sport}
+                                checked={formData.sports.includes(sport)}
+                                onChange={(e) => {
+                                  const value = e.target.value;
+                                  setFormData(prev => ({
+                                    ...prev,
+                                    sports: e.target.checked
+                                      ? [...prev.sports, value]
+                                      : prev.sports.filter(s => s !== value)
+                                  }));
+                                  setErrors(prev => ({ ...prev, sports: null }));
+                                }}
+                              />
+                              <span className="checkbox-label">{sport}</span>
+                            </label>
+                          ))}
+                        </div>
+                      </div>
+                      
+                      <div className={`input-group ${focusedField === 'contingentSize' ? 'focused' : ''} ${errors.contingentSize ? 'error' : ''}`}>
+                        <label htmlFor="contingent-size-input" className="input-label">
+                          <FiUsers className="label-icon" />
+                          Contingent Size
+                        </label>
+                        <p className="helper-text">Total number of participants in your contingent</p>
+                        <input
+                          id="contingent-size-input"
+                          name="contingentSize"
+                          type="number"
+                          min="1"
+                          placeholder="Enter total number of participants"
+                          required
+                          className="form-input"
+                          value={formData.contingentSize}
+                          onChange={handleInputChange}
+                          onFocus={() => setFocusedField('contingentSize')}
+                          onBlur={() => setFocusedField(null)}
+                        />
+                        {errors.contingentSize && (
+                          <span className="error-message">
+                            <FiAlertCircle /> {errors.contingentSize}
+                          </span>
+                        )}
+                      </div>
+                    </div>
+                    <button 
+                      type="submit" 
+                      className="submit-btn"
+                      disabled={submissionStatus.loading}
+                    >
+                      <FiCheckCircle className="btn-icon" />
+                      {submissionStatus.loading ? 'Submitting...' : 'Register Contingent'}
+                    </button>
+                    <p className="form-footer-text">
+                      By registering, you agree to our terms and conditions
+                    </p>
+                  </form>
+                )}
+              </>
+            ) : (
+              <SuccessScreen 
+                onClose={handleCloseSuccessScreen} 
+                registrationType={registrationType}
+              />
             )}
           </div>
         </div>

@@ -854,3 +854,149 @@ body {
   opacity: 0.6;
   cursor: not-allowed;
 }
+
+/* Success Screen Styles */
+.success-screen {
+  text-align: center;
+  padding: 3rem 2rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1.5rem;
+}
+
+.success-animation {
+  margin-bottom: 1rem;
+}
+
+.success-checkmark {
+  width: 100px;
+  height: 100px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, #10b981, #059669);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  animation: scaleIn 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+  box-shadow: 0 8px 32px rgba(16, 185, 129, 0.3);
+}
+
+@keyframes scaleIn {
+  0% {
+    transform: scale(0);
+    opacity: 0;
+  }
+  50% {
+    transform: scale(1.1);
+  }
+  100% {
+    transform: scale(1);
+    opacity: 1;
+  }
+}
+
+.success-icon {
+  font-size: 3.5rem;
+  color: white;
+  animation: checkmarkDraw 0.8s ease 0.3s forwards;
+  opacity: 0;
+}
+
+@keyframes checkmarkDraw {
+  to {
+    opacity: 1;
+  }
+}
+
+.success-title {
+  font-size: clamp(1.5rem, 4vw, 2rem);
+  font-weight: 700;
+  color: #10b981;
+  margin: 0;
+  animation: fadeInUp 0.6s ease 0.4s forwards;
+  opacity: 0;
+}
+
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.success-message {
+  font-size: clamp(1rem, 2.5vw, 1.2rem);
+  color: #facc15;
+  margin: 0;
+  font-weight: 500;
+  animation: fadeInUp 0.6s ease 0.5s forwards;
+  opacity: 0;
+}
+
+.success-details {
+  background: rgba(16, 185, 129, 0.1);
+  border: 1px solid rgba(16, 185, 129, 0.3);
+  border-radius: 12px;
+  padding: 1.5rem;
+  max-width: 500px;
+  animation: fadeInUp 0.6s ease 0.6s forwards;
+  opacity: 0;
+}
+
+.success-details p {
+  margin: 0.5rem 0;
+  color: #ddd;
+  font-size: clamp(0.9rem, 2.5vw, 1rem);
+  line-height: 1.6;
+}
+
+.success-close-btn {
+  background: linear-gradient(135deg, #10b981, #059669);
+  color: white;
+  padding: 1rem 2.5rem;
+  border-radius: 30px;
+  border: none;
+  font-weight: 700;
+  font-size: clamp(0.95rem, 2.5vw, 1.05rem);
+  cursor: pointer;
+  transition: all 0.3s ease;
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  box-shadow: 0 4px 15px rgba(16, 185, 129, 0.3);
+  animation: fadeInUp 0.6s ease 0.7s forwards;
+  opacity: 0;
+  font-family: 'Cinzel', serif;
+}
+
+.success-close-btn:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 6px 20px rgba(16, 185, 129, 0.5);
+}
+
+.success-close-btn:active {
+  transform: translateY(-1px);
+}
+
+@media only screen and (max-width: 480px) {
+  .success-screen {
+    padding: 2rem 1rem;
+  }
+  
+  .success-checkmark {
+    width: 80px;
+    height: 80px;
+  }
+  
+  .success-icon {
+    font-size: 2.5rem;
+  }
+  
+  .success-details {
+    padding: 1rem;
+  }
+}
