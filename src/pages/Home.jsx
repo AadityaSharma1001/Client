@@ -431,7 +431,7 @@ const HomePage = () => {
           </button>
         </footer>
       </div>
-      <div className="social-icons" style={{ position: 'absolute', bottom: '20px', display: 'flex', gap: '1rem', justifyContent: 'center' }}>
+      <div className="social-icons">
         <a href="https://www.instagram.com/varchas_iitj" target="_blank" rel="noreferrer" className="social-link" aria-label="Instagram">
           <FaInstagram />
         </a>
