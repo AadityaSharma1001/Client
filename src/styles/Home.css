@@ -668,10 +668,10 @@ body {
     font-size: clamp(1.2rem, 3vw, 2.2rem);
   }
   .date-badge {
-    top: 68%;
+    top: 72%;
   }
   .pre-register-btn {
-    top: 75%;
+    top: 82%;
   }
 }
 
@@ -708,8 +708,11 @@ body {
     top: 20%;
     font-size: clamp(0.9rem, 2.5vw, 1.8rem);
   }
-  .pre-register-btn {
+  .date-badge {
     top: 75%;
+  }
+  .pre-register-btn {
+    top: 85%;
   }
   .hero-title {
     -webkit-text-stroke: 2px #fff;
@@ -808,4 +811,46 @@ body {
   .constraint-info::before {
     font-size: 0.9rem;
   }
+}
+
+.status-message {
+  padding: 12px 20px;
+  border-radius: 8px;
+  margin-bottom: 20px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-weight: 500;
+  animation: slideDown 0.3s ease;
+}
+
+@keyframes slideDown {
+  from {
+    opacity: 0;
+    transform: translateY(-10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.status-message.loading {
+  background-color: #3b82f6;
+  color: white;
+}
+
+.status-message.success {
+  background-color: #10b981;
+  color: white;
+}
+
+.status-message.error {
+  background-color: #ef4444;
+  color: white;
+}
+
+.submit-btn:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
 }

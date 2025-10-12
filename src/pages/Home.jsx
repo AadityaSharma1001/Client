@@ -9,6 +9,8 @@ import { IoMdFootball } from "react-icons/io";
 import "../styles/Home.css";
 import bg1 from "/bg.jpg";
 
+const BACKEND_URL = "https://convenient-computation-dom-dome.trycloudflare.com";
+
 const HomePage = () => {
   const mountRef = useRef(null);
   const [showModal, setShowModal] = useState(false);
@@ -19,12 +21,14 @@ const HomePage = () => {
     college: "",
     phone: "",
     sport: "",
+    teamSize: "",
     contingentSize: "",
     sports: []
   });
   const [errors, setErrors] = useState({});
   const [focusedField, setFocusedField] = useState(null);
   const [teamSizeConstraints, setTeamSizeConstraints] = useState({ min: 1, max: 100 });
+  const [submissionStatus, setSubmissionStatus] = useState({ loading: false, success: false, error: null });
 
   const sportConstraints = {
     "Basketball (Men)": { min: 5, max: 12 },
@@ -58,7 +62,8 @@ const HomePage = () => {
     "Badminton (Women)", "Badminton (Mixed)",
     "Volleyball (Men)", "Volleyball (Women)", "Chess", "Hockey", "Tennis",
     "Table Tennis (Men Singles)", "Table Tennis (Women Singles)", "Table Tennis (Men Team)",
-    "Table Tennis (Women Team)", "Kabaddi", "Athletics (Men)", "Athletics (Women)", "Squash (Men)", "Squash (Women)", "ESports (BGMI)", "ESports (Free Fire)", "Powerlifting"
+    "Table Tennis (Women Team)", "Kabaddi", "Athletics (Men)", "Athletics (Women)", 
+    "Squash (Men)", "Squash (Women)", "ESports (BGMI)", "ESports (Free Fire)", "Powerlifting"
   ];
   
   useEffect(() => {
@@ -126,12 +131,14 @@ const HomePage = () => {
       college: "",
       phone: "",
       sport: "",
+      teamSize: "",
       contingentSize: "",
       sports: []
     });
     setErrors({});
     setFocusedField(null);
     setTeamSizeConstraints({ min: 1, max: 100 });
+    setSubmissionStatus({ loading: false, success: false, error: null });
   }, [activeTab]);
 
   useEffect(() => {
@@ -164,10 +171,16 @@ const HomePage = () => {
         const phoneRegex = /^\+?[\d\s-]{10,}$/;
         if (!phoneRegex.test(value)) error = "Invalid phone number";
         break;
-      case "contingentSize":
-        const size = parseInt(value);
-        if (isNaN(size) || size < teamSizeConstraints.min || size > teamSizeConstraints.max) {
+      case "teamSize":
+        const teamSize = parseInt(value);
+        if (isNaN(teamSize) || teamSize < teamSizeConstraints.min || teamSize > teamSizeConstraints.max) {
           error = `Team size must be between ${teamSizeConstraints.min} and ${teamSizeConstraints.max}`;
+        }
+        break;
+      case "contingentSize":
+        const contingentSize = parseInt(value);
+        if (isNaN(contingentSize) || contingentSize < 1) {
+          error = "Contingent size must be at least 1";
         }
         break;
       default:
@@ -185,10 +198,10 @@ const HomePage = () => {
 
   const handleSportChange = (e) => {
     const selectedSport = e.target.value;
-    setFormData(prev => ({ ...prev, sport: selectedSport, contingentSize: "" }));
+    setFormData(prev => ({ ...prev, sport: selectedSport, teamSize: "" }));
     if (selectedSport && sportConstraints[selectedSport]) {
       setTeamSizeConstraints(sportConstraints[selectedSport]);
-      setErrors(prev => ({ ...prev, contingentSize: "" }));
+      setErrors(prev => ({ ...prev, teamSize: "" }));
     } else {
       setTeamSizeConstraints({ min: 1, max: 100 });
     }
@@ -199,19 +212,112 @@ const HomePage = () => {
     setFormData(prev => ({ ...prev, sports: options }));
   };
 
-  const handleSubmit = (e) => {
+  const registerTeam = async (teamData) => {
+    const response = await fetch(`${BACKEND_URL}/register/team`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(teamData),
+    });
+    
+    if (!response.ok) {
+      const errorData = await response.json();
+      throw new Error(errorData.message || 'Registration failed');
+    }
+    
+    return await response.json();
+  };
+
+  const registerContingent = async (contingentData) => {
+    const response = await fetch(`${BACKEND_URL}/register/contingent`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(contingentData),
+    });
+    
+    if (!response.ok) {
+      const errorData = await response.json();
+      throw new Error(errorData.message || 'Registration failed');
+    }
+    
+    return await response.json();
+  };
+
+  const handleSubmit = async (e) => {
     e.preventDefault();
+    
     const newErrors = {};
     Object.keys(formData).forEach(key => {
       const error = validateField(key, formData[key]);
       if (error) newErrors[key] = error;
     });
+    
     if (Object.keys(newErrors).length > 0) {
       setErrors(newErrors);
       return;
     }
-    console.log("Form submitted:", formData);
-    setShowModal(false);
+
+    setSubmissionStatus({ loading: true, success: false, error: null });
+
+    try {
+      if (activeTab === "team") {
+        const teamData = {
+          name: formData.name,
+          email: formData.email,
+          number: formData.phone,
+          college: formData.college,
+          sport: formData.sport,
+          teamSize: parseInt(formData.teamSize)
+        };
+        
+        const response = await registerTeam(teamData);
+        console.log("Team registered successfully:", response);
+        
+        setSubmissionStatus({ 
+          loading: false, 
+          success: true, 
+          error: null 
+        });
+        setTimeout(() => {
+          setShowModal(false);
+          setSubmissionStatus({ loading: false, success: false, error: null });
+        }, 3000);
+        
+      } else {
+        const contingentData = {
+          name: formData.name,
+          email: formData.email,
+          number: formData.phone,
+          college: formData.college,
+          sport: formData.sports,
+          contingentSize: parseInt(formData.contingentSize)
+        };
+        
+        const response = await registerContingent(contingentData);
+        console.log("Contingent registered successfully:", response);
+        
+        setSubmissionStatus({ 
+          loading: false, 
+          success: true, 
+          error: null 
+        });
+        setTimeout(() => {
+          setShowModal(false);
+          setSubmissionStatus({ loading: false, success: false, error: null });
+        }, 3000);
+      }
+      
+    } catch (error) {
+      console.error("Registration error:", error);
+      setSubmissionStatus({ 
+        loading: false, 
+        success: false, 
+        error: error.message || 'Registration failed. Please try again.' 
+      });
+    }
   };
 
   return (
@@ -258,19 +364,33 @@ const HomePage = () => {
               <p className="modal-subtitle">Join us for VARCHAS 2025 - Where Champions Rise</p>
               <div className="modal-divider"></div>
             </div>
+            {submissionStatus.loading && (
+              <div className="status-message loading">
+                <FiAlertCircle /> Submitting registration...
+              </div>
+            )}
+            {submissionStatus.success && (
+              <div className="status-message success">
+                <FiCheckCircle /> Pre-Registration successful! Welcome to VARCHAS 2025!
+              </div>
+            )}
+            {submissionStatus.error && (
+              <div className="status-message error">
+                <FiAlertCircle /> {submissionStatus.error}
+              </div>
+            )}
+
             <div className="tabs">
               <button
                 className={`tab-btn ${activeTab === "team" ? "active" : ""}`}
                 onClick={() => setActiveTab("team")}
               >
-                <span className="tab-icon">👤</span>
                 <span className="tab-text">Team/Individual</span>
               </button>
               <button
                 className={`tab-btn ${activeTab === "contingent" ? "active" : ""}`}
                 onClick={() => setActiveTab("contingent")}
               >
-                <span className="tab-icon">🎯</span>
                 <span className="tab-text">Contingent</span>
               </button>
             </div>
@@ -328,7 +448,7 @@ const HomePage = () => {
                       id="phone"
                       name="phone"
                       type="tel"
-                      placeholder="+91 XXXXX XXXXX"
+                      placeholder="XXXXXXXXXX"
                       required
                       className="form-input"
                       value={formData.phone}
@@ -385,8 +505,8 @@ const HomePage = () => {
                       ))}
                     </select>
                   </div>
-                  <div className={`input-group ${focusedField === 'contingentSize' ? 'focused' : ''} ${errors.contingentSize ? 'error' : ''}`}>
-                    <label htmlFor="contingent-size" className="input-label">
+                  <div className={`input-group ${focusedField === 'teamSize' ? 'focused' : ''} ${errors.teamSize ? 'error' : ''}`}>
+                    <label htmlFor="team-size" className="input-label">
                       <FiUsers className="label-icon" />
                       Team Size
                     </label>
@@ -398,30 +518,34 @@ const HomePage = () => {
                       </p>
                     )}
                     <input
-                      id="contingent-size"
-                      name="contingentSize"
+                      id="team-size"
+                      name="teamSize"
                       type="number"
                       min={teamSizeConstraints.min}
                       max={teamSizeConstraints.max}
                       placeholder={formData.sport ? `Enter number of players` : "Select a sport first"}
                       required
                       className="form-input"
-                      value={formData.contingentSize}
+                      value={formData.teamSize}
                       onChange={handleInputChange}
-                      onFocus={() => setFocusedField('contingentSize')}
+                      onFocus={() => setFocusedField('teamSize')}
                       onBlur={() => setFocusedField(null)}
                       disabled={!formData.sport}
                     />
-                    {errors.contingentSize && (
+                    {errors.teamSize && (
                       <span className="error-message">
-                        <FiAlertCircle /> {errors.contingentSize}
+                        <FiAlertCircle /> {errors.teamSize}
                       </span>
                     )}
                   </div>
                 </div>
-                <button type="submit" className="submit-btn">
+                <button 
+                  type="submit" 
+                  className="submit-btn"
+                  disabled={submissionStatus.loading}
+                >
                   <FiCheckCircle className="btn-icon" />
-                  Complete Pre-Registration
+                  {submissionStatus.loading ? 'Submitting...' : 'Complete Pre-Registration'}
                 </button>
                 <p className="form-footer-text">
                   By registering, you agree to our terms and conditions
@@ -544,10 +668,41 @@ const HomePage = () => {
                       ))}
                     </div>
                   </div>
+                  
+                  {/* NEW: Contingent Size Input Field */}
+                  <div className={`input-group ${focusedField === 'contingentSize' ? 'focused' : ''} ${errors.contingentSize ? 'error' : ''}`}>
+                    <label htmlFor="contingent-size-input" className="input-label">
+                      <FiUsers className="label-icon" />
+                      Contingent Size
+                    </label>
+                    <p className="helper-text">Total number of participants in your contingent</p>
+                    <input
+                      id="contingent-size-input"
+                      name="contingentSize"
+                      type="number"
+                      min="1"
+                      placeholder="Enter total number of participants"
+                      required
+                      className="form-input"
+                      value={formData.contingentSize}
+                      onChange={handleInputChange}
+                      onFocus={() => setFocusedField('contingentSize')}
+                      onBlur={() => setFocusedField(null)}
+                    />
+                    {errors.contingentSize && (
+                      <span className="error-message">
+                        <FiAlertCircle /> {errors.contingentSize}
+                      </span>
+                    )}
+                  </div>
                 </div>
-                <button type="submit" className="submit-btn">
+                <button 
+                  type="submit" 
+                  className="submit-btn"
+                  disabled={submissionStatus.loading}
+                >
                   <FiCheckCircle className="btn-icon" />
-                  Register Contingent
+                  {submissionStatus.loading ? 'Submitting...' : 'Register Contingent'}
                 </button>
                 <p className="form-footer-text">
                   By registering, you agree to our terms and conditions
