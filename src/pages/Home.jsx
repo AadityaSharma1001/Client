@@ -9,7 +9,7 @@ import { IoMdFootball } from "react-icons/io";
 import "../styles/Home.css";
 import bg1 from "/bg.jpg";
 
-const BACKEND_URL = import.meta.env.VITE_URL_BACKEND || "/api";
+const BACKEND_URL = import.meta.env.VITE_URL_BACKEND;
 
 const SuccessScreen = ({ onClose, registrationType }) => {
   return (
@@ -19,14 +19,14 @@ const SuccessScreen = ({ onClose, registrationType }) => {
           <FiCheckCircle className="success-icon" />
         </div>
       </div>
-      <h2 className="success-title">Successfully Pre-Registered! 🎉</h2>
+      <h2 className="success-title">Successfully Pre-Registered!</h2>
       <p className="success-message">
         Welcome to VARCHAS 2025 - Where Champions Rise
       </p>
       <div className="success-details">
         <p>
           {registrationType === "team" 
-            ? "Your team has been successfully registered." 
+            ? "Your have been successfully registered." 
             : "Your contingent has been successfully registered."}
         </p>
         <p>Check your email for confirmation details.</p>

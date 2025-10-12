@@ -10,7 +10,7 @@ export default defineConfig({
   server: {
     proxy: {
       '/api': {
-        target: 'https://api.varchas.me',
+        target: import.meta.env.VITE_URL_BACKEND,
         changeOrigin: true,
         rewrite: (path) => path.replace(/^\/api/, '')
       }
