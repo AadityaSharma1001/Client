@@ -152,12 +152,12 @@ const HomePage = () => {
         .start()
         .ifEnded(() => console.log("Countdown finished"));
     }
-    return () => {
-      if (flipdown && flipdown.element) {
-        clearInterval(flipdown.countdown);
-        flipdown.element.innerHTML = "";
-      }
-    };
+    // return () => {
+    //   if (flipdown && flipdown.element) {
+    //     clearInterval(flipdown.countdown);
+    //     flipdown.element.innerHTML = "";
+    //   }
+    // };
   }, []);
 
   const validateField = (name, value) => {
