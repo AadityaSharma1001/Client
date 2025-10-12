@@ -1,4 +1,5 @@
 @import url('https://fonts.googleapis.com/css2?family=Cinzel:wght@400..900&display=swap');
+
 @font-face {
   font-family: 'Vampire Wars';
   src: url('/fonts/vampire_wars.ttf') format('truetype');
@@ -250,6 +251,7 @@ body {
   from {
     opacity: 0;
   }
+
   to {
     opacity: 1;
   }
@@ -278,6 +280,7 @@ body {
     opacity: 0;
     transform: translateY(30px);
   }
+
   to {
     opacity: 1;
     transform: translateY(0);
@@ -322,9 +325,12 @@ body {
 }
 
 @keyframes rotateIcon {
-  0%, 100% {
+
+  0%,
+  100% {
     transform: rotate(0deg);
   }
+
   50% {
     transform: rotate(15deg);
   }
@@ -522,6 +528,7 @@ body {
     opacity: 0;
     transform: translateY(-10px);
   }
+
   to {
     opacity: 1;
     transform: translateY(0);
@@ -667,9 +674,11 @@ body {
     top: 25%;
     font-size: clamp(1.2rem, 3vw, 2.2rem);
   }
+
   .date-badge {
     top: 72%;
   }
+
   .pre-register-btn {
     top: 82%;
   }
@@ -680,40 +689,52 @@ body {
     padding: 1.5rem 1rem;
     border-radius: 12px;
   }
+
   .tabs {
     gap: 0.4rem;
   }
+
   .tab-text {
     display: none;
   }
+
   .tab-btn {
     padding: 0.7rem;
   }
+
   .tab-icon {
     font-size: 1.4rem;
   }
+
   .sports-grid {
     grid-template-columns: 1fr;
   }
+
   .form-section {
     margin-bottom: 1.5rem;
   }
+
   .input-group {
     margin-bottom: 1.2rem;
   }
+
   .modal-icon {
     font-size: 2.5rem;
   }
+
   .hero-subtitle {
     top: 20%;
     font-size: clamp(0.9rem, 2.5vw, 1.8rem);
   }
+
   .date-badge {
     top: 75%;
   }
+
   .pre-register-btn {
     top: 85%;
   }
+
   .hero-title {
     -webkit-text-stroke: 2px #fff;
   }
@@ -723,16 +744,19 @@ body {
   .modal {
     padding: 2.5rem 2rem;
   }
+
   .hero-bottom {
     flex-direction: row;
     gap: 1.5rem;
   }
+
   .sports-grid {
     grid-template-columns: repeat(3, 1fr);
   }
 }
 
 @media (prefers-reduced-motion: reduce) {
+
   *,
   *::before,
   *::after {
@@ -743,6 +767,7 @@ body {
 }
 
 @media (prefers-contrast: high) {
+
   .countdown-item,
   .form-input,
   .tab-btn {
@@ -793,6 +818,7 @@ body {
     opacity: 0;
     transform: translateY(-10px);
   }
+
   to {
     opacity: 1;
     transform: translateY(0);
@@ -808,6 +834,7 @@ body {
     font-size: 0.75rem;
     padding: 0.5rem 0.6rem;
   }
+
   .constraint-info::before {
     font-size: 0.9rem;
   }
@@ -829,6 +856,7 @@ body {
     opacity: 0;
     transform: translateY(-10px);
   }
+
   to {
     opacity: 1;
     transform: translateY(0);
@@ -885,9 +913,11 @@ body {
     transform: scale(0);
     opacity: 0;
   }
+
   50% {
     transform: scale(1.1);
   }
+
   100% {
     transform: scale(1);
     opacity: 1;
@@ -921,6 +951,7 @@ body {
     opacity: 0;
     transform: translateY(20px);
   }
+
   to {
     opacity: 1;
     transform: translateY(0);
@@ -985,17 +1016,33 @@ body {
   .success-screen {
     padding: 2rem 1rem;
   }
-  
+
   .success-checkmark {
     width: 80px;
     height: 80px;
   }
-  
+
   .success-icon {
     font-size: 2.5rem;
   }
-  
+
   .success-details {
     padding: 1rem;
+  }
+}
+
+@media only screen and (max-width: 480px) {
+  .pre-register-btn {
+    top: 82%;
+  }
+
+  .social-icons {
+    position: fixed;
+    bottom: 0.5rem;
+    right: 50%;
+    transform: translateX(50%);
+    flex-direction: row;
+    gap: 0.8rem;
+    justify-content: center;
   }
 }
