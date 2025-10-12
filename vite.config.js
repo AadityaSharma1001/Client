@@ -6,14 +6,5 @@ import tailwindcss from '@tailwindcss/vite'
 export default defineConfig({
   plugins: [react(), 
     tailwindcss()
-  ],
-  server: {
-    proxy: {
-      '/api': {
-        target: 'https://api.varchas.me',
-        changeOrigin: true,
-        rewrite: (path) => path.replace(/^\/api/, '')
-      }
-    }
-  }
+  ]
 })
