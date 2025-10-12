@@ -439,7 +439,7 @@ const HomePage = () => {
           <FaYoutube />
         </a>
         <a href="mailto:pr_varchas@iitj.ac.in" target="_blank" rel="noreferrer" className="social-link" aria-label="Email">
-          <FaYoutube />
+          <FiMail size={20} color="#FFF" />
         </a>
       </div>
       {showModal && (
