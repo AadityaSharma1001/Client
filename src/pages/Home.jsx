@@ -62,10 +62,10 @@ const HomePage = () => {
     "Badminton (Women)", "Badminton (Mixed)",
     "Volleyball (Men)", "Volleyball (Women)", "Chess", "Hockey", "Tennis",
     "Table Tennis (Men Singles)", "Table Tennis (Women Singles)", "Table Tennis (Men Team)",
-    "Table Tennis (Women Team)", "Kabaddi", "Athletics (Men)", "Athletics (Women)", 
+    "Table Tennis (Women Team)", "Kabaddi", "Athletics (Men)", "Athletics (Women)",
     "Squash (Men)", "Squash (Women)", "ESports (BGMI)", "ESports (Free Fire)", "Powerlifting"
   ];
-  
+
   useEffect(() => {
     const currentMount = mountRef.current;
     const scene = new THREE.Scene();
@@ -220,12 +220,12 @@ const HomePage = () => {
       },
       body: JSON.stringify(teamData),
     });
-    
+
     if (!response.ok) {
       const errorData = await response.json();
       throw new Error(errorData.message || 'Registration failed');
     }
-    
+
     return await response.json();
   };
 
@@ -237,24 +237,24 @@ const HomePage = () => {
       },
       body: JSON.stringify(contingentData),
     });
-    
+
     if (!response.ok) {
       const errorData = await response.json();
       throw new Error(errorData.message || 'Registration failed');
     }
-    
+
     return await response.json();
   };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    
+
     const newErrors = {};
     Object.keys(formData).forEach(key => {
       const error = validateField(key, formData[key]);
       if (error) newErrors[key] = error;
     });
-    
+
     if (Object.keys(newErrors).length > 0) {
       setErrors(newErrors);
       return;
@@ -272,20 +272,20 @@ const HomePage = () => {
           sport: formData.sport,
           teamSize: parseInt(formData.teamSize)
         };
-        
+
         const response = await registerTeam(teamData);
         console.log("Team registered successfully:", response);
-        
-        setSubmissionStatus({ 
-          loading: false, 
-          success: true, 
-          error: null 
+
+        setSubmissionStatus({
+          loading: false,
+          success: true,
+          error: null
         });
         setTimeout(() => {
           setShowModal(false);
           setSubmissionStatus({ loading: false, success: false, error: null });
         }, 3000);
-        
+
       } else {
         const contingentData = {
           name: formData.name,
@@ -295,27 +295,27 @@ const HomePage = () => {
           sport: formData.sports,
           contingentSize: parseInt(formData.contingentSize)
         };
-        
+
         const response = await registerContingent(contingentData);
         console.log("Contingent registered successfully:", response);
-        
-        setSubmissionStatus({ 
-          loading: false, 
-          success: true, 
-          error: null 
+
+        setSubmissionStatus({
+          loading: false,
+          success: true,
+          error: null
         });
         setTimeout(() => {
           setShowModal(false);
           setSubmissionStatus({ loading: false, success: false, error: null });
         }, 3000);
       }
-      
+
     } catch (error) {
       console.error("Registration error:", error);
-      setSubmissionStatus({ 
-        loading: false, 
-        success: false, 
-        error: error.message || 'Registration failed. Please try again.' 
+      setSubmissionStatus({
+        loading: false,
+        success: false,
+        error: error.message || 'Registration failed. Please try again.'
       });
     }
   };
@@ -347,7 +347,7 @@ const HomePage = () => {
           <FaYoutube />
         </a>
         <a href="mailto:pr_varchas@iitj.ac.in" target="_blank" rel="noreferrer" className="social-link" aria-label="Email">
-          <FaYoutube />
+          <FiMail size={20} color="#FFF" />
         </a>
       </div>
       {showModal && (
@@ -539,8 +539,8 @@ const HomePage = () => {
                     )}
                   </div>
                 </div>
-                <button 
-                  type="submit" 
+                <button
+                  type="submit"
                   className="submit-btn"
                   disabled={submissionStatus.loading}
                 >
@@ -668,7 +668,7 @@ const HomePage = () => {
                       ))}
                     </div>
                   </div>
-                  
+
                   {/* NEW: Contingent Size Input Field */}
                   <div className={`input-group ${focusedField === 'contingentSize' ? 'focused' : ''} ${errors.contingentSize ? 'error' : ''}`}>
                     <label htmlFor="contingent-size-input" className="input-label">
@@ -696,8 +696,8 @@ const HomePage = () => {
                     )}
                   </div>
                 </div>
-                <button 
-                  type="submit" 
+                <button
+                  type="submit"
                   className="submit-btn"
                   disabled={submissionStatus.loading}
                 >
