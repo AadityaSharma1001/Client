@@ -9,7 +9,7 @@ import { IoMdFootball } from "react-icons/io";
 import "../styles/Home.css";
 import bg1 from "/bg.jpg";
 
-const BACKEND_URL = process.env.VITE_URL_BACKEND || "/api";
+const BACKEND_URL = import.meta.env.VITE_URL_BACKEND || "/api";
 
 const SuccessScreen = ({ onClose, registrationType }) => {
   return (
