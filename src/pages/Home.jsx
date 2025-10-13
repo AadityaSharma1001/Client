@@ -25,11 +25,10 @@ const SuccessScreen = ({ onClose, registrationType }) => {
       </p>
       <div className="success-details">
         <p>
-          {registrationType === "team" 
-            ? "Your have been successfully registered." 
+          {registrationType === "team"
+            ? "Your have been successfully registered."
             : "Your contingent has been successfully registered."}
         </p>
-        <p>Check your email for confirmation details.</p>
       </div>
       <button onClick={onClose} className="success-close-btn">
         <FiCheckCircle /> Continue
@@ -64,7 +63,7 @@ const HomePage = () => {
     "Basketball (Women)": { min: 5, max: 12 },
     "Powerlifting": { min: 2, max: 8 },
     "Kabaddi": { min: 7, max: 12 },
-    "Badminton (Men)": { min: 4, max: 5 },
+    "Badminton (Men)": { min: 3, max: 5 },
     "Badminton (Women)": { min: 2, max: 3 },
     "Badminton (Mixed)": { min: 2, max: 2 },
     "Squash (Men)": { min: 3, max: 4 },
@@ -90,10 +89,10 @@ const HomePage = () => {
     "Badminton (Women)", "Badminton (Mixed)",
     "Volleyball (Men)", "Volleyball (Women)", "Chess", "Hockey", "Tennis",
     "Table Tennis (Men Singles)", "Table Tennis (Women Singles)", "Table Tennis (Men Team)",
-    "Table Tennis (Women Team)", "Kabaddi", "Athletics (Men)", "Athletics (Women)", 
+    "Table Tennis (Women Team)", "Kabaddi", "Athletics (Men)", "Athletics (Women)",
     "Squash (Men)", "Squash (Women)", "ESports (BGMI)", "ESports (Free Fire)", "Powerlifting"
   ];
-  
+
   useEffect(() => {
     const currentMount = mountRef.current;
     const scene = new THREE.Scene();
@@ -243,12 +242,12 @@ const HomePage = () => {
         },
         body: JSON.stringify(teamData),
       });
-      
+
       if (!response.ok) {
         const errorData = await response.json().catch(() => ({}));
         throw new Error(errorData.message || 'Registration failed');
       }
-      
+
       return await response.json();
     } catch (error) {
       console.error('API Error:', error);
@@ -265,12 +264,12 @@ const HomePage = () => {
         },
         body: JSON.stringify(contingentData),
       });
-      
+
       if (!response.ok) {
         const errorData = await response.json().catch(() => ({}));
         throw new Error(errorData.message || 'Registration failed');
       }
-      
+
       return await response.json();
     } catch (error) {
       console.error('API Error:', error);
@@ -280,10 +279,10 @@ const HomePage = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    
+
     console.log("Form submitted!", { formData, activeTab });
     const newErrors = {};
-    
+
     if (activeTab === "team") {
       if (!formData.name) newErrors.name = "Name is required";
       if (!formData.email) newErrors.email = "Email is required";
@@ -323,9 +322,9 @@ const HomePage = () => {
         if (sizeError) newErrors.contingentSize = sizeError;
       }
     }
-    
+
     console.log("Validation errors:", newErrors);
-    
+
     if (Object.keys(newErrors).length > 0) {
       setErrors(newErrors);
       console.log("Form has errors, stopping submission");
@@ -345,21 +344,21 @@ const HomePage = () => {
           sport: formData.sport,
           teamSize: parseInt(formData.teamSize)
         };
-        
+
         console.log("Sending team data:", teamData);
         const response = await registerTeam(teamData);
         console.log("Team registered successfully:", response);
-        
-        setSubmissionStatus({ 
-          loading: false, 
-          success: true, 
-          error: null 
+
+        setSubmissionStatus({
+          loading: false,
+          success: true,
+          error: null
         });
-        
+
         console.log("Setting success screen for team");
         setRegistrationType("team");
         setShowSuccessScreen(true);
-        
+
       } else {
         const contingentData = {
           name: formData.name,
@@ -369,28 +368,28 @@ const HomePage = () => {
           sport: formData.sports,
           contingentSize: parseInt(formData.contingentSize)
         };
-        
+
         console.log("Sending contingent data:", contingentData);
         const response = await registerContingent(contingentData);
         console.log("Contingent registered successfully:", response);
-        
-        setSubmissionStatus({ 
-          loading: false, 
-          success: true, 
-          error: null 
+
+        setSubmissionStatus({
+          loading: false,
+          success: true,
+          error: null
         });
-        
+
         console.log("Setting success screen for contingent");
         setRegistrationType("contingent");
         setShowSuccessScreen(true);
       }
-      
+
     } catch (error) {
       console.error("Registration error:", error);
-      setSubmissionStatus({ 
-        loading: false, 
-        success: false, 
-        error: error.message || 'Registration failed. Please try again.' 
+      setSubmissionStatus({
+        loading: false,
+        success: false,
+        error: error.message || 'Registration failed. Please try again.'
       });
     }
   };
@@ -434,7 +433,7 @@ const HomePage = () => {
         <a href="https://www.instagram.com/varchas_iitj" target="_blank" rel="noreferrer" className="social-link" aria-label="Instagram">
           <FaInstagram />
         </a>
-        <a href="https://youtube.com" target="_blank" rel="noreferrer" className="social-link" aria-label="YouTube">
+        <a href="https://www.youtube.com/watch?v=6hOYDPt8R-s" target="_blank" rel="noreferrer" className="social-link" aria-label="YouTube">
           <FaYoutube />
         </a>
         <a href="mailto:pr_varchas@iitj.ac.in" target="_blank" rel="noreferrer" className="social-link" aria-label="Email">
@@ -642,8 +641,8 @@ const HomePage = () => {
                         )}
                       </div>
                     </div>
-                    <button 
-                      type="submit" 
+                    <button
+                      type="submit"
                       className="submit-btn"
                       disabled={submissionStatus.loading}
                     >
@@ -787,7 +786,7 @@ const HomePage = () => {
                           ))}
                         </div>
                       </div>
-                      
+
                       <div className={`input-group ${focusedField === 'contingentSize' ? 'focused' : ''} ${errors.contingentSize ? 'error' : ''}`}>
                         <label htmlFor="contingent-size-input" className="input-label">
                           <FiUsers className="label-icon" />
@@ -814,8 +813,8 @@ const HomePage = () => {
                         )}
                       </div>
                     </div>
-                    <button 
-                      type="submit" 
+                    <button
+                      type="submit"
                       className="submit-btn"
                       disabled={submissionStatus.loading}
                     >
@@ -829,8 +828,8 @@ const HomePage = () => {
                 )}
               </>
             ) : (
-              <SuccessScreen 
-                onClose={handleCloseSuccessScreen} 
+              <SuccessScreen
+                onClose={handleCloseSuccessScreen}
                 registrationType={registrationType}
               />
             )}
