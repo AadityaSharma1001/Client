@@ -82,8 +82,7 @@ const HomePage = () => {
     "Athletics (Women)": { min: 3, max: 3 },
     "ESports (BGMI)": { min: 4, max: 5 },
     "ESports (Free Fire)": { min: 4, max: 5 },
-    "Chess": { min: 4, max: 5 },
-    "Tennis": { min: 1, max: 4 }
+    "Chess": { min: 4, max: 5 }
   };
 
   const sports = [
