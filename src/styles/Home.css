@@ -202,7 +202,7 @@ body {
 }
 
 .social-icons {
-  position: fixed;
+  position: absolute;
   bottom: 1.5rem;
   right: 1rem;
   display: flex;
@@ -694,9 +694,9 @@ body {
     gap: 0.4rem;
   }
 
-  .tab-text {
+  /* .tab-text {
     display: none;
-  }
+  } */
 
   .tab-btn {
     padding: 0.7rem;
@@ -1037,8 +1037,9 @@ body {
   }
 
   .social-icons {
-    position: fixed;
-    top: 97%;
+    position: absolute;
+    top: 93%;
+    margin-bottom: 2rem;
     right: 50%;
     transform: translateX(50%);
     flex-direction: row;
