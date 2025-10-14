@@ -87,7 +87,7 @@ const HomePage = () => {
   const sports = [
     "Cricket", "Football", "Basketball (Men)", "Basketball (Women)", "Badminton (Men)",
     "Badminton (Women)", "Badminton (Mixed)",
-    "Volleyball (Men)", "Volleyball (Women)", "Chess", "Hockey", "Tennis",
+    "Volleyball (Men)", "Volleyball (Women)", "Chess", "Hockey",
     "Table Tennis (Men Singles)", "Table Tennis (Women Singles)", "Table Tennis (Men Team)",
     "Table Tennis (Women Team)", "Kabaddi", "Athletics (Men)", "Athletics (Women)",
     "Squash (Men)", "Squash (Women)", "ESports (BGMI)", "ESports (Free Fire)", "Powerlifting"
