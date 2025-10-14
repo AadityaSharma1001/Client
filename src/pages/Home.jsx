@@ -61,7 +61,7 @@ const HomePage = () => {
   const sportConstraints = {
     "Basketball (Men)": { min: 5, max: 12 },
     "Basketball (Women)": { min: 5, max: 12 },
-    "Powerlifting": { min: 2, max: 8 },
+    "Powerlifting": { min: 4, max: 8 },
     "Kabaddi": { min: 7, max: 12 },
     "Badminton (Men)": { min: 3, max: 5 },
     "Badminton (Women)": { min: 2, max: 3 },
