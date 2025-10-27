@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://varchas.iitj.ac.in/sitemap.xml
