@@ -1,0 +1,403 @@
+[
+  {
+    "image": "https://res.cloudinary.com/dvz8vitos/image/upload/v1761593354/IMG-20241202-WA0056_xfjnqs.jpg",
+    "title": "Krish Teckchandani",
+    "subtitle": "Festival chief (Finance)",
+    "description": "@krish2005tech — Manages all fest budget and cost management",
+    "borderColor": "#10B981",
+    "gradient": "linear-gradient(210deg, #10B981, #000)",
+    "ruleBookUrl": "/logo.png",
+    "registerUrl": "https://instagram.com/krish2005tech"
+  },
+  {
+    "image": "https://res.cloudinary.com/dvz8vitos/image/upload/v1761593247/20250503_174835_wmcmp3.jpg",
+    "title": "Jatin Purbia",
+    "subtitle": "Festival chief",
+    "description": "@jatin_purbia — Oversees all fest operations and management",
+    "borderColor": "#10B981",
+    "gradient": "linear-gradient(210deg, #10B981, #000)",
+    "ruleBookUrl": "/logo.png",
+    "registerUrl": "https://instagram.com/jatin_purbia"
+  },
+  {
+    "image": "https://res.cloudinary.com/dvz8vitos/image/upload/v1761593515/8d3341dd-6607-4ef8-81d8-7f5bd6db61f1_zql5w8.jpg",
+    "title": "Rudra Gupta",
+    "subtitle": "Festival chief",
+    "description": "@imrudra08 — Oversees all fest operations and management",
+    "borderColor": "#10B981",
+    "gradient": "linear-gradient(210deg, #10B981, #000)",
+    "ruleBookUrl": "/logo.png",
+    "registerUrl": "https://instagram.com/imrudra08"
+  },
+  {
+    "image": "https://res.cloudinary.com/dvz8vitos/image/upload/v1761412420/Team/1bA-HONhP8JWonrPg11NbTpbtSUhWt4a6.jpg",
+    "title": "Om Chandra Sharma",
+    "subtitle": "Festival chief",
+    "description": "Om Chandra Sharma — Oversees all fest operations and management",
+    "borderColor": "#E11D48",
+    "gradient": "linear-gradient(145deg, #10B981, #000)",
+    "ruleBookUrl": "/logo.png",
+    "registerUrl": "https://www.linkedin.com/in/om-chandra-sharma"
+  },
+  {
+    "image": "https://res.cloudinary.com/dvz8vitos/image/upload/v1761593949/WhatsApp_Image_2025-10-28_at_01.08.19_8983ed67_erbvjx.jpg",
+    "title": "Sudhanshu Tamhankar",
+    "subtitle": "Ex-Officio",
+    "description": "@sudhanshutamhankar — Oversees all fest operations and management",
+    "borderColor": "#10B981",
+    "gradient": "linear-gradient(210deg, #10B981, #000)",
+    "ruleBookUrl": "/logo.png",
+    "registerUrl": "https://instagram.com/sudhanshutamhankar"
+  },
+  {
+    "image": "https://res.cloudinary.com/dvz8vitos/image/upload/v1761593691/WhatsApp_Image_2025-10-28_at_01.04.22_0a13453b_ay0ovs.jpg",
+    "title": "Aaditya Sharma",
+    "subtitle": "Web Development",
+    "description": "@aaditya___1210 — Handles all web development and related technical work for the fest",
+    "borderColor": "#E11D48",
+    "gradient": "linear-gradient(145deg, #10B981, #000)",
+    "ruleBookUrl": "/logo.png",
+    "registerUrl": "https://www.instagram.com/in/aaditya___1210"
+  },
+  {
+    "image": "https://res.cloudinary.com/dvz8vitos/image/upload/v1761412401/Team/1qPw0F7aSp4pdOUt9MefB6SmCmhVJWH0u.jpg",
+    "title": "Nitin koronde",
+    "subtitle": "ATS",
+    "description": "@Nitin_koronde — Handles Accommodation queries",
+    "borderColor": "#10B981",
+    "gradient": "linear-gradient(210deg, #10B981, #000)",
+    "ruleBookUrl": "/logo.png",
+    "registerUrl": "https://instagram.com/Nitin_koronde"
+  },
+  {
+    "image": "https://res.cloudinary.com/dvz8vitos/image/upload/v1761412445/Team/1Pp0YUHpY2QOH2ql0gOj0JO8tECcW0UD4.jpg",
+    "title": "Piyush kumar",
+    "subtitle": "ATS",
+    "description": "@piyushk2303 — Accommodation & ATS",
+    "borderColor": "#FB923C",
+    "gradient": "linear-gradient(180deg, #FB923C, #000)",
+    "ruleBookUrl": "/logo.png",
+    "registerUrl": "https://instagram.com/piyushk2303"
+  },
+  {
+    "image": "https://res.cloudinary.com/dvz8vitos/image/upload/v1761412409/Team/1mePPqty6SgI4D6YYVcQFNuPeTshokVg3.jpg",
+    "title": "Satya Prakash Yadav",
+    "subtitle": "ATS",
+    "description": "@satyaprakash6291 — ATS Management",
+    "borderColor": "#F43F5E",
+    "gradient": "linear-gradient(200deg, #F43F5E, #000)",
+    "ruleBookUrl": "/logo.png",
+    "registerUrl": "https://instagram.com/satyaprakash6291"
+  },
+  {
+    "image": "https://res.cloudinary.com/dvz8vitos/image/upload/v1761412425/Team/17tI3HL7SIfDJdW1HnWTXvF1bL61eudc_.jpg",
+    "title": "Yashaswini Tirupathi",
+    "subtitle": "ATS",
+    "description": "@_ms.serenity_ — ATS",
+    "borderColor": "#A78BFA",
+    "gradient": "linear-gradient(185deg, #A78BFA, #000)",
+    "ruleBookUrl": "/logo.png",
+    "registerUrl": "https://instagram.com/_ms.serenity_"
+  },
+  {
+    "image": "https://res.cloudinary.com/dvz8vitos/image/upload/v1761412454/Team/1xJtyNwFVdexybWzVfOjiXfTCsz7VZNV5.jpg",
+    "title": "Jilukara Supriya",
+    "subtitle": "ATS",
+    "description": "@Supriya__2666 — ATS & Accommodation",
+    "borderColor": "#84CC16",
+    "gradient": "linear-gradient(160deg, #84CC16, #000)",
+    "ruleBookUrl": "/logo.png",
+    "registerUrl": "https://instagram.com/Supriya__2666"
+  },
+  {
+    "image": "https://res.cloudinary.com/dvz8vitos/image/upload/v1761412451/Team/15aTWeL4DiX2FTBRrryyDyz5Nfzc-LBMz.jpg",
+    "title": "TUSHAR NAGARGOJE",
+    "subtitle": "Sports",
+    "description": "@_tushar_nagargoje — Basketball Coordination",
+    "borderColor": "#F59E0B",
+    "gradient": "linear-gradient(165deg, #F59E0B, #000)",
+    "ruleBookUrl": "/logo.png",
+    "registerUrl": "https://instagram.com/_tushar_nagargoje"
+  },
+  {
+    "image": "https://res.cloudinary.com/dvz8vitos/image/upload/v1761412396/Team/1XEoCM-A3AiXFk20Sl6n8M1p4GT11sSfR.jpg",
+    "title": "Saumitra",
+    "subtitle": "Design and Creativity",
+    "description": "@saumitra — Contact for Design & Creative Works",
+    "borderColor": "#4F46E5",
+    "gradient": "linear-gradient(145deg, #4F46E5, #000)",
+    "ruleBookUrl": "/logo.png",
+    "registerUrl": "https://instagram.com/saumitra"
+  },
+  {
+    "image": "https://res.cloudinary.com/dvz8vitos/image/upload/v1761594035/WhatsApp_Image_2025-10-28_at_01.10.00_9d76278f_oeqo5s.jpg",
+    "title": "Mahi Upadhyay",
+    "subtitle": "Design and Creativity",
+    "description": "@mahiupadhyaay — Contact for Design & Creative Works",
+    "borderColor": "#4F46E5",
+    "gradient": "linear-gradient(145deg, #4F46E5, #000)",
+    "ruleBookUrl": "/logo.png",
+    "registerUrl": "https://instagram.com/mahiupadhyaay"
+  },
+  
+  {
+    "image": "https://res.cloudinary.com/dvz8vitos/image/upload/v1761594270/WhatsApp_Image_2025-10-28_at_01.10.01_1c305218_extxfx.jpg",
+    "title": "Pragati Rokade",
+    "subtitle": "Design and Creativity",
+    "description": "@pragati.r_ — Contact for Design & Creative Works",
+    "borderColor": "#4F46E5",
+    "gradient": "linear-gradient(145deg, #4F46E5, #000)",
+    "ruleBookUrl": "/logo.png",
+    "registerUrl": "https://instagram.com/pragati.r_"
+  },
+  {
+    "image": "https://res.cloudinary.com/dvz8vitos/image/upload/v1761412464/Team/1Jjq6lXK0sif4Vo1rxCxgH76imMcfLROs.jpg",
+    "title": "Arnav Kataria",
+    "subtitle": "Informal Events",
+    "description": "@arnavkataria77 — Organizes Fun Events",
+    "borderColor": "#2563EB",
+    "gradient": "linear-gradient(190deg, #2563EB, #000)",
+    "ruleBookUrl": "/logo.png",
+    "registerUrl": "https://instagram.com/arnavkataria77"
+  },
+  {
+    "image": "https://res.cloudinary.com/dvz8vitos/image/upload/v1761412430/Team/1V4AgqPNPzWkC8ac3KocqVFxTWQVg7HTL.jpg",
+    "title": "Japneet Singh",
+    "subtitle": "Informals",
+    "description": "@japneet_singh1011 — Informal Events",
+    "borderColor": "#60A5FA",
+    "gradient": "linear-gradient(150deg, #60A5FA, #000)",
+    "ruleBookUrl": "/logo.png",
+    "registerUrl": "https://instagram.com/japneet_singh1011"
+  },
+  {
+    "image": "https://res.cloudinary.com/dvz8vitos/image/upload/v1761412406/Team/1y4HkFRihLBNvzHQs1vqPR62kgxqXUJqt.jpg",
+    "title": "Meet",
+    "subtitle": "Informals",
+    "description": "@thatswhatmeetsaid — Manages Informal Events",
+    "borderColor": "#FDE047",
+    "gradient": "linear-gradient(175deg, #FDE047, #000)",
+    "ruleBookUrl": "/logo.png",
+    "registerUrl": "https://instagram.com/thatswhatmeetsaid"
+  },
+  {
+    "image": "https://res.cloudinary.com/dvz8vitos/image/upload/v1761412404/Team/1tgFPMSVzxVoGm6r9Y34LvKo-FEzb7Zuu.jpg",
+    "title": "Dungar Soni",
+    "subtitle": "Informal events",
+    "description": "@dungar_soni_05 — Informal Event Management",
+    "borderColor": "#EA580C",
+    "gradient": "linear-gradient(170deg, #EA580C, #000)",
+    "ruleBookUrl": "/logo.png",
+    "registerUrl": "https://instagram.com/dungar_soni_05"
+  },
+  {
+    "image": "https://res.cloudinary.com/dvz8vitos/image/upload/v1761412438/Team/15fuafOXA6DDYKFgEDFZbI5Kf1mObA3rq.jpg",
+    "title": "Anuj Trivedi",
+    "subtitle": "Marketing",
+    "description": "@anuj_trivedi_26 — Marketing & Promotion",
+    "borderColor": "#BE123C",
+    "gradient": "linear-gradient(160deg, #BE123C, #000)",
+    "ruleBookUrl": "/logo.png",
+    "registerUrl": "https://instagram.com/anuj_trivedi_26"
+  },
+  {
+    "image": "https://res.cloudinary.com/dvz8vitos/image/upload/v1761412398/Team/1Z-O3C-3m6aBXgqKWEGb9BNwyqgfM_pJE.jpg",
+    "title": "Dhiraj Raj",
+    "subtitle": "Marketing",
+    "description": "@dhiraj_raj_iitj — Leads Marketing Campaigns",
+    "borderColor": "#F472B6",
+    "gradient": "linear-gradient(200deg, #F472B6, #000)",
+    "ruleBookUrl": "/logo.png",
+    "registerUrl": "https://instagram.com/dhiraj_raj_iitj"
+  },
+  {
+    "image": "https://res.cloudinary.com/dvz8vitos/image/upload/v1761412434/Team/1Fr8L496n6i5OCMCirzerojfCjS0VPMBh.jpg",
+    "title": "Anshika Kashyap",
+    "subtitle": "Marketing",
+    "description": "@anshika_iitj — Marketing Coordination",
+    "borderColor": "#7C3AED",
+    "gradient": "linear-gradient(140deg, #7C3AED, #000)",
+    "ruleBookUrl": "/logo.png",
+    "registerUrl": "https://instagram.com/anshika_iitj"
+  },
+  {
+    "image": "https://res.cloudinary.com/dvz8vitos/image/upload/v1761412394/Team/1ykKZJveYIhXxltZKk2DvYxiNAXteOFIu.png",
+    "title": "Prashant Srivastav",
+    "subtitle": "Marketing",
+    "description": "@its.prashant.srivastav — Marketing Initiatives",
+    "borderColor": "#D946EF",
+    "gradient": "linear-gradient(185deg, #D946EF, #000)",
+    "ruleBookUrl": "/logo.png",
+    "registerUrl": "https://instagram.com/its.prashant.srivastav"
+  },
+  {
+    "image": "https://res.cloudinary.com/dvz8vitos/image/upload/v1761412381/Team/1P9JOtEUMEtZ0UTu81XcebAvOQxpD_6kt.jpg",
+    "title": "Abhijeet Kumar",
+    "subtitle": "Media",
+    "description": "@ABHIJEET_KUMAR_KESHRI — Manages Media",
+    "borderColor": "#0EA5E9",
+    "gradient": "linear-gradient(155deg, #0EA5E9, #000)",
+    "ruleBookUrl": "/logo.png",
+    "registerUrl": "https://instagram.com/ABHIJEET_KUMAR_KESHRI"
+  },
+  {
+    "image": "https://res.cloudinary.com/dvz8vitos/image/upload/v1761412388/Team/1MHYaAw_WMnNZExO0S6Rc8EYvwPay4LY6.jpg",
+    "title": "Dhanush",
+    "subtitle": "Media",
+    "description": "@_.arcus._ — Media",
+    "borderColor": "#FB7185",
+    "gradient": "linear-gradient(170deg, #FB7185, #000)",
+    "ruleBookUrl": "/logo.png",
+    "registerUrl": "https://instagram.com/_.arcus._"
+  },
+  {
+    "image": "https://res.cloudinary.com/dvz8vitos/image/upload/v1761412459/Team/1dk-vdZEjLrfyASIg68tdB-fYaGVJegs7.jpg",
+    "title": "Mohit",
+    "subtitle": "Resources",
+    "description": "@the_fascinated_king — Resource Allocation",
+    "borderColor": "#C026D3",
+    "gradient": "linear-gradient(160deg, #C026D3, #000)",
+    "ruleBookUrl": "/logo.png",
+    "registerUrl": "https://instagram.com/the_fascinated_king"
+  },
+  {
+    "image": "https://res.cloudinary.com/dvz8vitos/image/upload/v1761412415/Team/1GTOfKc5RPofgeIJOBSFFmMcGqXHP8C5m.jpg",
+    "title": "Apdesh Kumar",
+    "subtitle": "Resources Management",
+    "description": "@apdeshkumar_243 — Oversees Resource Distribution",
+    "borderColor": "#06B6D4",
+    "gradient": "linear-gradient(135deg, #06B6D4, #000)",
+    "ruleBookUrl": "/logo.png",
+    "registerUrl": "https://instagram.com/apdeshkumar_243"
+  },
+  {
+    "image": "https://res.cloudinary.com/dvz8vitos/image/upload/v1761412456/Team/1pcsX7DuZU4-Fpm7_M98Pykcj3ezOGl6p.jpg",
+    "title": "Rajat Kumar",
+    "subtitle": "Resources Management",
+    "description": "na — Resource Coordinator",
+    "borderColor": "#34D399",
+    "gradient": "linear-gradient(140deg, #34D399, #000)",
+    "ruleBookUrl": "/logo.png",
+    "registerUrl": "#"
+  },
+  {
+    "image": "https://res.cloudinary.com/dvz8vitos/image/upload/v1761412474/Team/1tARoklpRwZRdj81NL9u3XZaomnZP8ri9.jpg",
+    "title": "Sanidhya Mishra",
+    "subtitle": "Security",
+    "description": "@sanidhyamishra — Security & Safety Lead",
+    "borderColor": "#FACC15",
+    "gradient": "linear-gradient(210deg, #FACC15, #000)",
+    "ruleBookUrl": "/logo.png",
+    "registerUrl": "https://instagram.com/sanidhyamishra"
+  },
+  {
+    "image": "https://res.cloudinary.com/dvz8vitos/image/upload/v1761412468/Team/15YxoSheNCawigq_aSEztCxANrGUZfDbP.jpg",
+    "title": "Dakshina Nair M",
+    "subtitle": "Public relation",
+    "description": "@dakshina_nair — PR & Communication",
+    "borderColor": "#22D3EE",
+    "gradient": "linear-gradient(155deg, #22D3EE, #000)",
+    "ruleBookUrl": "/logo.png",
+    "registerUrl": "https://instagram.com/dakshina_nair"
+  },
+  {
+    "image": "https://res.cloudinary.com/dvz8vitos/image/upload/v1761412436/Team/1d9pGW15u2TI69Uwa3xNsV_pYKvNqplLf.jpg",
+    "title": "Kanika Singh",
+    "subtitle": "Public Relations",
+    "description": "@blsky.h08 — Public Relations Team",
+    "borderColor": "#E879F9",
+    "gradient": "linear-gradient(205deg, #E879F9, #000)",
+    "ruleBookUrl": "/logo.png",
+    "registerUrl": "https://instagram.com/blsky.h08"
+  },
+  {
+    "image": "https://res.cloudinary.com/dvz8vitos/image/upload/v1761412448/Team/1CrsI0B_6MnA98AQgHyYi5V_zLY7W9J17.jpg",
+    "title": "Rahul Ahuja",
+    "subtitle": "PR",
+    "description": "@rahul07.xd — PR & Communications",
+    "borderColor": "#14B8A6",
+    "gradient": "linear-gradient(215deg, #14B8A6, #000)",
+    "ruleBookUrl": "/logo.png",
+    "registerUrl": "https://instagram.com/rahul07.xd"
+  },
+  {
+    "image": "https://res.cloudinary.com/dvz8vitos/image/upload/v1761412470/Team/1FCjPX8yD6TY2wJcb87Vza_bqqVqM1_0M.jpg",
+    "title": "Vihan Karnik",
+    "subtitle": "Sports",
+    "description": "@vihahahahahan — Sports Event Management",
+    "borderColor": "#3B82F6",
+    "gradient": "linear-gradient(195deg, #3B82F6, #000)",
+    "ruleBookUrl": "/logo.png",
+    "registerUrl": "https://instagram.com/vihahahahahan"
+  },
+  {
+    "image": "https://res.cloudinary.com/dvz8vitos/image/upload/v1761412466/Team/1_R7pZPXc_5FBgXRl96Fi2R8enfUhNNqW.jpg",
+    "title": "Nikhil yadav",
+    "subtitle": "Sports",
+    "description": "@nikhilyadav8714 — Sports Events",
+    "borderColor": "#F97316",
+    "gradient": "linear-gradient(200deg, #F97316, #000)",
+    "ruleBookUrl": "/logo.png",
+    "registerUrl": "https://instagram.com/nikhilyadav8714"
+  },
+  {
+    "image": "https://res.cloudinary.com/dvz8vitos/image/upload/v1761412422/Team/1ubFuf-3_IPyOgZ0mrPAVqM3QS7XPXON1.jpg",
+    "title": "Kuldeep",
+    "subtitle": "Sports",
+    "description": "@alive__kuldeep — Volleyball Event Management",
+    "borderColor": "#67E8F9",
+    "gradient": "linear-gradient(165deg, #67E8F9, #000)",
+    "ruleBookUrl": "/logo.png",
+    "registerUrl": "https://instagram.com/alive__kuldeep"
+  },
+  {
+    "image": "https://res.cloudinary.com/dvz8vitos/image/upload/v1761412427/Team/1D4d4hrf4iOUiseZ42xJjHGs5QpeKeqsC.jpg",
+    "title": "Bilavath Sravanth Naik",
+    "subtitle": "Sports",
+    "description": "@mr_sravanth_nayak_ — Sports Lead",
+    "borderColor": "#06B6D4",
+    "gradient": "linear-gradient(165deg, #06B6D4, #000)",
+    "ruleBookUrl": "/logo.png",
+    "registerUrl": "https://instagram.com/mr_sravanth_nayak_"
+  },
+  {
+    "image": "https://res.cloudinary.com/dvz8vitos/image/upload/v1761412418/Team/1ZSIxdGtUedV4C4ZMWTgUp8IJ7RAxb-hv.webp",
+    "title": "Mayank Kumar",
+    "subtitle": "Sports",
+    "description": "@mayank_1jaat — Sports Coordination",
+    "borderColor": "#22C55E",
+    "gradient": "linear-gradient(220deg, #22C55E, #000)",
+    "ruleBookUrl": "/logo.png",
+    "registerUrl": "https://instagram.com/mayank_1jaat"
+  },
+  {
+    "image": "https://res.cloudinary.com/dvz8vitos/image/upload/v1761412391/Team/18XyurO_le-pXSxhriq9_jA91OfBNKk49.jpg",
+    "title": "Mayank Dahiya",
+    "subtitle": "Sports",
+    "description": "@m_dahiya471 — Manages Esports and Chess",
+    "borderColor": "#EF4444",
+    "gradient": "linear-gradient(195deg, #EF4444, #000)",
+    "ruleBookUrl": "/logo.png",
+    "registerUrl": "https://instagram.com/m_dahiya471"
+  },
+  {
+    "image": "https://res.cloudinary.com/dvz8vitos/image/upload/v1761412461/Team/18HnD7KA1En3pXZdQEJUMFIEbG_e7XVWn.jpg",
+    "title": "Yaddanapudi Gnani Prakash",
+    "subtitle": "Sports",
+    "description": "@tonyyy__ig — Manages Strength & TT Events",
+    "borderColor": "#0D9488",
+    "gradient": "linear-gradient(175deg, #0D9488, #000)",
+    "ruleBookUrl": "/logo.png",
+    "registerUrl": "https://instagram.com/tonyyy__ig"
+  },
+  {
+    "image": "https://res.cloudinary.com/dvz8vitos/image/upload/v1761412384/Team/1cI_VgNUOQg_qxvsBHiIRSpn-oiw9CBmj.jpg",
+    "title": "J.Arjun",
+    "subtitle": "Publicity and media",
+    "description": "@Mico__2506 — Handles Media & Publicity",
+    "borderColor": "#FBBF24",
+    "gradient": "linear-gradient(145deg, #FBBF24, #000)",
+    "ruleBookUrl": "/logo.png",
+    "registerUrl": "https://instagram.com/Mico__2506"
+  }
+]
