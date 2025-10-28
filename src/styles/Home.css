@@ -233,7 +233,7 @@ body {
 
 .stats-grid {
   display: grid;
-  grid-template-columns: repeat(3, 1fr);
+  grid-template-columns: repeat(2, 1fr);
   gap: 20px;
   margin-top: 15px;
 }
@@ -487,7 +487,7 @@ body {
   }
 
   .stats-grid {
-    grid-template-columns: repeat(3, 1fr);
+    grid-template-columns: repeat(2, 1fr);
   }
 
   .stat-item.large {
@@ -538,7 +538,7 @@ body {
   }
 
   .stats-grid {
-    grid-template-columns: repeat(3, 1fr);
+    grid-template-columns: repeat(2, 1fr);
   }
 
   .stat-item.large {
@@ -588,6 +588,10 @@ body {
   .oraculum-btn {
     padding: 12px 24px;
     font-size: 0.9rem;
+  }
+
+  .about-text{
+    display: none;
   }
 }
 
@@ -689,7 +693,7 @@ body {
 
   .stats-grid {
     display: grid;
-    grid-template-columns: repeat(3, 1fr);
+    grid-template-columns: repeat(2, 1fr);
     gap: 10px;
     justify-items: center;
   }
@@ -705,5 +709,26 @@ body {
 
   .stat-label {
     font-size: 0.7rem;
+  }
+}
+
+@media (max-width: 768px) {
+  .about-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 25px;
+  }
+  .divider {
+    display: none;
+  }
+
+  .about-text {
+    display: none;
+  }
+
+  .video-container {
+    order: 2;
+    width: 100%;
   }
 }
