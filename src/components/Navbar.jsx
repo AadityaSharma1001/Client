@@ -13,7 +13,8 @@ const Navbar = () => {
     { path: "/discount", label: "DISCOUNT" },
     { path: "/events", label: "EVENTS" },
     { path: "/team", label: "TEAM" },
-    { path: "/gallery", label: "GALLERY" }
+    { path: "/gallery", label: "GALLERY" },
+    { path: "/referee", label: "REFEREE" }
   ];
 
   // Handle scroll effect
@@ -95,9 +96,9 @@ const Navbar = () => {
           </div>
 
           <div className="nav-right">
-            {/* <Link to="/register" className="cta-button" aria-label="Register for VARCHAS 2025">
+            <Link to="/register" className="cta-button" aria-label="Register for VARCHAS 2025">
               Register
-            </Link> */}
+            </Link>
 
             <button 
               className={`hamburger ${isMenuOpen ? 'active' : ''}`}
