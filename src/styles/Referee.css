@@ -1,0 +1,247 @@
+@import url('https://fonts.googleapis.com/css2?family=Cinzel:wght@400..900&display=swap');
+
+:root {
+    --bg: #000;
+    --gold: #d4af37;
+    --gold-dark: #b78f28;
+    --text-color: #ddd;
+    --error-color: #ef4444;
+}
+
+/* --- Base & Page Layout --- */
+.registration-page {
+    min-height: 100vh;
+    position: relative;
+    overflow: hidden;
+    background: var(--bg);
+    font-family: 'Cinzel', serif;
+}
+
+.particles-background {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 1;
+}
+
+.registration-content {
+    position: relative;
+    z-index: 2;
+    padding: 3rem 1rem;
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+/* --- Form Card --- */
+.form-card {
+    max-width: 600px;
+    width: 100%;
+    background: rgba(0, 0, 0, 0.4);
+    backdrop-filter: blur(15px);
+    -webkit-backdrop-filter: blur(15px);
+    border: 1px solid rgba(212, 175, 55, 0.3);
+    border-radius: 20px;
+    padding: 2.5rem 3rem;
+    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.5);
+    transition: all 0.3s ease;
+}
+
+.form-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 15px 50px rgba(212, 175, 55, 0.2);
+    border-color: rgba(212, 175, 55, 0.5);
+}
+
+/* --- Form Header --- */
+.form-header {
+    text-align: center;
+    margin-bottom: 2rem;
+}
+
+.form-title {
+    font-size: 2.8rem;
+    font-weight: 800;
+    margin-bottom: 0.5rem;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    background: linear-gradient(45deg, var(--gold), var(--gold-dark), var(--gold));
+    background-size: 200% 200%;
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+    animation: gradientShift 4s ease-in-out infinite;
+}
+
+@keyframes gradientShift {
+    0%, 100% { background-position: 0% 50%; }
+    50% { background-position: 100% 50%; }
+}
+
+.form-subtitle {
+    color: #aaa;
+    font-size: 1rem;
+    font-weight: 400;
+    margin: 0;
+}
+
+.form-divider {
+    border: none;
+    height: 1px;
+    background: linear-gradient(90deg, transparent, var(--gold), transparent);
+    margin-top: 1.5rem;
+}
+
+/* --- Form Inputs & Labels --- */
+.input-group {
+    margin-bottom: 1.5rem;
+    position: relative;
+}
+
+.input-label {
+    display: flex;
+    align-items: center;
+    gap: 0.6rem;
+    font-size: 0.9rem;
+    color: var(--text-color);
+    margin-bottom: 0.5rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+.label-icon {
+    color: var(--gold);
+    font-size: 1.1rem;
+}
+
+.form-input {
+    width: 100%;
+    padding: 0.9rem 1rem;
+    border-radius: 10px;
+    border: 1.5px solid rgba(212, 175, 55, 0.25);
+    background: rgba(255, 255, 255, 0.03);
+    color: white;
+    outline: none;
+    font-size: 1rem;
+    transition: all 0.3s ease;
+    font-family: 'Cinzel', serif;
+}
+
+.form-input:hover {
+    border-color: rgba(212, 175, 55, 0.5);
+    background: rgba(255, 255, 255, 0.05);
+}
+
+.form-input:focus {
+    border-color: var(--gold);
+    background: rgba(255, 255, 255, 0.08);
+    box-shadow: 0 0 0 3px rgba(212, 175, 55, 0.15);
+}
+
+.form-input::placeholder {
+    color: #888;
+}
+
+.form-input option {
+    background: #1a1a1a;
+    color: white;
+}
+
+/* --- Error Messages (for future use) --- */
+.error-message {
+    display: flex;
+    align-items: center;
+    gap: 0.4rem;
+    color: var(--error-color);
+    font-size: 0.8rem;
+    margin-top: 0.4rem;
+    animation: slideDown 0.3s ease;
+}
+
+@keyframes slideDown {
+    from {
+        opacity: 0;
+        transform: translateY(-10px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* --- Submit Button --- */
+.submit-btn {
+    width: 100%;
+    background: linear-gradient(135deg, var(--gold), var(--gold-dark));
+    color: #000;
+    padding: 1rem;
+    border-radius: 10px;
+    border: none;
+    font-weight: 700;
+    font-size: 1.05rem;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    margin-top: 1.5rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.6rem;
+    box-shadow: 0 4px 15px rgba(212, 175, 55, 0.3);
+    font-family: 'Cinzel', serif;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+.submit-btn:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 6px 20px rgba(212, 175, 55, 0.5);
+}
+
+.submit-btn:active {
+    transform: translateY(-1px);
+    box-shadow: 0 2px 10px rgba(212, 175, 55, 0.4);
+}
+
+
+/* --- Responsive Design --- */
+@media (max-width: 768px) {
+    .form-card {
+        padding: 2rem;
+    }
+
+    .form-title {
+        font-size: 2.2rem;
+    }
+}
+
+@media (max-width: 480px) {
+    .registration-content {
+        padding: 1rem;
+    }
+    
+    .form-card {
+        padding: 1.5rem;
+    }
+
+    .form-title {
+        font-size: 1.8rem;
+    }
+    
+    .form-subtitle {
+        font-size: 0.9rem;
+    }
+    
+    .form-input {
+        padding: 0.8rem;
+        font-size: 0.9rem;
+    }
+    
+    .submit-btn {
+        font-size: 0.95rem;
+        padding: 0.9rem;
+    }
+}
