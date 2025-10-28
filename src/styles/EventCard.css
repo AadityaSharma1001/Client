@@ -58,7 +58,10 @@
   position: relative;
   background: #111;
   border: 1px solid #333;
-  box-shadow: rgba(0, 0, 0, 0.8) calc((var(--pointer-from-left) * 10px) - 3px) calc((var(--pointer-from-top) * 20px) - 6px) 20px -5px;
+  box-shadow: rgba(0, 0, 0, 0.8)
+    calc((var(--pointer-from-left) * 10px) - 3px)
+    calc((var(--pointer-from-top) * 20px) - 6px)
+    20px -5px;
   transition: transform 1s ease, border-color 0.3s ease;
   transform: translate3d(0, 0, 0.1px) rotateX(0deg) rotateY(0deg);
   overflow: hidden;
@@ -91,10 +94,12 @@
 }
 
 .ec-shine {
-  background: linear-gradient(115deg,
-      transparent 30%,
-      rgba(255, 255, 255, 0.3) 50%,
-      transparent 70%);
+  background: linear-gradient(
+    115deg,
+    transparent 30%,
+    rgba(255, 255, 255, 0.3) 50%,
+    transparent 70%
+  );
   opacity: 0;
 }
 
@@ -108,16 +113,17 @@
   0% {
     transform: translateX(-100%) translateY(-100%) rotate(45deg);
   }
-
   100% {
     transform: translateX(100%) translateY(100%) rotate(45deg);
   }
 }
 
 .ec-glare {
-  background: radial-gradient(farthest-corner circle at var(--pointer-x) var(--pointer-y),
-      rgba(255, 255, 255, 0.1) 0%,
-      transparent 70%);
+  background: radial-gradient(
+    farthest-corner circle at var(--pointer-x) var(--pointer-y),
+    rgba(255, 255, 255, 0.1) 0%,
+    transparent 70%
+  );
 }
 
 .ec-card-wrapper:hover .ec-glare,
@@ -266,7 +272,7 @@
 
 @media (max-width: 768px) {
   .ec-card {
-    height: 450px;
+    height: auto;
   }
 
   .ec-image-container {
@@ -279,6 +285,8 @@
 
   .ec-buttons {
     flex-direction: column;
+    margin-bottom: 20px;
+    padding-bottom: 10px;
   }
 
   .ec-event-number {
@@ -292,7 +300,7 @@
 
 @media (max-width: 480px) {
   .ec-card {
-    height: 420px;
+    height: auto;
   }
 
   .ec-image-container {
@@ -317,4 +325,18 @@
   opacity: 0.6;
   pointer-events: none;
   cursor: not-allowed;
+}
+
+@media (max-width: 768px) {
+  .ec-card {
+    width: 90%;
+    margin: 0 auto;
+  }
+}
+
+@media (max-width: 480px) {
+  .ec-card {
+    width: 85%;
+    margin: 0 auto;
+  }
 }

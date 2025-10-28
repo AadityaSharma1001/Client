@@ -433,12 +433,9 @@ function Home({ setShowNavbar }) {
                   <a href="/gallery" className="oraculum-btn">
                     View More
                   </a>
-                  <a href="#brochure" className="oraculum-btn">
-                    Brochure
-                  </a>
                 </div>
               </div>
-            </div>
+            </div> 
 
             {/* Content 5: Join Community */}
             <div
