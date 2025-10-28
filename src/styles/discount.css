@@ -420,3 +420,62 @@
   color: #ff6b6b;
   font-weight: 600;
 }
+
+/* Responsive Design */
+@media (max-width: 1024px) {
+  .discount-title {
+    font-size: 2.5rem;
+  }
+  .offer-title {
+    font-size: 2rem;
+  }
+}
+
+@media (max-width: 768px) {
+  .discount-content {
+    padding: 2rem 1rem;
+  }
+  .discount-title {
+    font-size: 2.2rem;
+    margin-bottom: 2rem;
+  }
+  .offer-card {
+    padding: 1.8rem;
+  }
+  .offer-header {
+    flex-direction: column;
+    gap: 0.8rem;
+  }
+  .offer-title {
+    font-size: 1.7rem;
+  }
+  .offer-content h3 {
+    font-size: 1.4rem;
+  }
+  .offer-content h4 {
+    font-size: 1.2rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .discount-title {
+    font-size: 1.8rem;
+    letter-spacing: 1px;
+  }
+  .offer-card {
+    padding: 1.2rem;
+  }
+  .offer-title {
+    font-size: 1.4rem;
+  }
+  .offer-badge {
+    font-size: 0.9rem;
+    padding: 0.3rem 1rem;
+  }
+  .offer-content h3 {
+    font-size: 1.2rem;
+  }
+  .offer-content h4 {
+    font-size: 1rem;
+  }
+}
