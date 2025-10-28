@@ -16,7 +16,7 @@ const Events = () => {
       id: 2,
       name: "Football Cup",
       description: "Show your skills in the most awaited football tournament of the year",
-      image: "/images/image2.jpg",
+      image: "/images/image3.jpg",
       registerLink: "#",
       rulebookLink: "https://drive.google.com/file/d/1hQTgcJGdF1JDkIKInB-QPbLsT9jEM1qU/view?usp=drive_link"
     },
@@ -24,7 +24,7 @@ const Events = () => {
       id: 3,
       name: "Table Tennis Masters",
       description: "Fast-paced action and precision play in our premier table tennis competition",
-      image: "/images/image3.jpg",
+      image: "/images/image6.jpg",
       registerLink: "#",
       rulebookLink: "https://drive.google.com/file/d/1pztULRv3YDNIzbXPfiYocotAOkRgurH_/view?usp=drive_link"
     },
@@ -32,7 +32,7 @@ const Events = () => {
       id: 4,
       name: "Cricket League",
       description: "Experience the thrill of competitive cricket at its finest",
-      image: "/images/image4.jpg",
+      image: "/images/image7.jpg",
       registerLink: "#",
       rulebookLink: "https://drive.google.com/file/d/1yoDZOWrd7WzopL2-dMHSi4NYFLz_zQku/view?usp=drive_link"
     },
@@ -48,7 +48,7 @@ const Events = () => {
       id: 6,
       name: "Volleyball Championship",
       description: "Team up and spike your way to victory in this exciting tournament",
-      image: "/images/image6.jpg",
+      image: "/images/image8.jpg",
       registerLink: "#",
       rulebookLink: "https://drive.google.com/file/d/1mfpwn0RvoBJSF9qCGUA4Gfo_s8UntC0Q/view?usp=drive_link"
     },

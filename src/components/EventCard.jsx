@@ -32,9 +32,15 @@ const EventCardComponent = ({
 }) => {
   const wrapRef = useRef(null);
   const cardRef = useRef(null);
-
+  const [isMobile, setIsMobile] = React.useState(window.innerWidth <= 768);
+  useEffect(() => {
+    const handleResize = () => setIsMobile(window.innerWidth <= 768);
+    window.addEventListener('resize', handleResize);
+    return () => window.removeEventListener('resize', handleResize);
+  }, []);
+  const tiltEnabled = enableTilt && !isMobile;
   const animationHandlers = useMemo(() => {
-    if (!enableTilt) return null;
+    if (!tiltEnabled) return null;
 
     let rafId = null;
 
@@ -98,7 +104,7 @@ const EventCardComponent = ({
         }
       }
     };
-  }, [enableTilt]);
+  }, [tiltEnabled]);
 
   const handlePointerMove = useCallback(
     event => {
@@ -142,7 +148,7 @@ const EventCardComponent = ({
   );
 
   useEffect(() => {
-    if (!enableTilt || !animationHandlers) return;
+    if (!tiltEnabled || !animationHandlers) return;
 
     const card = cardRef.current;
     const wrap = wrapRef.current;
@@ -164,7 +170,7 @@ const EventCardComponent = ({
       card.removeEventListener('pointerleave', handlePointerLeave);
       animationHandlers.cancelAnimation();
     };
-  }, [enableTilt, animationHandlers, handlePointerMove, handlePointerEnter, handlePointerLeave]);
+  }, [tiltEnabled, animationHandlers, handlePointerMove, handlePointerEnter, handlePointerLeave]);
 
   const cardStyle = useMemo(
     () => ({
