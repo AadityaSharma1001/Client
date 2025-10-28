@@ -442,7 +442,7 @@ function Home({ setShowNavbar }) {
                   <p className="community-highlight">
                     This is where champions rise!
                   </p>
-                  <a href="https://whatsapp.com" className="whatsapp-btn">
+                  <a href="https://whatsapp.com/channel/0029Vb6vtkHGJP8CBVHuJo0c" className="whatsapp-btn">
                     <span className="whatsapp-icon"></span>
                     Join WhatsApp Channel
                   </a>
