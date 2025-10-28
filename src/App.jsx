@@ -1,8 +1,8 @@
 import React, { useState } from "react";
 import { BrowserRouter as Router, Routes, Route, useLocation } from "react-router-dom";
-import Home from "./pages/home.jsx";
+import Home from "./pages/Home.jsx";
 import Gallery from "./pages/gallery.jsx";
-import Events from "./pages/events.jsx";
+import Events from "./pages/Events.jsx";
 import Team from "./pages/team.jsx";
 import Navbar from "./components/Navbar.jsx";
 import useSessionStorage from "./hooks/useSessionStorage.jsx";
