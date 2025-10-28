@@ -361,18 +361,6 @@ function Home({ setShowNavbar }) {
                       </div>
                       <div className="stat-label">Footfall (K)</div>
                     </div>
-                    <div className="stat-item">
-                      <div className="stat-number" data-target="29">
-                        0+
-                      </div>
-                      <div className="stat-label">Footfall (K)</div>
-                    </div>
-                    <div className="stat-item">
-                      <div className="stat-number" data-target="29">
-                        0+
-                      </div>
-                      <div className="stat-label">Footfall (K)</div>
-                    </div>
                   </div>
                 </div>
               </div>
