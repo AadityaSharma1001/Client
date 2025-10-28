@@ -1,7 +1,7 @@
 import { useEffect, useRef, useState } from "react";
 import Loader from "../components/loader";
 import useSessionStorage from "../hooks/useSessionStorage";
-import "../styles/home.css";
+import "../styles/Home.css";
 
 function Home({ setShowNavbar }) {
   const [hasLoaded, setHasLoaded] = useSessionStorage("hasLoaded", false);
