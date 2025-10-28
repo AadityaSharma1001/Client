@@ -1,12 +1,12 @@
 import React, { useState } from "react";
 import { BrowserRouter as Router, Routes, Route, useLocation } from "react-router-dom";
-import Home from "./pages/home";
-import Gallery from "./pages/gallery";
-import Events from "./pages/events";
-import Team from "./pages/team";
-import Navbar from "./components/Navbar";
-import useSessionStorage from "./hooks/useSessionStorage";
-import Discount from "./pages/discount";
+import Home from "./pages/home.jsx";
+import Gallery from "./pages/gallery.jsx";
+import Events from "./pages/events.jsx";
+import Team from "./pages/team.jsx";
+import Navbar from "./components/Navbar.jsx";
+import useSessionStorage from "./hooks/useSessionStorage.jsx";
+import Discount from "./pages/discount.jsx";
 import "./index.css";
 
 function AppContent({ showNavbar, setShowNavbar }) {
