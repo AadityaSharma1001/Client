@@ -1,3 +1,11 @@
+html,
+body {
+  background: #000 !important;
+  overflow-x: hidden;
+  transform: translateZ(0);
+  backface-visibility: hidden;
+}
+
 :root {
   --pointer-x: 50%;
   --pointer-y: 50%;
@@ -56,8 +64,8 @@
 
 .pc-card-wrapper:hover::before,
 .pc-card-wrapper.active::before {
-  filter: contrast(1) saturate(2) blur(25px) opacity(1);
-  transform: scale(0.9) translate3d(0, 0, 0.1px);
+  filter: contrast(1.2) saturate(1.2) blur(0.7px) opacity(0.8);
+  transform: scale(0.92) translateZ(0);
 }
 
 .pc-card {
@@ -68,7 +76,7 @@
   aspect-ratio: 0.718;
   border-radius: var(--card-radius);
   position: relative;
-  background-blend-mode: color-dodge, normal, normal, normal;
+  background-blend-mode: lighten, normal, normal, normal;
   animation: glow-bg 12s linear infinite;
   box-shadow: rgba(0, 0, 0, 0.8) calc((var(--pointer-from-left) * 10px) - 3px) calc((var(--pointer-from-top) * 20px) - 6px) 20px -5px;
   transition: transform 1s ease;
@@ -232,13 +240,13 @@
   background-image: radial-gradient(farthest-corner circle at var(--pointer-x) var(--pointer-y),
       hsl(248, 25%, 80%) 12%,
       hsla(207, 40%, 30%, 0.8) 90%);
-  mix-blend-mode: overlay;
+  mix-blend-mode: normal;
   filter: brightness(0.8) contrast(1.2);
   z-index: 4;
 }
 
 .pc-avatar-content {
-  mix-blend-mode: screen;
+  mix-blend-mode: normal;
   overflow: hidden;
 }
 
@@ -565,4 +573,21 @@
     font-size: 9px;
     border-radius: 50px;
   }
+}
+
+.pc-card-wrapper,
+.pc-card {
+  backface-visibility: hidden;
+  transform-style: preserve-3d;
+  will-change: transform, opacity, filter;
+  isolation: isolate;
+}
+
+.pc-card-wrapper {
+  contain: layout paint style;
+  will-change: transform;
+  transform: translateZ(0);
+  backface-visibility: hidden;
+  isolation: isolate;
+  perspective: 800px;
 }
