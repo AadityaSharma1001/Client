@@ -102,6 +102,7 @@
   text-decoration: none;
   font-weight: 500;
   transition: color 0.3s ease;
+  align-self: center;
 }
 
 .connect-link:hover {
