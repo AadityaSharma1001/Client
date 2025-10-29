@@ -4,6 +4,45 @@ import { FiMail, FiLock, FiEye, FiEyeOff, FiCheckCircle, FiAlertCircle } from "r
 import '../styles/Register.css'
 import Particles from '../components/Particles'
 
+const STATES = [
+    { value: "1", label: "Andhra Pradesh" },
+    { value: "2", label: "Arunachal Pradesh" },
+    { value: "3", label: "Assam" },
+    { value: "4", label: "Bihar" },
+    { value: "5", label: "Chhattisgarh" },
+    { value: "6", label: "Goa" },
+    { value: "7", label: "Gujarat" },
+    { value: "8", label: "Haryana" },
+    { value: "9", label: "Himachal Pradesh" },
+    { value: "10", label: "Jammu & Kashmir" },
+    { value: "11", label: "Jharkhand" },
+    { value: "12", label: "Karnataka" },
+    { value: "13", label: "Kerala" },
+    { value: "14", label: "Madhya Pradesh" },
+    { value: "15", label: "Maharashtra" },
+    { value: "16", label: "Manipur" },
+    { value: "17", label: "Meghalaya" },
+    { value: "18", label: "Mizoram" },
+    { value: "19", label: "Nagaland" },
+    { value: "20", label: "Odisha" },
+    { value: "21", label: "Punjab" },
+    { value: "22", label: "Rajasthan" },
+    { value: "23", label: "Sikkim" },
+    { value: "24", label: "Tamil Nadu" },
+    { value: "25", label: "Telangana" },
+    { value: "26", label: "Tripura" },
+    { value: "27", label: "Uttarakhand" },
+    { value: "28", label: "Uttar Pradesh" },
+    { value: "29", label: "West Bengal" },
+    { value: "30", label: "Andaman & Nicobar Islands" },
+    { value: "31", label: "Delhi" },
+    { value: "32", label: "Chandigarh" },
+    { value: "33", label: "Dadra & Naagar Haveli" },
+    { value: "34", label: "Daman & Diu" },
+    { value: "35", label: "Lakshadweep" },
+    { value: "36", label: "Puducherry" }
+]
+
 const UserRegister = () => {
     const [step, setStep] = useState(1)
     const [form1, setForm1] = useState({ email: "", password: "", confirm: "" })
@@ -55,9 +94,11 @@ const UserRegister = () => {
                 if (!["M", "F"].includes(value.toUpperCase())) error = "Enter M or F"
                 break
             case "college":
-            case "state":
             case "account_holder_name":
                 if (!value.trim()) error = "This field is required"
+                break
+            case "state":
+                if (!value.trim()) error = "Please select a state"
                 break
             case "ifsc_code":
                 if (!/^[A-Z]{4}0[A-Z0-9]{6}$/.test(value.trim().toUpperCase())) error = "Invalid IFSC format"
@@ -95,7 +136,6 @@ const UserRegister = () => {
                 body: JSON.stringify({ email: form1.email, password: form1.password, confirm_password: form1.confirm })
             })
             const data = await res.json()
-            //   console.log(data)
             if ((res.status === 201 || res.status === 200) && data.message?.toLowerCase().includes("success")) {
                 setForm2(prev => ({ ...prev, email: form1.email }))
                 setStep(2)
@@ -125,12 +165,11 @@ const UserRegister = () => {
                 headers: { "Content-Type": "application/json" },
                 body: JSON.stringify(form2)
             })
-            console.log(form2);
             if (res.status === 201) {
                 setPopup({ show: true, message: "Registration Successful!", success: true })
                 setTimeout(() => window.location.reload(), 2500)
             } else {
-                setPopup({ show: true, message: "Update failed", success: false })
+                setPopup({ show: true, message: res.message || res.Error || "Update failed", success: false })
             }
         } catch {
             setPopup({ show: true, message: "Network error", success: false })
@@ -198,15 +237,49 @@ const UserRegister = () => {
                         <form onSubmit={updateInfo} className="form">
                             <input value={form2.email} readOnly className="form-input readonly" placeholder="Email" />
 
-                            {[
-                                ["first_name", "First Name"], ["last_name", "Last Name"], ["phone", "Phone"],
-                                ["gender", "Gender (M/F)"], ["college", "College"], ["state", "State"],
-                                ["account_holder_name", "Account Holder Name"], ["ifsc_code", "IFSC Code"],
+                            {[["first_name", "First Name"], ["last_name", "Last Name"], ["phone", "Phone"],
+                                ["gender", "Gender (M/F)"], ["college", "College"]
+                            ].map(([name, placeholder]) => (
+                                <div key={name} className={`input-group ${errors2[name] ? 'error' : ''}`}>
+                                    <input
+                                        name={name}
+                                        placeholder={placeholder}
+                                        value={form2[name]}
+                                        onChange={e => handleChange(e, setForm2, validateField2, setErrors2)}
+                                        className="form-input"
+                                    />
+                                    {errors2[name] && <span className="error-message"><FiAlertCircle /> {errors2[name]}</span>}
+                                </div>
+                            ))}
+
+                            {/* ✅ State Dropdown */}
+                            <div className={`input-group ${errors2.state ? 'error' : ''}`}>
+                                <label>State</label>
+                                <select
+                                    name="state"
+                                    value={form2.state}
+                                    onChange={e => handleChange(e, setForm2, validateField2, setErrors2)}
+                                    className="form-input"
+                                >
+                                    <option value="">-- Select State --</option>
+                                    {STATES.map(s => (
+                                        <option key={s.value} value={s.value}>{s.label}</option>
+                                    ))}
+                                </select>
+                                {errors2.state && <span className="error-message"><FiAlertCircle /> {errors2.state}</span>}
+                            </div>
+
+                            {[["account_holder_name", "Account Holder Name"], ["ifsc_code", "IFSC Code"],
                                 ["bank_account_number", "Bank Account Number"]
                             ].map(([name, placeholder]) => (
                                 <div key={name} className={`input-group ${errors2[name] ? 'error' : ''}`}>
-                                    <input name={name} placeholder={placeholder} value={form2[name]}
-                                        onChange={e => handleChange(e, setForm2, validateField2, setErrors2)} className="form-input" />
+                                    <input
+                                        name={name}
+                                        placeholder={placeholder}
+                                        value={form2[name]}
+                                        onChange={e => handleChange(e, setForm2, validateField2, setErrors2)}
+                                        className="form-input"
+                                    />
                                     {errors2[name] && <span className="error-message"><FiAlertCircle /> {errors2[name]}</span>}
                                 </div>
                             ))}
