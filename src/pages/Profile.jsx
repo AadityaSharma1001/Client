@@ -1,13 +1,13 @@
 import React, { useEffect, useMemo, useState } from "react"
-import { FiUser, FiMail, FiPhone, FiHome, FiHash, FiBook, FiUsers, FiCheckCircle, FiXCircle } from "react-icons/fi"
+import { FiUser, FiMail, FiPhone, FiHome, FiHash, FiBook, FiUsers, FiCheckCircle, FiXCircle, FiLogOut } from "react-icons/fi"
 import "../styles/Profile.css"
 import useLocalStorage from "../hooks/useLocalStorage"
 import Particles from "../components/Particles"
 
 const UserProfile = () => {
     const [profile, setProfile] = useState(null)
-    const [token] = useLocalStorage("token", "")
-    const [uniqueId] = useLocalStorage("uniqueId", "")
+    const [token, setToken] = useLocalStorage("token", "")
+    const [uniqueId, setUniqueId] = useLocalStorage("uniqueId", "")
     const backendUrl = import.meta.env.VITE_BACKEND_URL
 
     useEffect(() => {
@@ -43,6 +43,13 @@ const UserProfile = () => {
         return []
     }, [profile])
 
+    const handleLogout = () => {
+        localStorage.clear()
+        setToken("")
+        setUniqueId("")
+        window.location.reload()
+    }
+
     if (!profile) {
         return (
             <div className="profile-loading">
@@ -76,6 +83,12 @@ const UserProfile = () => {
             </div>
 
             <div className="profile-container">
+
+                {/* 🔹 Logout Button */}
+                <button className="logout-button" onClick={handleLogout}>
+                    <FiLogOut /> Logout
+                </button>
+
                 <section className="profile-hero">
                     <div className="avatar-ring">
                         <div className="avatar-circle"><FiUser aria-label="User avatar" /></div>

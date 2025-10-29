@@ -167,7 +167,9 @@ const UserRegister = () => {
             })
             if (res.status === 201) {
                 setPopup({ show: true, message: "Registration Successful!", success: true })
-                setTimeout(() => window.location.reload(), 2500)
+                setTimeout(() => {
+                    window.location.href = "/login"
+                }, 2000)
             } else {
                 setPopup({ show: true, message: res.message || res.Error || "Update failed", success: false })
             }
