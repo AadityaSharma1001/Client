@@ -51,7 +51,7 @@ body {
   inset: 0;
   width: 100vw;
   height: 100vh;
-  background: rgba(0, 0, 0, 0.296);
+  /* background: rgba(0, 0, 0, 0.096); */
   z-index: 1;
   pointer-events: none;
 }
@@ -386,11 +386,12 @@ body {
 
 .community-container {
   max-width: 1100px;
-  width: 100%;
-  display: grid;
-  grid-template-columns: 1fr 1fr;
+  width: 60%;
+  display: flex;
   gap: 50px;
+  justify-content: center;
   align-items: center;
+  text-align: center;
   background: rgba(0, 0, 0, 0.329);
   backdrop-filter: blur(10px);
   padding: 50px 40px;
@@ -444,7 +445,7 @@ body {
   font-size: 1.05rem;
   font-weight: 600;
   transition: all 0.3s ease;
-  align-self: flex-start;
+  align-self: center;
   margin-top: 10px;
   box-shadow: 0 5px 20px rgba(37, 211, 102, 0.3);
 }
@@ -732,3 +733,25 @@ body {
     width: 100%;
   }
 }
+
+/* Initial visibility - hide all content until delay completes */
+.content-wrapper {
+  opacity: 0;
+  transition: opacity 0.3s ease-in;
+}
+
+.content-wrapper.content-visible {
+  opacity: 1;
+}
+
+/* Hide non-logo items initially - REMOVED !important to allow JS override */
+.content-item:not(.content-initial-visible) {
+  opacity: 0;
+  transform: scale(0.5);
+}
+
+.content-item.content-initial-visible {
+  opacity: 1;
+  transform: scale(1);
+}
+

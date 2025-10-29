@@ -6,51 +6,28 @@ import "../styles/Home.css";
 function Home({ setShowNavbar }) {
   const [hasLoaded, setHasLoaded] = useSessionStorage("hasLoaded", false);
   const [showCanvas, setShowCanvas] = useState(hasLoaded);
-  const [galleryImagesLoaded, setGalleryImagesLoaded] = useState(false);
+  const [showContent, setShowContent] = useState(hasLoaded); // New state for content visibility
   const canvasRef = useRef(null);
   const loaderTextRef = useRef(null);
   const loaderBarRef = useRef(null);
   const contentRefs = useRef([]);
 
   const galleryImages = [
-    "https://ik.imagekit.io/bhavishy2801/image1.jpg?updatedAt=1761057131535",
-    "https://ik.imagekit.io/bhavishy2801/image2.jpg?updatedAt=1761057131506",
-    "https://ik.imagekit.io/bhavishy2801/image3.jpg?updatedAt=1761057131599",
-    "https://ik.imagekit.io/bhavishy2801/image4.jpg?updatedAt=1761057131508",
-    "https://ik.imagekit.io/bhavishy2801/image5.jpg?updatedAt=1761057131607",
-    "https://ik.imagekit.io/bhavishy2801/image6.jpg?updatedAt=1761057131385"
+    "/images/image1.jpg",
+    "/images/image2.jpg",
+    "/images/image3.jpg",
+    "/images/image4.jpg",
+    "/images/image5.jpg",
+    "/images/image6.jpg",
+    "/images/image0.jpg"
   ];
 
   useEffect(() => {
     if (!showCanvas) return;
 
-    let loadedCount = 0;
-    const totalImages = galleryImages.length;
-
-    galleryImages.forEach((src) => {
-      const img = new Image();
-      img.onload = () => {
-        loadedCount++;
-        if (loadedCount === totalImages) {
-          setGalleryImagesLoaded(true);
-        }
-      };
-      img.onerror = () => {
-        loadedCount++;
-        if (loadedCount === totalImages) {
-          setGalleryImagesLoaded(true);
-        }
-      };
-      img.src = src;
-    });
-  }, [showCanvas]);
-
-  useEffect(() => {
-    if (!showCanvas) return;
-
     const frameCount = 583;
-    const prefix = '00';
-    const ext = '.jpg';
+    const prefix = 'frame_0';
+    const ext = '.png';
     const padding = 3;
     const framesPath = '/frames/';
     const easing = 0.09;
@@ -111,6 +88,24 @@ function Home({ setShowNavbar }) {
       contentRefs.current.forEach((content, index) => {
         if (!content) return;
 
+        // First item (logo) - visible at start, fades out on scroll
+        if (index === 0) {
+          const fadeOutThreshold = 0.05; // Start fading out after 5% scroll
+          if (currentScrollPercent < fadeOutThreshold) {
+            content.style.opacity = 1;
+            content.style.transform = 'scale(1)';
+          } else if (currentScrollPercent < fadeOutThreshold + 0.05) {
+            const progress = (currentScrollPercent - fadeOutThreshold) / 0.05;
+            content.style.opacity = 1 - progress;
+            content.style.transform = `scale(${1 + 0.5 * progress})`;
+          } else {
+            content.style.opacity = 0;
+            content.style.transform = 'scale(1.5)';
+          }
+          return;
+        }
+
+        // Other items - start appearing after first scroll
         const startScroll = index / totalContents;
         let endScroll = (index + 1) / totalContents;
 
@@ -120,10 +115,7 @@ function Home({ setShowNavbar }) {
         let opacity = 0;
         let scale = 0.5;
 
-        if (index === 0 && currentScrollPercent < startScroll + 0.02) {
-          opacity = 1;
-          scale = 1;
-        } else if (currentScrollPercent < startScroll) {
+        if (currentScrollPercent < startScroll) {
           opacity = 0;
           scale = 0.5;
         } else if (currentScrollPercent < startScroll + contentScrollRange * 0.3) {
@@ -263,6 +255,11 @@ function Home({ setShowNavbar }) {
             setShowCanvas(true);
             setHasLoaded(true);
             setShowNavbar(true);
+            
+            // Delay showing content by 0.5 seconds
+            setTimeout(() => {
+              setShowContent(true);
+            }, 500);
           }}
         />
       )}
@@ -272,10 +269,10 @@ function Home({ setShowNavbar }) {
           <canvas id="canvas" ref={canvasRef} aria-hidden="true" />
           <div className="canvas-overlay"></div>
 
-          <div className="content-wrapper">
+          <div className={`content-wrapper ${showContent ? 'content-visible' : ''}`}>
             {/* Content 1: Logo */}
             <div
-              className="content-item"
+              className="content-item content-initial-visible"
               ref={(el) => (contentRefs.current[0] = el)}
             >
               <img src="/var.png" alt="Varchas Logo" className="logo-image" />
@@ -350,10 +347,10 @@ function Home({ setShowNavbar }) {
                       <div className="stat-label">Events</div>
                     </div>
                     <div className="stat-item">
-                      <div className="stat-number" data-target="15">
+                      <div className="stat-number" data-target="2000">
                         0+
                       </div>
-                      <div className="stat-label">Events</div>
+                      <div className="stat-label">Registrations</div>
                     </div>
                     <div className="stat-item">
                       <div className="stat-number" data-target="29">
@@ -375,46 +372,46 @@ function Home({ setShowNavbar }) {
                 <h1 className="oraculum-title">GALLERY</h1>
 
                 <div className="oraculum-gallery">
-                  {galleryImagesLoaded ? (
-                    <>
-                      <div className="gallery-row">
-                        <img
-                          src={galleryImages[0]}
-                          alt="Varchas 1"
-                          className="gallery-image"
-                        />
-                        <img
-                          src={galleryImages[1]}
-                          alt="Varchas 2"
-                          className="gallery-image"
-                        />
-                        <img
-                          src={galleryImages[2]}
-                          alt="Varchas 3"
-                          className="gallery-image"
-                        />
-                      </div>
-                      <div className="gallery-row">
-                        <img
-                          src={galleryImages[3]}
-                          alt="Varchas 4"
-                          className="gallery-image"
-                        />
-                        <img
-                          src={galleryImages[4]}
-                          alt="Varchas 5"
-                          className="gallery-image"
-                        />
-                        <img
-                          src={galleryImages[5]}
-                          alt="Varchas 6"
-                          className="gallery-image"
-                        />
-                      </div>
-                    </>
-                  ) : (
-                    <div className="gallery-loading">Loading gallery...</div>
-                  )}
+                  <div className="gallery-row">
+                    <img
+                      src={galleryImages[0]}
+                      alt="Varchas 1"
+                      className="gallery-image"
+                      loading="lazy"
+                    />
+                    <img
+                      src={galleryImages[1]}
+                      alt="Varchas 2"
+                      className="gallery-image"
+                      loading="lazy"
+                    />
+                    <img
+                      src={galleryImages[2]}
+                      alt="Varchas 3"
+                      className="gallery-image"
+                      loading="lazy"
+                    />
+                  </div>
+                  <div className="gallery-row">
+                    <img
+                      src={galleryImages[3]}
+                      alt="Varchas 4"
+                      className="gallery-image"
+                      loading="lazy"
+                    />
+                    <img
+                      src={galleryImages[4]}
+                      alt="Varchas 5"
+                      className="gallery-image"
+                      loading="lazy"
+                    />
+                    <img
+                      src={galleryImages[5]}
+                      alt="Varchas 6"
+                      className="gallery-image"
+                      loading="lazy"
+                    />
+                  </div>
                 </div>
 
                 <div className="button-group">
@@ -423,7 +420,7 @@ function Home({ setShowNavbar }) {
                   </a>
                 </div>
               </div>
-            </div> 
+            </div>
 
             {/* Content 5: Join Community */}
             <div
@@ -446,9 +443,6 @@ function Home({ setShowNavbar }) {
                     <span className="whatsapp-icon"></span>
                     Join WhatsApp Channel
                   </a>
-                </div>
-                <div className="community-image">
-                  <img src="/sample.jpg" alt="Community" />
                 </div>
               </div>
             </div>
