@@ -8,7 +8,7 @@ const Events = () => {
       id: 1,
       name: "Basketball Championship",
       description: "Compete in the ultimate basketball showdown with teams from across the nation",
-      image: "/images/image1.jpg",
+      image: "/images/image21.jpg",
       registerLink: "#",
       rulebookLink: "https://drive.google.com/file/d/18DCApxGztjt-J4ngdulxLpawqg7UcJxf/view?usp=drive_link"
     },
@@ -16,7 +16,7 @@ const Events = () => {
       id: 2,
       name: "Football Cup",
       description: "Show your skills in the most awaited football tournament of the year",
-      image: "/images/image3.jpg",
+      image: "/images/image22.jpg",
       registerLink: "#",
       rulebookLink: "https://drive.google.com/file/d/1hQTgcJGdF1JDkIKInB-QPbLsT9jEM1qU/view?usp=drive_link"
     },
@@ -40,7 +40,7 @@ const Events = () => {
       id: 5,
       name: "Badminton Tournament",
       description: "Showcase your agility and technique in this elite badminton championship",
-      image: "/images/image5.jpg",
+      image: "/images/image23.jpg",
       registerLink: "#",
       rulebookLink: "https://drive.google.com/file/d/11S4c5V7dcG_B6NmQEYslLBq4fTEIm8Zf/view?usp=drive_link"
     },
@@ -56,7 +56,7 @@ const Events = () => {
       id: 7,
       name: "Chess Masters",
       description: "Test your strategic mind in our premier chess championship",
-      image: "/images/image1.jpg",
+      image: "/images/image24.jpg",
       registerLink: "#",
       rulebookLink: "https://drive.google.com/file/d/1z_vuBiEl6uMQKteXBkj3ht_17KsNu7C_/view?usp=drive_link"
     },
@@ -64,7 +64,7 @@ const Events = () => {
       id: 8,
       name: "BGMI Esports",
       description: "Battle it out in the ultimate mobile gaming championship",
-      image: "/images/image2.jpg",
+      image: "/images/image25.jpg",
       registerLink: "#",
       rulebookLink: "https://drive.google.com/file/d/1zVY2SGrjY4_bl3vW3plIz1KQnQWdlGDa/view?usp=drive_link"
     },
@@ -72,7 +72,7 @@ const Events = () => {
       id: 9,
       name: "Hockey Championship",
       description: "Experience the fast-paced action of competitive hockey",
-      image: "/images/image3.jpg",
+      image: "/images/image26.jpg",
       registerLink: "#",
       rulebookLink: "https://drive.google.com/file/d/13n14h6KG4mLeSoO9DFFUYcTC-EX_exU9/view?usp=drive_link"
     },
@@ -80,7 +80,7 @@ const Events = () => {
       id: 10,
       name: "Kabaddi Tournament",
       description: "Show your strength and strategy in this traditional sport",
-      image: "/images/image4.jpg",
+      image: "/images/image27.jpg",
       registerLink: "#",
       rulebookLink: "https://drive.google.com/file/d/1GGnpTPhh5DM94Wm1h1YTi1x0zKRHvjEn/view?usp=drive_link"
     },
@@ -88,7 +88,7 @@ const Events = () => {
       id: 11,
       name: "Powerlifting Championship",
       description: "Test your raw strength in this ultimate powerlifting competition",
-      image: "/images/image5.jpg",
+      image: "/images/image28.jpg",
       registerLink: "#",
       rulebookLink: "https://drive.google.com/file/d/1JnIXBTBnEj-GQOLKn3XqWn7rvvEY6lau/view?usp=drive_link"
     },
@@ -96,7 +96,7 @@ const Events = () => {
       id: 12,
       name: "Squash Championship",
       description: "Fast-paced indoor racquet sport competition for skilled players",
-      image: "/images/image6.jpg",
+      image: "/images/image29.jpg",
       registerLink: "#",
       rulebookLink: "https://drive.google.com/file/d/1zQMxa1dahG_MZVJaSRSf4iLvjrYqcXqk/view?usp=drive_link"
     },
@@ -104,7 +104,7 @@ const Events = () => {
       id: 13,
       name: "Free Fire Esports",
       description: "Battle royale competition in the popular mobile game",
-      image: "/images/image1.jpg",
+      image: "/images/image31.jpg",
       registerLink: "#",
       rulebookLink: "https://drive.google.com/file/d/17lIRTnKMqe22Uxt9qwD9b9x7h4LqfgZP/view?usp=drive_link"
     },
@@ -112,7 +112,7 @@ const Events = () => {
       id: 14,
       name: "Athletics Championship",
       description: "Show your speed, strength, and endurance in track and field events",
-      image: "/images/image2.jpg",
+      image: "/images/image32.jpg",
       registerLink: "#",
       rulebookLink: "https://drive.google.com/file/d/15AcMKmCezNgN5o-gh7OAkZjDoIY5LlRP/view?usp=drive_link"
     }
