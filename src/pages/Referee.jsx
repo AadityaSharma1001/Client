@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { FiUser, FiMail, FiPhone, FiTrendingUp, FiCheckCircle, FiAlertCircle } from "react-icons/fi";
+import { FiUser, FiMail, FiPhone, FiTrendingUp, FiCreditCard, FiHash, FiCheckCircle, FiAlertCircle } from "react-icons/fi";
 import '../styles/Referee.css';
 import Particles from '../components/Particles';
 
@@ -14,7 +14,10 @@ const Referee = () => {
     name: "",
     email: "",
     phone: "",
-    sport: ""
+    sport: "",
+    account_holder_name: "",
+    ifsc_code: "",
+    bank_account_number: ""
   });
   const [errors, setErrors] = useState({});
   const [popup, setPopup] = useState({ show: false, message: "", success: false });
@@ -38,6 +41,18 @@ const Referee = () => {
       case "sport":
         if (!value.trim()) error = "Please select a sport";
         break;
+      case "account_holder_name":
+        if (!value.trim()) error = "Account holder name is required";
+        else if (!/^[a-zA-Z\s.]+$/.test(value)) error = "Only letters and spaces allowed";
+        break;
+      case "ifsc_code":
+        if (!value.trim()) error = "IFSC code is required";
+        else if (!/^[A-Z]{4}0[A-Z0-9]{6}$/.test(value.trim().toUpperCase())) error = "Invalid IFSC format (e.g., SBIN0001234)";
+        break;
+      case "bank_account_number":
+        if (!value.trim()) error = "Bank account number is required";
+        else if (!/^\d{9,18}$/.test(value.trim())) error = "Account number must be 9–18 digits";
+        break;
       default:
         break;
     }
@@ -53,7 +68,6 @@ const Referee = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-
     const newErrors = {};
     Object.keys(formData).forEach(key => {
       const error = validateField(key, formData[key]);
@@ -72,7 +86,15 @@ const Referee = () => {
 
       if (res.status === 201) {
         setPopup({ show: true, message: "Registration Successful, our PR team will contact you soon!", success: true });
-        setFormData({ name: "", email: "", phone: "", sport: "" });
+        setFormData({
+          name: "",
+          email: "",
+          phone: "",
+          sport: "",
+          account_holder_name: "",
+          ifsc_code: "",
+          bank_account_number: ""
+        });
       } else {
         setPopup({ show: true, message: "Registration Failed. Please try again.", success: false });
       }
@@ -101,70 +123,50 @@ const Referee = () => {
 
           <form className="form" onSubmit={handleSubmit}>
             <div className={`input-group ${errors.name ? 'error' : ''}`}>
-              <label htmlFor="name" className="input-label">
-                <FiUser className="label-icon" /> Full Name
-              </label>
-              <input
-                id="name"
-                name="name"
-                type="text"
-                placeholder="Enter your full name"
-                value={formData.name}
-                onChange={handleInputChange}
-                className="form-input"
-              />
+              <label className="input-label"><FiUser className="label-icon" /> Full Name</label>
+              <input name="name" type="text" placeholder="Enter your full name" value={formData.name} onChange={handleInputChange} className="form-input" />
               {errors.name && <span className="error-message"><FiAlertCircle /> {errors.name}</span>}
             </div>
 
             <div className={`input-group ${errors.email ? 'error' : ''}`}>
-              <label htmlFor="email" className="input-label">
-                <FiMail className="label-icon" /> Email Address
-              </label>
-              <input
-                id="email"
-                name="email"
-                type="email"
-                placeholder="Enter a valid email address"
-                value={formData.email}
-                onChange={handleInputChange}
-                className="form-input"
-              />
+              <label className="input-label"><FiMail className="label-icon" /> Email Address</label>
+              <input name="email" type="email" placeholder="Enter a valid email address" value={formData.email} onChange={handleInputChange} className="form-input" />
               {errors.email && <span className="error-message"><FiAlertCircle /> {errors.email}</span>}
             </div>
 
             <div className={`input-group ${errors.phone ? 'error' : ''}`}>
-              <label htmlFor="phone" className="input-label">
-                <FiPhone className="label-icon" /> Phone Number
-              </label>
-              <input
-                id="phone"
-                name="phone"
-                type="tel"
-                placeholder="Enter a 10-digit phone number"
-                value={formData.phone}
-                onChange={handleInputChange}
-                className="form-input"
-              />
+              <label className="input-label"><FiPhone className="label-icon" /> Phone Number</label>
+              <input name="phone" type="tel" placeholder="Enter a 10-digit phone number" value={formData.phone} onChange={handleInputChange} className="form-input" />
               {errors.phone && <span className="error-message"><FiAlertCircle /> {errors.phone}</span>}
             </div>
 
             <div className={`input-group ${errors.sport ? 'error' : ''}`}>
-              <label htmlFor="sport" className="input-label">
-                <FiTrendingUp className="label-icon" /> Choose Sport
-              </label>
-              <select
-                id="sport"
-                name="sport"
-                value={formData.sport}
-                onChange={handleInputChange}
-                className="form-input"
-              >
+              <label className="input-label"><FiTrendingUp className="label-icon" /> Choose Sport</label>
+              <select name="sport" value={formData.sport} onChange={handleInputChange} className="form-input">
                 <option value="">Select a sport...</option>
                 {sports.map((sport, index) => (
                   <option key={index} value={sport}>{sport}</option>
                 ))}
               </select>
               {errors.sport && <span className="error-message"><FiAlertCircle /> {errors.sport}</span>}
+            </div>
+
+            <div className={`input-group ${errors.account_holder_name ? 'error' : ''}`}>
+              <label className="input-label"><FiUser className="label-icon" /> Account Holder Name</label>
+              <input name="account_holder_name" type="text" placeholder="As per bank records" value={formData.account_holder_name} onChange={handleInputChange} className="form-input" />
+              {errors.account_holder_name && <span className="error-message"><FiAlertCircle /> {errors.account_holder_name}</span>}
+            </div>
+
+            <div className={`input-group ${errors.ifsc_code ? 'error' : ''}`}>
+              <label className="input-label"><FiHash className="label-icon" /> IFSC Code</label>
+              <input name="ifsc_code" type="text" placeholder="e.g. SBIN0001234" value={formData.ifsc_code} onChange={handleInputChange} className="form-input" />
+              {errors.ifsc_code && <span className="error-message"><FiAlertCircle /> {errors.ifsc_code}</span>}
+            </div>
+
+            <div className={`input-group ${errors.bank_account_number ? 'error' : ''}`}>
+              <label className="input-label"><FiCreditCard className="label-icon" /> Bank Account Number</label>
+              <input name="bank_account_number" type="text" placeholder="Enter bank account number" value={formData.bank_account_number} onChange={handleInputChange} className="form-input" />
+              {errors.bank_account_number && <span className="error-message"><FiAlertCircle /> {errors.bank_account_number}</span>}
             </div>
 
             <button type="submit" className="submit-btn">
