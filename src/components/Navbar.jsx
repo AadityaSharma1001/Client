@@ -98,7 +98,7 @@ const Navbar = () => {
 
           <div className="nav-right">
             <Link to="/register" className="cta-button" aria-label="Register for VARCHAS 2025">
-              Register
+              Register / Login
             </Link>
 
             <button 
@@ -147,7 +147,7 @@ const Navbar = () => {
             tabIndex={isMenuOpen ? 0 : -1}
             onClick={() => setIsMenuOpen(false)}
           >
-            Register for Varchas 2025
+            Register / Login for Varchas 2025
           </Link>
         </div>
       </nav>

@@ -379,3 +379,21 @@ body {
     border-radius: 8px !important;
   }
 }
+
+.login-redirect {
+  margin-top: 1rem;
+  text-align: center;
+  color: #d4af37;
+  font-size: 0.95rem;
+}
+
+.login-redirect a {
+  color: #fff;
+  text-decoration: underline;
+  font-weight: 500;
+  transition: color 0.3s;
+}
+
+.login-redirect a:hover {
+  color: #d4af37;
+}

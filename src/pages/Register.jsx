@@ -1,5 +1,6 @@
 import React, { useState } from 'react'
-import { FiMail, FiLock, FiEye, FiEyeOff, FiCheckCircle, FiAlertCircle, FiUser, FiPhone, FiHash, FiCreditCard } from "react-icons/fi"
+import { Link } from "react-router-dom"
+import { FiMail, FiLock, FiEye, FiEyeOff, FiCheckCircle, FiAlertCircle } from "react-icons/fi"
 import '../styles/Register.css'
 import Particles from '../components/Particles'
 
@@ -9,7 +10,6 @@ const UserRegister = () => {
     const [errors1, setErrors1] = useState({})
     const [showPass, setShowPass] = useState({ pass: false, confirm: false })
     const [form2, setForm2] = useState({
-        userId: "",
         email: "",
         first_name: "",
         last_name: "",
@@ -23,7 +23,6 @@ const UserRegister = () => {
         bank_account_number: ""
     })
     const [errors2, setErrors2] = useState({})
-    const [uniqueId, setUniqueId] = useState("")
     const [popup, setPopup] = useState({ show: false, message: "", success: false })
     const backendUrl = import.meta.env.VITE_BACKEND_URL
 
@@ -87,32 +86,21 @@ const UserRegister = () => {
             if (err) newErrors[k] = err
         })
         setErrors1(newErrors)
-        if (Object.keys(newErrors).length > 0) return;
+        if (Object.keys(newErrors).length > 0) return
 
         try {
             const res = await fetch(`${backendUrl}/account/userregister/`, {
                 method: "POST",
                 headers: { "Content-Type": "application/json" },
-                body: JSON.stringify({ email: form1.email, password: form1.password })
+                body: JSON.stringify({ email: form1.email, password: form1.password, confirm_password: form1.confirm })
             })
             const data = await res.json()
-            setUniqueId(data.uniqueId)
-            setForm2(prev => ({
-                ...prev,
-                email: form1.email,
-                userId: data.uniqueId
-            }))
-            setStep(2)
-            if (data.message === "Profile Updated Successfully") {
-                setUniqueId(data.uniqueId)
-                setForm2(prev => ({
-                    ...prev,
-                    email: form1.email,
-                    userId: data.uniqueId
-                }))
+            //   console.log(data)
+            if ((res.status === 201 || res.status === 200) && data.message?.toLowerCase().includes("success")) {
+                setForm2(prev => ({ ...prev, email: form1.email }))
                 setStep(2)
             } else {
-                setPopup({ show: true, message: "Registration failed", success: false })
+                setPopup({ show: true, message: data.message || data.Error || "Registration failed", success: false })
             }
         } catch {
             setPopup({ show: true, message: "Network error", success: false })
@@ -133,10 +121,11 @@ const UserRegister = () => {
 
         try {
             const res = await fetch(`${backendUrl}/account/updateInfo/`, {
-                method: "POST",
+                method: "PUT",
                 headers: { "Content-Type": "application/json" },
-                body: JSON.stringify({ ...form2, uniqueId })
+                body: JSON.stringify(form2)
             })
+            console.log(form2);
             if (res.status === 201) {
                 setPopup({ show: true, message: "Registration Successful!", success: true })
                 setTimeout(() => window.location.reload(), 2500)
@@ -195,6 +184,10 @@ const UserRegister = () => {
                             </div>
 
                             <button type="submit" className="submit-btn"><FiCheckCircle /> Register</button>
+
+                            <p className="login-redirect">
+                                Already registered? <Link to="/login">Login</Link>
+                            </p>
                         </form>
                     </div>
                 )}
@@ -203,9 +196,7 @@ const UserRegister = () => {
                     <div className="form-card popup-card">
                         <h1 className="form-title">Complete Your Profile</h1>
                         <form onSubmit={updateInfo} className="form">
-                            {["userId", "email"].map(f => (
-                                <input key={f} value={form2[f]} readOnly className="form-input readonly" placeholder={f === "userId" ? "User ID" : "Email"} />
-                            ))}
+                            <input value={form2.email} readOnly className="form-input readonly" placeholder="Email" />
 
                             {[
                                 ["first_name", "First Name"], ["last_name", "Last Name"], ["phone", "Phone"],
@@ -214,7 +205,8 @@ const UserRegister = () => {
                                 ["bank_account_number", "Bank Account Number"]
                             ].map(([name, placeholder]) => (
                                 <div key={name} className={`input-group ${errors2[name] ? 'error' : ''}`}>
-                                    <input name={name} placeholder={placeholder} value={form2[name]} onChange={e => handleChange(e, setForm2, validateField2, setErrors2)} className="form-input" />
+                                    <input name={name} placeholder={placeholder} value={form2[name]}
+                                        onChange={e => handleChange(e, setForm2, validateField2, setErrors2)} className="form-input" />
                                     {errors2[name] && <span className="error-message"><FiAlertCircle /> {errors2[name]}</span>}
                                 </div>
                             ))}
