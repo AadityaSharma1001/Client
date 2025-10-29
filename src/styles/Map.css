@@ -1,0 +1,241 @@
+.map-page {
+  width: 100%;
+  min-height: 100vh;
+  background: linear-gradient(135deg, #0a0a0a 0%, #1a1a1a 100%);
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  position: relative;
+}
+
+.map-header {
+  text-align: center;
+  padding: 2rem 1rem 1rem;
+  background: rgba(0, 0, 0, 0.5);
+  backdrop-filter: blur(10px);
+  border-bottom: 2px solid rgba(212, 175, 55, 0.3);
+  z-index: 10;
+}
+
+.map-title {
+  font-size: 3rem;
+  font-weight: 700;
+  background: linear-gradient(135deg, #d4af37 0%, #f4e5a8 50%, #d4af37 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  margin: 0 0 0.5rem 0;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+}
+
+.map-subtitle {
+  font-size: 1.2rem;
+  color: rgba(212, 175, 55, 0.8);
+  margin: 0;
+  font-weight: 300;
+  letter-spacing: 1px;
+}
+
+.map-controls-info {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 2rem;
+  padding: 1rem;
+  background: rgba(0, 0, 0, 0.3);
+  backdrop-filter: blur(5px);
+  border-bottom: 1px solid rgba(212, 175, 55, 0.2);
+  flex-wrap: wrap;
+  z-index: 10;
+}
+
+.control-item {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  color: #d4af37;
+  font-size: 0.9rem;
+  padding: 0.5rem 1rem;
+  background: rgba(212, 175, 55, 0.1);
+  border-radius: 8px;
+  border: 1px solid rgba(212, 175, 55, 0.3);
+  transition: all 0.3s ease;
+}
+
+.control-item:hover {
+  background: rgba(212, 175, 55, 0.2);
+  border-color: rgba(212, 175, 55, 0.5);
+  transform: translateY(-2px);
+}
+
+.control-icon {
+  font-size: 1.2rem;
+}
+
+.control-text {
+  font-weight: 500;
+  letter-spacing: 0.5px;
+}
+
+.model-container {
+  flex: 1;
+  width: 100%;
+  position: relative;
+  min-height: 60vh;
+}
+
+.canvas-3d {
+  background: radial-gradient(circle at center, #1a1a1a 0%, #0a0a0a 100%);
+}
+
+.loading-screen {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  height: 100%;
+  min-height: 60vh;
+  background: linear-gradient(135deg, #0a0a0a 0%, #1a1a1a 100%);
+}
+
+.loader {
+  text-align: center;
+  color: #d4af37;
+}
+
+.spinner {
+  width: 60px;
+  height: 60px;
+  margin: 0 auto 1.5rem;
+  border: 4px solid rgba(212, 175, 55, 0.2);
+  border-top: 4px solid #d4af37;
+  border-radius: 50%;
+  animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+.loading-text {
+  font-size: 1.5rem;
+  font-weight: 600;
+  margin: 0 0 0.5rem 0;
+  letter-spacing: 1px;
+}
+
+.loading-subtext {
+  font-size: 1rem;
+  color: rgba(212, 175, 55, 0.7);
+  font-weight: 300;
+  margin: 0;
+}
+
+.map-footer {
+  text-align: center;
+  padding: 1rem;
+  background: rgba(0, 0, 0, 0.5);
+  backdrop-filter: blur(10px);
+  border-top: 2px solid rgba(212, 175, 55, 0.3);
+  z-index: 10;
+}
+
+.footer-text {
+  color: rgba(212, 175, 55, 0.8);
+  font-size: 0.9rem;
+  margin: 0;
+  font-weight: 400;
+  letter-spacing: 0.5px;
+}
+
+/* Mobile Responsive */
+@media (max-width: 768px) {
+  .map-title {
+    font-size: 2rem;
+  }
+
+  .map-subtitle {
+    font-size: 1rem;
+  }
+
+  .map-controls-info {
+    gap: 1rem;
+    padding: 0.75rem;
+  }
+
+  .control-item {
+    font-size: 0.8rem;
+    padding: 0.4rem 0.8rem;
+  }
+
+  .control-icon {
+    font-size: 1rem;
+  }
+
+  .model-container {
+    min-height: 50vh;
+  }
+
+  .loading-screen {
+    min-height: 50vh;
+  }
+
+  .loading-text {
+    font-size: 1.2rem;
+  }
+
+  .loading-subtext {
+    font-size: 0.9rem;
+  }
+
+  .spinner {
+    width: 50px;
+    height: 50px;
+  }
+}
+
+@media (max-width: 480px) {
+  .map-title {
+    font-size: 1.5rem;
+  }
+
+  .map-controls-info {
+    flex-direction: column;
+    gap: 0.5rem;
+  }
+
+  .control-item {
+    width: 100%;
+    max-width: 280px;
+    justify-content: center;
+  }
+}
+
+/* Tablet Responsive */
+@media (min-width: 769px) and (max-width: 1024px) {
+  .map-title {
+    font-size: 2.5rem;
+  }
+
+  .model-container {
+    min-height: 65vh;
+  }
+}
+
+/* High-resolution displays */
+@media (min-width: 1920px) {
+  .map-title {
+    font-size: 3.5rem;
+  }
+
+  .map-subtitle {
+    font-size: 1.4rem;
+  }
+
+  .control-item {
+    font-size: 1rem;
+    padding: 0.6rem 1.2rem;
+  }
+}
