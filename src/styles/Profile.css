@@ -317,3 +317,42 @@
     transition: none !important;
   }
 }
+
+/* Logout Button */
+.logout-button {
+  position: absolute;
+  top: 1rem;
+  right: 1rem;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  padding: 0.45rem 0.9rem;
+  border-radius: 8px;
+  background: rgba(212, 175, 55, 0.12);
+  border: 1px solid rgba(212, 175, 55, 0.4);
+  color: var(--accent, #d4af37);
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.25s ease;
+  z-index: 10;
+}
+
+.logout-button:hover {
+  background: rgba(212, 175, 55, 0.25);
+  transform: translateY(-2px);
+  box-shadow: 0 0 10px rgba(212, 175, 55, 0.3);
+}
+
+/* 🧠 Responsive fix — prevent overlap with avatar on small screens */
+@media (max-width: 640px) {
+  .logout-button {
+    position: static;
+    align-self:last baseline;
+    margin-bottom: 0.75rem;
+    order: -1; /* puts logout button above everything else */
+  }
+
+  .profile-container {
+    align-items: center;
+  }
+}
