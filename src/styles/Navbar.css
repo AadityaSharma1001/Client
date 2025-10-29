@@ -765,6 +765,10 @@ html {
     padding: 8px 0;
   }
 
+  .user-id{
+    display: none;
+  }
+
   .mobile-user-info .mobile-user-label {
     display: inline-block;
     font-size: 0.3rem;

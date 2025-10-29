@@ -1,5 +1,5 @@
-import React, { useEffect, useState } from "react"
-import { FiUser, FiMail, FiPhone, FiHome, FiHash, FiBook, FiUsers } from "react-icons/fi"
+import React, { useEffect, useMemo, useState } from "react"
+import { FiUser, FiMail, FiPhone, FiHome, FiHash, FiBook, FiUsers, FiCheckCircle, FiXCircle } from "react-icons/fi"
 import "../styles/Profile.css"
 import useLocalStorage from "../hooks/useLocalStorage"
 import Particles from "../components/Particles"
@@ -28,11 +28,35 @@ const UserProfile = () => {
         fetchProfile()
     }, [])
 
+    const initials = useMemo(() => {
+        const first = profile?.first_name?.[0] || ""
+        const last = profile?.last_name?.[0] || ""
+        const joined = `${first}${last}`.trim()
+        return joined || (profile?.email ? profile.email[0]?.toUpperCase() : "U")
+    }, [profile])
+
+    const teams = useMemo(() => {
+        if (!profile) return []
+        const multi = profile.teams || profile.team_ids
+        if (Array.isArray(multi) && multi.length > 0) return multi
+        if (profile.team_id) return [profile.team_id]
+        return []
+    }, [profile])
+
     if (!profile) {
         return (
             <div className="profile-loading">
                 <Particles particleColors={['#d4af37', '#b78f28']} particleCount={2000} speed={0.1} />
-                <h2>Loading profile...</h2>
+                <div className="profile-skeleton">
+                    <div className="skeleton-avatar" />
+                    <div className="skeleton-line w-60" />
+                    <div className="skeleton-line w-40" />
+                    <div className="skeleton-grid">
+                        {Array.from({ length: 6 }).map((_, i) => (
+                            <div className="skeleton-card" key={i} />
+                        ))}
+                    </div>
+                </div>
             </div>
         )
     }
@@ -48,22 +72,61 @@ const UserProfile = () => {
     return (
         <div className="profile-page">
             <div className="particles-background">
-                <Particles particleColors={['#d4af37', '#b78f28']} particleCount={3000} speed={0.1} />
+                <Particles particleColors={['#d4af37', '#06b6d4', '#b78f28']} particleCount={2400} speed={0.12} />
             </div>
 
-            <div className="profile-card">
-                <h1 className="profile-title">User Profile</h1>
-                <hr className="divider" />
+            <div className="profile-container">
+                <section className="profile-hero">
+                    <div className="avatar-ring">
+                        <div className="avatar-circle"><FiUser aria-label="User avatar" /></div>
+                    </div>
+                    <div className="hero-text">
+                        <h1 className="profile-title">{profile.first_name} {profile.last_name}</h1>
+                        <p className="profile-subtitle"><FiMail /> {profile.email}</p>
+                        <div className="profile-badges">
+                            <span className="badge"><FiHash /> ID: {uniqueId}</span>
+                            <span className={`badge ${profile.accommodation_required === 'Y' ? 'ok' : 'muted'}`}>
+                                {profile.accommodation_required === 'Y' ? <FiCheckCircle /> : <FiXCircle />}
+                                {profile.accommodation_required === 'Y' ? 'Accommodation' : 'No Accommodation'}
+                            </span>
+                        </div>
+                    </div>
+                </section>
 
-                <div className="profile-info">
-                    <div className="profile-item"><FiUser /> <strong>Name:</strong> {profile.first_name} {profile.last_name}</div>
-                    <div className="profile-item"><FiMail /> <strong>Email:</strong> {profile.email}</div>
-                    <div className="profile-item"><FiPhone /> <strong>Phone:</strong> {profile.phone}</div>
-                    <div className="profile-item"><FiBook /> <strong>College:</strong> {profile.college}</div>
-                    <div className="profile-item"><FiHome /> <strong>Accommodation:</strong> {profile.accommodation_required === "Y" ? "Yes" : "No"}</div>
-                    <div className="profile-item"><FiHash /> <strong>User ID:</strong> {uniqueId}</div>
-                    <div className="profile-item"><FiUsers /> <strong>Team ID:</strong> {profile.team_id || "NA"}</div>
-                </div>
+                <section className="profile-grid">
+                    <div className="info-card">
+                        <div className="info-title"><FiUser /> Full Name</div>
+                        <div className="info-value">{profile.first_name} {profile.last_name}</div>
+                    </div>
+                    <div className="info-card">
+                        <div className="info-title"><FiPhone /> Phone</div>
+                        <div className="info-value">{profile.phone || '—'}</div>
+                    </div>
+                    <div className="info-card">
+                        <div className="info-title"><FiHome /> Accommodation</div>
+                        <div className="info-value">{profile.accommodation_required === 'Y' ? 'Yes' : 'No'}</div>
+                    </div>
+                    <div className="info-card">
+                        <div className="info-title"><FiHash /> Unique ID</div>
+                        <div className="info-value">{uniqueId}</div>
+                    </div>
+                    <div className="info-card span-2 college-card">
+                        <div className="info-title"><FiBook /> College</div>
+                        <div className="info-value">{profile.college || '—'}</div>
+                    </div>
+                    <div className="info-card span-2">
+                        <div className="info-title"><FiUsers /> Teams</div>
+                        <div className="info-value">
+                            {teams.length > 0 ? (
+                                <div className="teams-list">
+                                    {teams.map((t, i) => (
+                                        <span className="badge" key={`${t}-${i}`}>{String(t)}</span>
+                                    ))}
+                                </div>
+                            ) : 'NA'}
+                        </div>
+                    </div>
+                </section>
             </div>
         </div>
     )
