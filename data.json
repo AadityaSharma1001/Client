@@ -59,6 +59,16 @@
     "ruleBookUrl": "/logo.png",
     "registerUrl": "https://www.instagram.com/in/aaditya___1210"
   },
+   {
+    "image": "https://res.cloudinary.com/dvz8vitos/image/upload/v1761412474/Team/1tARoklpRwZRdj81NL9u3XZaomnZP8ri9.jpg",
+    "title": "Sanidhya Mishra",
+    "subtitle": "ATS",
+    "description": "@sanidhyamishra \u2014 Security & Safety Lead",
+    "borderColor": "#FACC15",
+    "gradient": "linear-gradient(180deg, #FACC15, #000)",
+    "ruleBookUrl": "/logo.png",
+    "registerUrl": "https://instagram.com/sanidhyamishra"
+  },
   {
     "image": "https://res.cloudinary.com/dvz8vitos/image/upload/v1761412401/Team/1qPw0F7aSp4pdOUt9MefB6SmCmhVJWH0u.jpg",
     "title": "Nitin koronde",
@@ -110,16 +120,6 @@
     "registerUrl": "https://instagram.com/Supriya__2666"
   },
   {
-    "image": "https://res.cloudinary.com/dvz8vitos/image/upload/v1761412451/Team/15aTWeL4DiX2FTBRrryyDyz5Nfzc-LBMz.jpg",
-    "title": "TUSHAR NAGARGOJE",
-    "subtitle": "Sports",
-    "description": "@_tushar_nagargoje \u2014 Basketball Coordination",
-    "borderColor": "#F59E0B",
-    "gradient": "linear-gradient(180deg, #F59E0B, #000)",
-    "ruleBookUrl": "/logo.png",
-    "registerUrl": "https://instagram.com/_tushar_nagargoje"
-  },
-  {
     "image": "https://res.cloudinary.com/dvz8vitos/image/upload/v1761412396/Team/1XEoCM-A3AiXFk20Sl6n8M1p4GT11sSfR.jpg",
     "title": "Saumitra",
     "subtitle": "Design and Creativity",
@@ -152,7 +152,7 @@
   {
     "image": "https://res.cloudinary.com/dvz8vitos/image/upload/v1761412464/Team/1Jjq6lXK0sif4Vo1rxCxgH76imMcfLROs.jpg",
     "title": "Arnav Kataria",
-    "subtitle": "Informal Events",
+    "subtitle": "Informals",
     "description": "@arnavkataria77 \u2014 Organizes Fun Events",
     "borderColor": "#2563EB",
     "gradient": "linear-gradient(180deg, #2563EB, #000)",
@@ -182,7 +182,7 @@
   {
     "image": "https://res.cloudinary.com/dvz8vitos/image/upload/v1761412404/Team/1tgFPMSVzxVoGm6r9Y34LvKo-FEzb7Zuu.jpg",
     "title": "Dungar Soni",
-    "subtitle": "Informal events",
+    "subtitle": "Informals",
     "description": "@dungar_soni_05 \u2014 Informal Event Management",
     "borderColor": "#EA580C",
     "gradient": "linear-gradient(180deg, #EA580C, #000)",
@@ -262,7 +262,7 @@
   {
     "image": "https://res.cloudinary.com/dvz8vitos/image/upload/v1761412415/Team/1GTOfKc5RPofgeIJOBSFFmMcGqXHP8C5m.jpg",
     "title": "Apdesh Kumar",
-    "subtitle": "Resources Management",
+    "subtitle": "Resources",
     "description": "@apdeshkumar_243 \u2014 Oversees Resource Distribution",
     "borderColor": "#06B6D4",
     "gradient": "linear-gradient(180deg, #06B6D4, #000)",
@@ -272,7 +272,7 @@
   {
     "image": "https://res.cloudinary.com/dvz8vitos/image/upload/v1761412456/Team/1pcsX7DuZU4-Fpm7_M98Pykcj3ezOGl6p.jpg",
     "title": "Rajat Kumar",
-    "subtitle": "Resources Management",
+    "subtitle": "Resources",
     "description": "na \u2014 Resource Coordinator",
     "borderColor": "#34D399",
     "gradient": "linear-gradient(180deg, #34D399, #000)",
@@ -280,19 +280,9 @@
     "registerUrl": "#"
   },
   {
-    "image": "https://res.cloudinary.com/dvz8vitos/image/upload/v1761412474/Team/1tARoklpRwZRdj81NL9u3XZaomnZP8ri9.jpg",
-    "title": "Sanidhya Mishra",
-    "subtitle": "Security",
-    "description": "@sanidhyamishra \u2014 Security & Safety Lead",
-    "borderColor": "#FACC15",
-    "gradient": "linear-gradient(180deg, #FACC15, #000)",
-    "ruleBookUrl": "/logo.png",
-    "registerUrl": "https://instagram.com/sanidhyamishra"
-  },
-  {
     "image": "https://res.cloudinary.com/dvz8vitos/image/upload/v1761412468/Team/15YxoSheNCawigq_aSEztCxANrGUZfDbP.jpg",
     "title": "Dakshina Nair M",
-    "subtitle": "Public relation",
+    "subtitle": "Public Relations",
     "description": "@dakshina_nair \u2014 PR & Communication",
     "borderColor": "#22D3EE",
     "gradient": "linear-gradient(180deg, #22D3EE, #000)",
@@ -312,12 +302,22 @@
   {
     "image": "https://res.cloudinary.com/dvz8vitos/image/upload/v1761412448/Team/1CrsI0B_6MnA98AQgHyYi5V_zLY7W9J17.jpg",
     "title": "Rahul Ahuja",
-    "subtitle": "PR",
+    "subtitle": "Public Relations",
     "description": "@rahul07.xd \u2014 PR & Communications",
     "borderColor": "#14B8A6",
     "gradient": "linear-gradient(180deg, #14B8A6, #000)",
     "ruleBookUrl": "/logo.png",
     "registerUrl": "https://instagram.com/rahul07.xd"
+  },
+  {
+    "image": "https://res.cloudinary.com/dvz8vitos/image/upload/v1761735411/WhatsApp_Image_2025-10-29_at_08.34.22_d86ee131_mrebjj.jpg",
+    "title": "Vaibhav Dwivedi",
+    "subtitle": "Public Relations",
+    "description": "@cj.vaibhav \u2014 Public Relations",
+    "borderColor": "#F87171",
+    "gradient": "linear-gradient(180deg, #F87171, #000)",
+    "ruleBookUrl": "/logo.png",
+    "registerUrl": "https://www.instagram.com/cj.vaibhav"
   },
   {
     "image": "https://res.cloudinary.com/dvz8vitos/image/upload/v1761412470/Team/1FCjPX8yD6TY2wJcb87Vza_bqqVqM1_0M.jpg",
@@ -368,6 +368,16 @@
     "gradient": "linear-gradient(180deg, #22C55E, #000)",
     "ruleBookUrl": "/logo.png",
     "registerUrl": "https://instagram.com/mayank_1jaat"
+  },
+    {
+    "image": "https://res.cloudinary.com/dvz8vitos/image/upload/v1761412451/Team/15aTWeL4DiX2FTBRrryyDyz5Nfzc-LBMz.jpg",
+    "title": "TUSHAR NAGARGOJE",
+    "subtitle": "Sports",
+    "description": "@_tushar_nagargoje \u2014 Basketball Coordination",
+    "borderColor": "#F59E0B",
+    "gradient": "linear-gradient(180deg, #F59E0B, #000)",
+    "ruleBookUrl": "/logo.png",
+    "registerUrl": "https://instagram.com/_tushar_nagargoje"
   },
   {
     "image": "https://res.cloudinary.com/dvz8vitos/image/upload/v1761412391/Team/18XyurO_le-pXSxhriq9_jA91OfBNKk49.jpg",
