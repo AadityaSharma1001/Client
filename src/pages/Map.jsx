@@ -12,15 +12,15 @@ const Map = () => {
 
       <div className="map-controls-info">
         <div className="control-item">
-          <span className="control-icon">🖱️</span>
+          {/* <span className="control-icon">🖱️</span> */}
           <span className="control-text">Left Click + Drag to Rotate</span>
         </div>
         <div className="control-item">
-          <span className="control-icon">🔍</span>
+          {/* <span className="control-icon">🔍</span> */}
           <span className="control-text">Scroll to Zoom</span>
         </div>
         <div className="control-item">
-          <span className="control-icon">✋</span>
+          {/* <span className="control-icon">✋</span> */}
           <span className="control-text">Right Click + Drag to Pan</span>
         </div>
       </div>
