@@ -4,6 +4,7 @@ import { FiMail, FiLock, FiEye, FiEyeOff, FiCheckCircle, FiAlertCircle } from "r
 import '../styles/Register.css'
 import Particles from '../components/Particles'
 
+
 const STATES = [
     { value: "1", label: "Andhra Pradesh" },
     { value: "2", label: "Arunachal Pradesh" },
@@ -43,6 +44,7 @@ const STATES = [
     { value: "36", label: "Puducherry" }
 ]
 
+
 const UserRegister = () => {
     const [step, setStep] = useState(1)
     const [form1, setForm1] = useState({ email: "", password: "", confirm: "" })
@@ -56,7 +58,7 @@ const UserRegister = () => {
         gender: "",
         college: "",
         state: "",
-        accommodation_required: "N",
+        accommodation_required: "",
         account_holder_name: "",
         ifsc_code: "",
         bank_account_number: ""
@@ -64,6 +66,7 @@ const UserRegister = () => {
     const [errors2, setErrors2] = useState({})
     const [popup, setPopup] = useState({ show: false, message: "", success: false })
     const backendUrl = import.meta.env.VITE_BACKEND_URL
+
 
     const validateField1 = (name, value) => {
         let error = ""
@@ -79,6 +82,7 @@ const UserRegister = () => {
         return error
     }
 
+
     const validateField2 = (name, value) => {
         let error = ""
         switch (name) {
@@ -91,7 +95,7 @@ const UserRegister = () => {
                 if (!/^\d{10}$/.test(value)) error = "Enter a valid 10-digit number"
                 break
             case "gender":
-                if (!["M", "F"].includes(value.toUpperCase())) error = "Enter M or F"
+                if (!value) error = "Please select a gender"
                 break
             case "college":
             case "account_holder_name":
@@ -99,6 +103,9 @@ const UserRegister = () => {
                 break
             case "state":
                 if (!value.trim()) error = "Please select a state"
+                break
+            case "accommodation_required":
+                if (!value) error = "Please select an option"
                 break
             case "ifsc_code":
                 if (!/^[A-Z]{4}0[A-Z0-9]{6}$/.test(value.trim().toUpperCase())) error = "Invalid IFSC format"
@@ -112,12 +119,14 @@ const UserRegister = () => {
         return error
     }
 
+
     const handleChange = (e, setFunc, validateFunc, setErr) => {
         const { name, value } = e.target
         setFunc(prev => ({ ...prev, [name]: value }))
         const error = validateFunc(name, value)
         setErr(prev => ({ ...prev, [name]: error }))
     }
+
 
     const registerUser = async (e) => {
         e.preventDefault()
@@ -128,6 +137,7 @@ const UserRegister = () => {
         })
         setErrors1(newErrors)
         if (Object.keys(newErrors).length > 0) return
+
 
         try {
             const res = await fetch(`${backendUrl}/account/userregister/`, {
@@ -149,6 +159,7 @@ const UserRegister = () => {
         }
     }
 
+
     const updateInfo = async (e) => {
         e.preventDefault()
         const newErrors = {}
@@ -159,12 +170,14 @@ const UserRegister = () => {
         setErrors2(newErrors)
         if (Object.keys(newErrors).length > 0) return
 
+
         try {
             const res = await fetch(`${backendUrl}/account/updateInfo/`, {
                 method: "PUT",
                 headers: { "Content-Type": "application/json" },
                 body: JSON.stringify(form2)
             })
+            console.log(JSON.stringify(form2));
             if (res.status === 201) {
                 setPopup({ show: true, message: "Registration Successful!", success: true })
                 setTimeout(() => {
@@ -180,11 +193,13 @@ const UserRegister = () => {
         }
     }
 
+
     return (
         <div className="registration-page">
             <div className="particles-background">
                 <Particles particleColors={['#d4af37', '#b78f28']} particleCount={4000} speed={0.1} />
             </div>
+
 
             <div className="registration-content">
                 {step === 1 && (
@@ -197,6 +212,7 @@ const UserRegister = () => {
                                     value={form1.email} onChange={e => handleChange(e, setForm1, validateField1, setErrors1)} className="form-input" />
                                 {errors1.email && <span className="error-message"><FiAlertCircle /> {errors1.email}</span>}
                             </div>
+
 
                             <div className={`input-group ${errors1.password ? 'error' : ''}`}>
                                 <label><FiLock className="label-icon" /> Password</label>
@@ -211,6 +227,7 @@ const UserRegister = () => {
                                 {errors1.password && <span className="error-message"><FiAlertCircle /> {errors1.password}</span>}
                             </div>
 
+
                             <div className={`input-group ${errors1.confirm ? 'error' : ''}`}>
                                 <label><FiLock className="label-icon" /> Confirm Password</label>
                                 <div className="password-wrapper">
@@ -224,7 +241,9 @@ const UserRegister = () => {
                                 {errors1.confirm && <span className="error-message"><FiAlertCircle /> {errors1.confirm}</span>}
                             </div>
 
+
                             <button type="submit" className="submit-btn"><FiCheckCircle /> Register</button>
+
 
                             <p className="login-redirect">
                                 Already registered? <Link to="/login">Login</Link>
@@ -233,14 +252,15 @@ const UserRegister = () => {
                     </div>
                 )}
 
+
                 {step === 2 && (
                     <div className="form-card popup-card">
                         <h1 className="form-title">Complete Your Profile</h1>
                         <form onSubmit={updateInfo} className="form">
                             <input value={form2.email} readOnly className="form-input readonly" placeholder="Email" />
 
-                            {[["first_name", "First Name"], ["last_name", "Last Name"], ["phone", "Phone"],
-                                ["gender", "Gender (M/F)"], ["college", "College"]
+
+                            {[["first_name", "First Name"], ["last_name", "Last Name"], ["phone", "Phone"], ["college", "College"]
                             ].map(([name, placeholder]) => (
                                 <div key={name} className={`input-group ${errors2[name] ? 'error' : ''}`}>
                                     <input
@@ -254,7 +274,25 @@ const UserRegister = () => {
                                 </div>
                             ))}
 
-                            {/* ✅ State Dropdown */}
+
+                            {/* Gender Dropdown */}
+                            <div className={`input-group ${errors2.gender ? 'error' : ''}`}>
+                                <label>Gender</label>
+                                <select
+                                    name="gender"
+                                    value={form2.gender}
+                                    onChange={e => handleChange(e, setForm2, validateField2, setErrors2)}
+                                    className="form-input"
+                                >
+                                    <option value="">-- Select Gender --</option>
+                                    <option value="M">Male</option>
+                                    <option value="F">Female</option>
+                                </select>
+                                {errors2.gender && <span className="error-message"><FiAlertCircle /> {errors2.gender}</span>}
+                            </div>
+
+
+                            {/* State Dropdown */}
                             <div className={`input-group ${errors2.state ? 'error' : ''}`}>
                                 <label>State</label>
                                 <select
@@ -271,8 +309,26 @@ const UserRegister = () => {
                                 {errors2.state && <span className="error-message"><FiAlertCircle /> {errors2.state}</span>}
                             </div>
 
+
+                            {/* Accommodation Required Dropdown */}
+                            <div className={`input-group ${errors2.accommodation_required ? 'error' : ''}`}>
+                                <label>Accommodation Required</label>
+                                <select
+                                    name="accommodation_required"
+                                    value={form2.accommodation_required}
+                                    onChange={e => handleChange(e, setForm2, validateField2, setErrors2)}
+                                    className="form-input"
+                                >
+                                    <option value="">-- Select Option --</option>
+                                    <option value="Y">Yes</option>
+                                    <option value="N">No</option>
+                                </select>
+                                {errors2.accommodation_required && <span className="error-message"><FiAlertCircle /> {errors2.accommodation_required}</span>}
+                            </div>
+
+
                             {[["account_holder_name", "Account Holder Name"], ["ifsc_code", "IFSC Code"],
-                                ["bank_account_number", "Bank Account Number"]
+                            ["bank_account_number", "Bank Account Number"]
                             ].map(([name, placeholder]) => (
                                 <div key={name} className={`input-group ${errors2[name] ? 'error' : ''}`}>
                                     <input
@@ -286,11 +342,13 @@ const UserRegister = () => {
                                 </div>
                             ))}
 
+
                             <button type="submit" className="submit-btn"><FiCheckCircle /> Submit</button>
                         </form>
                     </div>
                 )}
             </div>
+
 
             {popup.show && (
                 <div className={`popup ${popup.success ? 'success' : 'error'}`}>
@@ -300,5 +358,6 @@ const UserRegister = () => {
         </div>
     )
 }
+
 
 export default UserRegister
