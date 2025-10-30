@@ -98,9 +98,9 @@ const UserProfile = () => {
                         <p className="profile-subtitle"><FiMail /> {profile.email}</p>
                         <div className="profile-badges">
                             <span className="badge"><FiHash /> ID: {uniqueId}</span>
-                            <span className={`badge ${profile.accommodation_required === 'Y' ? 'ok' : 'muted'}`}>
-                                {profile.accommodation_required === 'Y' ? <FiCheckCircle /> : <FiXCircle />}
-                                {profile.accommodation_required === 'Y' ? 'Accommodation' : 'No Accommodation'}
+                            <span className={`badge ${profile.accommodation === 'Y' ? 'ok' : 'muted'}`}>
+                                {profile.accommodation === 'Y' ? <FiCheckCircle /> : <FiXCircle />}
+                                {profile.accommodation === 'Y' ? 'Accommodation' : 'No Accommodation'}
                             </span>
                         </div>
                     </div>
