@@ -499,7 +499,7 @@ const TeamReg = ({ isOpen, onClose, sportName }) => {
 
         try {
             const backendUrl = import.meta.env.VITE_BACKEND_URL;
-            const response = await fetch(`${backendUrl}/account/jointeam`, {
+            const response = await fetch(`${backendUrl}/account/jointeam/`, {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
