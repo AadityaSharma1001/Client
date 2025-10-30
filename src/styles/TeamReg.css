@@ -374,3 +374,16 @@
   opacity: 0.5;
   cursor: not-allowed;
 }
+
+.player-ids-section {
+  margin-top: 16px;
+  padding-top: 16px;
+  border-top: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.player-ids-heading {
+  color: #4a90e2;
+  font-size: 14px;
+  font-weight: 600;
+  margin: 0 0 12px 0;
+}
