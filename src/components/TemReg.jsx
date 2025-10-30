@@ -102,29 +102,36 @@ const CATEGORY_MAP = {
     "Men": "M",
     "Women": "W",
     "Mixed": "X",
-    "Singles": "S"
+    "Women Singles": "S",
+    "Men Singles": "S",
 };
 
 const TeamReg = ({ isOpen, onClose, sportName }) => {
+    const [activeTab, setActiveTab] = useState('create');
     const [selectedCategories, setSelectedCategories] = useState([]);
     const [teamData, setTeamData] = useState({});
     const [errors, setErrors] = useState({});
     const [isSubmitting, setIsSubmitting] = useState(false);
     const [submitError, setSubmitError] = useState('');
     const [submitSuccess, setSubmitSuccess] = useState(false);
+    const [successMessage, setSuccessMessage] = useState('');
+    const [teamId, setTeamId] = useState('');
+    const [token] = useLocalStorage("token", "");
 
     const sportInfo = SPORTS_DATA[sportName];
 
     useEffect(() => {
-
         if (isOpen) {
+            setActiveTab('create');
             setSelectedCategories([]);
             setTeamData({});
             setErrors({});
             setSubmitError('');
             setSubmitSuccess(false);
+            setSuccessMessage('');
+            setTeamId('');
         }
-    }, [isOpen, sportName, sportInfo]);
+    }, [isOpen, sportName]);
 
     const handleCategoryToggle = (category) => {
         setSelectedCategories(prev => {
@@ -172,7 +179,6 @@ const TeamReg = ({ isOpen, onClose, sportName }) => {
         }
     };
 
-    const [token] = useLocalStorage("token", "");
     const handleTeamNameChange = (category, value) => {
         setTeamData(prev => ({
             ...prev,
@@ -221,7 +227,7 @@ const TeamReg = ({ isOpen, onClose, sportName }) => {
         return Object.keys(newErrors).length === 0;
     };
 
-    const handleSubmit = async (e) => {
+    const handleCreateTeam = async (e) => {
         e.preventDefault();
         setSubmitError('');
 
@@ -243,8 +249,6 @@ const TeamReg = ({ isOpen, onClose, sportName }) => {
                 teams: teams
             };
 
-            console.log('Submitting payload:', payload);
-
             const backendUrl = import.meta.env.VITE_BACKEND_URL;
             const response = await fetch(`${backendUrl}/registration/createteam/`, {
                 method: 'POST',
@@ -260,6 +264,8 @@ const TeamReg = ({ isOpen, onClose, sportName }) => {
                 throw new Error(errorData.message || errorData.Error || 'Registration failed');
             }
 
+            const responseData = await response.json();
+            setSuccessMessage(responseData.message || 'Team created successfully!');
             setSubmitSuccess(true);
 
             setTimeout(() => {
@@ -268,6 +274,48 @@ const TeamReg = ({ isOpen, onClose, sportName }) => {
 
         } catch (error) {
             setSubmitError(error.message || 'Failed to register. Please try again.');
+        } finally {
+            setIsSubmitting(false);
+        }
+    };
+
+    const handleJoinTeam = async (e) => {
+        e.preventDefault();
+        setSubmitError('');
+
+        if (!teamId.trim()) {
+            setSubmitError('Please enter a team ID');
+            return;
+        }
+
+        setIsSubmitting(true);
+
+        try {
+            const backendUrl = import.meta.env.VITE_BACKEND_URL;
+            const response = await fetch(`${backendUrl}/account/jointeam/`, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Authorization': `Bearer ${token}`
+                },
+                body: JSON.stringify({ teamId: teamId })
+            });
+
+            if (!response.ok) {
+                const errorData = await response.json();
+                throw new Error(errorData.message || errorData.Error || 'Failed to join team');
+            }
+
+            const responseData = await response.json();
+            setSuccessMessage(responseData.message || 'Successfully joined team!');
+            setSubmitSuccess(true);
+
+            setTimeout(() => {
+                onClose();
+            }, 2000);
+
+        } catch (error) {
+            setSubmitError(error.message || 'Failed to join team. Please try again.');
         } finally {
             setIsSubmitting(false);
         }
@@ -293,101 +341,162 @@ const TeamReg = ({ isOpen, onClose, sportName }) => {
                 {submitSuccess ? (
                     <div className="team-reg-success">
                         <div className="success-icon">✓</div>
-                        <p>Registration successful!</p>
+                        <p>{successMessage}</p>
                     </div>
                 ) : (
-                    <form onSubmit={handleSubmit} className="team-reg-form">
-                        <div className="form-section">
-                            <h3 className="section-title">Select Categories</h3>
-                            <div className="category-grid">
-                                {Object.keys(sportInfo.categories).map(category => (
-                                    <label key={category} className="category-checkbox">
-                                        <input
-                                            type="checkbox"
-                                            checked={selectedCategories.includes(category)}
-                                            onChange={() => handleCategoryToggle(category)}
-                                            disabled={isSubmitting}
-                                        />
-                                        <span className="category-label">{category}</span>
-                                        <span className="category-range">
-                                            ({sportInfo.categories[category].min}-{sportInfo.categories[category].max})
-                                        </span>
-                                    </label>
-                                ))}
-                            </div>
+                    <>
+                        <div className="tab-buttons">
+                            <button
+                                className={`tab-button ${activeTab === 'create' ? 'active' : ''}`}
+                                onClick={() => setActiveTab('create')}
+                            >
+                                Create Team
+                            </button>
+                            <button
+                                className={`tab-button ${activeTab === 'join' ? 'active' : ''}`}
+                                onClick={() => setActiveTab('join')}
+                            >
+                                Join Team
+                            </button>
                         </div>
 
-                        {selectedCategories.length > 0 && (
-                            <div className="form-section">
-                                <h3 className="section-title">Team Details</h3>
-                                {selectedCategories.map(category => (
-                                    <div key={category} className="team-details-card">
-                                        <h4 className="category-heading">{category}</h4>
-
-                                        <div className="form-group">
-                                            <label htmlFor={`teamName-${category}`}>Team Name</label>
-                                            <input
-                                                id={`teamName-${category}`}
-                                                type="text"
-                                                value={teamData[category]?.teamName || ''}
-                                                onChange={(e) => handleTeamNameChange(category, e.target.value)}
-                                                placeholder="Enter team name"
-                                                disabled={isSubmitting}
-                                                className={errors[`${category}_teamName`] ? 'error' : ''}
-                                            />
-                                            {errors[`${category}_teamName`] && (
-                                                <span className="error-message">{errors[`${category}_teamName`]}</span>
-                                            )}
-                                        </div>
-
-                                        <div className="form-group">
-                                            <label htmlFor={`teamSize-${category}`}>
-                                                Team Size (Min: {sportInfo.categories[category].min}, Max: {sportInfo.categories[category].max})
+                        {activeTab === 'create' ? (
+                            <form onSubmit={handleCreateTeam} className="team-reg-form">
+                                <div className="form-section">
+                                    <h3 className="section-title">Select Categories</h3>
+                                    <div className="category-grid">
+                                        {Object.keys(sportInfo.categories).map(category => (
+                                            <label key={category} className="category-checkbox">
+                                                <input
+                                                    type="checkbox"
+                                                    checked={selectedCategories.includes(category)}
+                                                    onChange={() => handleCategoryToggle(category)}
+                                                    disabled={isSubmitting}
+                                                />
+                                                <span className="category-label">{category}</span>
+                                                <span className="category-range">
+                                                    ({sportInfo.categories[category].min}-{sportInfo.categories[category].max})
+                                                </span>
                                             </label>
-                                            <input
-                                                id={`teamSize-${category}`}
-                                                type="number"
-                                                min={sportInfo.categories[category].min}
-                                                max={sportInfo.categories[category].max}
-                                                value={teamData[category]?.teamSize || ''}
-                                                onChange={(e) => handleTeamSizeChange(category, e.target.value)}
-                                                placeholder="Enter team size"
-                                                disabled={isSubmitting}
-                                                className={errors[`${category}_teamSize`] ? 'error' : ''}
-                                            />
-                                            {errors[`${category}_teamSize`] && (
-                                                <span className="error-message">{errors[`${category}_teamSize`]}</span>
-                                            )}
-                                        </div>
+                                        ))}
                                     </div>
-                                ))}
-                            </div>
-                        )}
+                                </div>
 
-                        {submitError && (
-                            <div className="submit-error">
-                                {submitError}
-                            </div>
-                        )}
+                                {selectedCategories.length > 0 && (
+                                    <div className="form-section">
+                                        <h3 className="section-title">Team Details</h3>
+                                        {selectedCategories.map(category => (
+                                            <div key={category} className="team-details-card">
+                                                <h4 className="category-heading">{category}</h4>
 
-                        <div className="form-actions">
-                            <button
-                                type="button"
-                                onClick={onClose}
-                                className="btn-cancel"
-                                disabled={isSubmitting}
-                            >
-                                Cancel
-                            </button>
-                            <button
-                                type="submit"
-                                className="btn-submit"
-                                disabled={isSubmitting || selectedCategories.length === 0}
-                            >
-                                {isSubmitting ? 'Registering...' : 'Register'}
-                            </button>
-                        </div>
-                    </form>
+                                                <div className="form-group">
+                                                    <label htmlFor={`teamName-${category}`}>Team Name</label>
+                                                    <input
+                                                        id={`teamName-${category}`}
+                                                        type="text"
+                                                        value={teamData[category]?.teamName || ''}
+                                                        onChange={(e) => handleTeamNameChange(category, e.target.value)}
+                                                        placeholder="Enter team name"
+                                                        disabled={isSubmitting}
+                                                        className={errors[`${category}_teamName`] ? 'error' : ''}
+                                                    />
+                                                    {errors[`${category}_teamName`] && (
+                                                        <span className="error-message">{errors[`${category}_teamName`]}</span>
+                                                    )}
+                                                </div>
+
+                                                <div className="form-group">
+                                                    <label htmlFor={`teamSize-${category}`}>
+                                                        Team Size (Min: {sportInfo.categories[category].min}, Max: {sportInfo.categories[category].max})
+                                                    </label>
+                                                    <input
+                                                        id={`teamSize-${category}`}
+                                                        type="number"
+                                                        min={sportInfo.categories[category].min}
+                                                        max={sportInfo.categories[category].max}
+                                                        value={teamData[category]?.teamSize || ''}
+                                                        onChange={(e) => handleTeamSizeChange(category, e.target.value)}
+                                                        placeholder="Enter team size"
+                                                        disabled={isSubmitting}
+                                                        className={errors[`${category}_teamSize`] ? 'error' : ''}
+                                                    />
+                                                    {errors[`${category}_teamSize`] && (
+                                                        <span className="error-message">{errors[`${category}_teamSize`]}</span>
+                                                    )}
+                                                </div>
+                                            </div>
+                                        ))}
+                                    </div>
+                                )}
+
+                                {submitError && (
+                                    <div className="submit-error">
+                                        {submitError}
+                                    </div>
+                                )}
+
+                                <div className="form-actions">
+                                    <button
+                                        type="button"
+                                        onClick={onClose}
+                                        className="btn-cancel"
+                                        disabled={isSubmitting}
+                                    >
+                                        Cancel
+                                    </button>
+                                    <button
+                                        type="submit"
+                                        className="btn-submit"
+                                        disabled={isSubmitting || selectedCategories.length === 0}
+                                    >
+                                        {isSubmitting ? 'Creating...' : 'Create Team'}
+                                    </button>
+                                </div>
+                            </form>
+                        ) : (
+                            <form onSubmit={handleJoinTeam} className="team-reg-form">
+                                <div className="form-section">
+                                    <h3 className="section-title">Join Existing Team</h3>
+                                    <div className="form-group">
+                                        <label htmlFor="teamId">Team ID</label>
+                                        <input
+                                            id="teamId"
+                                            type="text"
+                                            value={teamId}
+                                            onChange={(e) => setTeamId(e.target.value)}
+                                            placeholder="Enter team ID"
+                                            disabled={isSubmitting}
+                                            className={submitError && !teamId.trim() ? 'error' : ''}
+                                        />
+                                    </div>
+                                </div>
+
+                                {submitError && (
+                                    <div className="submit-error">
+                                        {submitError}
+                                    </div>
+                                )}
+
+                                <div className="form-actions">
+                                    <button
+                                        type="button"
+                                        onClick={onClose}
+                                        className="btn-cancel"
+                                        disabled={isSubmitting}
+                                    >
+                                        Cancel
+                                    </button>
+                                    <button
+                                        type="submit"
+                                        className="btn-submit"
+                                        disabled={isSubmitting || !teamId.trim()}
+                                    >
+                                        {isSubmitting ? 'Joining...' : 'Join Team'}
+                                    </button>
+                                </div>
+                            </form>
+                        )}
+                    </>
                 )}
             </div>
         </div>
