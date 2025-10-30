@@ -119,6 +119,8 @@ const SPORTS_DATA = {
 const CATEGORY_MAP = {
     "Men": "M",
     "Women": "W",
+    "Men Team": "M",
+    "Women Team": "W",
     "Mixed": "X",
     "Women Singles": "S",
     "Men Singles": "S",
@@ -585,7 +587,7 @@ const TeamReg = ({ isOpen, onClose, sportName }) => {
                                 className={`tab-button ${activeTab === 'join' ? 'active' : ''}`}
                                 onClick={() => setActiveTab('join')}
                             >
-                                Join Team
+                                Join Team (Case Sensitive)
                             </button>
                         </div>
 
