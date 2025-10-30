@@ -91,9 +91,27 @@ const SPORTS_DATA = {
     },
     "Athletics Championship": {
         "no": "1",
-        "categories": {
-            "Men": { "min": 1, "max": 42 },
-            "Women": { "min": 1, "max": 42 }
+        "hasEvents": true,
+        "maxEvents": 3,
+        "genderCategories": ["Men", "Women"],
+        "events": {
+            "Track Events": {
+                "100m": { "min": 1, "max": 1 },
+                "200m": { "min": 1, "max": 1 },
+                "400m": { "min": 1, "max": 1 },
+                "800m": { "min": 1, "max": 1 },
+                "1500m": { "min": 1, "max": 1 },
+                "5km": { "min": 1, "max": 1 },
+                "4x100m": { "min": 4, "max": 4 },
+                "4x400m": { "min": 4, "max": 4 }
+            },
+            "Field Events": {
+                "Discus Throw": { "min": 1, "max": 1 },
+                "Shot Put": { "min": 1, "max": 1 },
+                "High Jump": { "min": 1, "max": 1 },
+                "Long Jump": { "min": 1, "max": 1 },
+                "Triple Jump": { "min": 1, "max": 1 }
+            }
         }
     },
 };
@@ -109,6 +127,7 @@ const CATEGORY_MAP = {
 
 const TeamReg = ({ isOpen, onClose, sportName }) => {
     const [activeTab, setActiveTab] = useState('create');
+    const [selectedGender, setSelectedGender] = useState('');
     const [selectedCategories, setSelectedCategories] = useState([]);
     const [teamData, setTeamData] = useState({});
     const [playerIds, setPlayerIds] = useState({});
@@ -122,10 +141,13 @@ const TeamReg = ({ isOpen, onClose, sportName }) => {
 
     const sportInfo = SPORTS_DATA[sportName];
     const isFreeFire = sportInfo?.no === "14" || sportInfo?.no === "13";
+    const isAthletics = sportInfo?.hasEvents;
+    const maxEvents = sportInfo?.maxEvents || 999;
 
     useEffect(() => {
         if (isOpen) {
             setActiveTab('create');
+            setSelectedGender('');
             if (isFreeFire) {
                 setSelectedCategories(['X']);
                 setTeamData({ 'X': { teamSize: 4, teamName: '' } });
@@ -161,6 +183,11 @@ const TeamReg = ({ isOpen, onClose, sportName }) => {
 
                 return newCategories;
             } else {
+                if (isAthletics && prev.length >= maxEvents) {
+                    setSubmitError(`You can select a maximum of ${maxEvents} events`);
+                    setTimeout(() => setSubmitError(''), 3000);
+                    return prev;
+                }
                 return [...prev, category];
             }
         });
@@ -168,7 +195,17 @@ const TeamReg = ({ isOpen, onClose, sportName }) => {
 
     const handleTeamSizeChange = (category, value) => {
         const numValue = parseInt(value) || 0;
-        const { min, max } = sportInfo.categories[category];
+
+        let min, max;
+        if (isAthletics) {
+            const eventData = Object.values(sportInfo.events).flatMap(events =>
+                Object.entries(events)
+            ).find(([eventName]) => category === `${selectedGender} - ${eventName}`)?.[1];
+            min = eventData?.min || 1;
+            max = eventData?.max || 1;
+        } else {
+            ({ min, max } = sportInfo.categories[category]);
+        }
 
         setTeamData(prev => ({
             ...prev,
@@ -264,13 +301,33 @@ const TeamReg = ({ isOpen, onClose, sportName }) => {
         const newErrors = {};
 
         if (selectedCategories.length === 0) {
-            setSubmitError('Please select at least one category');
+            setSubmitError('Please select at least one event');
+            return false;
+        }
+
+        if (isAthletics && selectedCategories.length > maxEvents) {
+            setSubmitError(`You can select a maximum of ${maxEvents} events`);
+            return false;
+        }
+
+        if (isAthletics && !selectedGender) {
+            setSubmitError('Please select a gender category');
             return false;
         }
 
         selectedCategories.forEach(category => {
             const data = teamData[category];
-            const { min, max } = sportInfo.categories[category];
+
+            let min, max;
+            if (isAthletics) {
+                const eventData = Object.values(sportInfo.events).flatMap(events =>
+                    Object.entries(events)
+                ).find(([eventName]) => category === `${selectedGender} - ${eventName}`)?.[1];
+                min = eventData?.min || 1;
+                max = eventData?.max || 1;
+            } else {
+                ({ min, max } = sportInfo.categories[category]);
+            }
 
             if (!data?.teamName?.trim()) {
                 newErrors[`${category}_teamName`] = 'Team name is required';
@@ -314,16 +371,35 @@ const TeamReg = ({ isOpen, onClose, sportName }) => {
         setIsSubmitting(true);
 
         try {
-            const categories = selectedCategories.map(cat => CATEGORY_MAP[cat] || cat);
-            const teamsize = selectedCategories.map(cat => teamData[cat].teamSize);
-            const teams = selectedCategories.map(cat => teamData[cat].teamName);
+            let payload;
 
-            const payload = {
-                sport: sportInfo.no,
-                categories: categories,
-                teamsize: teamsize,
-                teams: teams
-            };
+            if (isAthletics) {
+                const eventNames = selectedCategories.map(cat => cat.replace(`${selectedGender} - `, ''));
+                const teamSizes = selectedCategories.map(cat => teamData[cat].teamSize);
+                const teamNames = selectedCategories.map(cat => teamData[cat].teamName);
+
+                const categoryCode = CATEGORY_MAP[selectedGender];
+                const categories = Array(eventNames.length).fill(categoryCode);
+
+                payload = {
+                    sport: sportInfo.no,
+                    categories: categories,
+                    teamsize: teamSizes,
+                    teams: teamNames,
+                    event_data: eventNames
+                };
+            } else {
+                const categories = selectedCategories.map(cat => CATEGORY_MAP[cat] || cat);
+                const teamsize = selectedCategories.map(cat => teamData[cat].teamSize);
+                const teams = selectedCategories.map(cat => teamData[cat].teamName);
+
+                payload = {
+                    sport: sportInfo.no,
+                    categories: categories,
+                    teamsize: teamsize,
+                    teams: teams
+                };
+            }
 
             if (isFreeFire && selectedCategories.length > 0) {
                 const category = selectedCategories[0];
@@ -347,12 +423,40 @@ const TeamReg = ({ isOpen, onClose, sportName }) => {
                 body: JSON.stringify(payload)
             });
 
+
             if (!response.ok) {
-                const errorData = await response.json();
-                throw new Error(errorData.message || errorData.Error || 'Registration failed');
+                let errorMessage = 'Registration failed';
+
+                try {
+                    const errorData = await response.json();
+                    errorMessage = errorData.message || errorData.Error || errorData.error || JSON.stringify(errorData);
+                } catch (e) {
+                    if (response.status === 404) {
+                        errorMessage = 'Endpoint not found. Please check with administrator.';
+                    } else if (response.status === 500) {
+                        errorMessage = 'Server error. Please try again later.';
+                    } else if (response.status === 403) {
+                        errorMessage = 'You are already registered for this event.';
+                    } else if (response.status === 401) {
+                        errorMessage = 'Session expired. Please login again.';
+                    } else if (response.status === 400) {
+                        errorMessage = 'Invalid request format. Please check the data.';
+                    } else {
+                        errorMessage = `Server error (${response.status}). Please try again.`;
+                    }
+                }
+
+                throw new Error(errorMessage);
             }
 
-            const responseData = await response.json();
+            let responseData;
+            try {
+                responseData = await response.json();
+            } catch (e) {
+                responseData = { message: 'Team created successfully!' };
+            }
+
+            console.log('Success response:', responseData);
             setSuccessMessage(responseData.message || 'Team created successfully!');
             setSubmitSuccess(true);
 
@@ -361,11 +465,26 @@ const TeamReg = ({ isOpen, onClose, sportName }) => {
             }, 2000);
 
         } catch (error) {
-            setSubmitError(error.message || 'Failed to register. Please try again.');
+            let errorMessage = error.message || 'Failed to register. Please try again.';
+
+            if (sportInfo?.no === "14") {
+                errorMessage = errorMessage.replace(/Valorant/gi, 'Free Fire');
+            }
+
+            if (errorMessage.toLowerCase().includes('count') ||
+                errorMessage.toLowerCase().includes('limit') ||
+                errorMessage.toLowerCase().includes('maximum') ||
+                errorMessage.toLowerCase().includes('exceed')) {
+                errorMessage = `Registration limit reached. ${errorMessage}`;
+            }
+
+            console.error('Error:', error);
+            setSubmitError(errorMessage);
         } finally {
             setIsSubmitting(false);
         }
     };
+
 
     const handleJoinTeam = async (e) => {
         e.preventDefault();
@@ -390,11 +509,33 @@ const TeamReg = ({ isOpen, onClose, sportName }) => {
             });
 
             if (!response.ok) {
-                const errorData = await response.json();
-                throw new Error(errorData.message || errorData.Error || 'Failed to join team');
+                let errorMessage = 'Failed to join team';
+
+                try {
+                    const errorData = await response.json();
+                    errorMessage = errorData.message || errorData.Error || errorData.error || errorMessage;
+                } catch (e) {
+                    if (response.status === 404) {
+                        errorMessage = 'Team not found.';
+                    } else if (response.status === 500) {
+                        errorMessage = 'Server error. Please try again later.';
+                    } else if (response.status === 401) {
+                        errorMessage = 'Session expired. Please login again.';
+                    } else {
+                        errorMessage = `Server error (${response.status}). Please try again.`;
+                    }
+                }
+
+                throw new Error(errorMessage);
             }
 
-            const responseData = await response.json();
+            let responseData;
+            try {
+                responseData = await response.json();
+            } catch (e) {
+                responseData = { message: 'Successfully joined team!' };
+            }
+
             setSuccessMessage(responseData.message || 'Successfully joined team!');
             setSubmitSuccess(true);
 
@@ -403,7 +544,7 @@ const TeamReg = ({ isOpen, onClose, sportName }) => {
             }, 2000);
 
         } catch (error) {
-            setSubmitError(error.Message || 'Failed to join team. Please try again.');
+            setSubmitError(error.message || 'Failed to join team. Please try again.');
         } finally {
             setIsSubmitting(false);
         }
@@ -450,7 +591,68 @@ const TeamReg = ({ isOpen, onClose, sportName }) => {
 
                         {activeTab === 'create' ? (
                             <form onSubmit={handleCreateTeam} className="team-reg-form">
-                                {!isFreeFire && (
+                                {isAthletics && (
+                                    <div className="form-section">
+                                        <h3 className="section-title">Select Gender Category</h3>
+                                        <div className="gender-buttons">
+                                            {sportInfo.genderCategories.map(gender => (
+                                                <button
+                                                    key={gender}
+                                                    type="button"
+                                                    className={`gender-button ${selectedGender === gender ? 'active' : ''}`}
+                                                    onClick={() => {
+                                                        setSelectedGender(gender);
+                                                        setSelectedCategories([]);
+                                                        setTeamData({});
+                                                    }}
+                                                    disabled={isSubmitting}
+                                                >
+                                                    {gender}
+                                                </button>
+                                            ))}
+                                        </div>
+                                    </div>
+                                )}
+
+                                {isAthletics && selectedGender && (
+                                    <div className="form-section">
+                                        <h3 className="section-title">
+                                            Select Events (Max {maxEvents}) - {selectedCategories.length}/{maxEvents} selected
+                                        </h3>
+                                        {Object.entries(sportInfo.events).map(([eventType, events]) => (
+                                            <div key={eventType} className="event-type-section">
+                                                <h4 className="event-type-heading">{eventType}</h4>
+                                                <div className="category-grid">
+                                                    {Object.entries(events).map(([eventName, eventData]) => {
+                                                        const categoryKey = `${selectedGender} - ${eventName}`;
+                                                        const isSelected = selectedCategories.includes(categoryKey);
+                                                        const isDisabled = !isSelected && selectedCategories.length >= maxEvents;
+
+                                                        return (
+                                                            <label
+                                                                key={eventName}
+                                                                className={`category-checkbox ${isDisabled ? 'disabled' : ''}`}
+                                                            >
+                                                                <input
+                                                                    type="checkbox"
+                                                                    checked={isSelected}
+                                                                    onChange={() => handleCategoryToggle(categoryKey)}
+                                                                    disabled={isSubmitting || isDisabled}
+                                                                />
+                                                                <span className="category-label">{eventName}</span>
+                                                                <span className="category-range">
+                                                                    ({eventData.min}-{eventData.max})
+                                                                </span>
+                                                            </label>
+                                                        );
+                                                    })}
+                                                </div>
+                                            </div>
+                                        ))}
+                                    </div>
+                                )}
+
+                                {!isFreeFire && !isAthletics && (
                                     <div className="form-section">
                                         <h3 className="section-title">Select Categories</h3>
                                         <div className="category-grid">
@@ -475,74 +677,88 @@ const TeamReg = ({ isOpen, onClose, sportName }) => {
                                 {selectedCategories.length > 0 && (
                                     <div className="form-section">
                                         <h3 className="section-title">Team Details</h3>
-                                        {selectedCategories.map(category => (
-                                            <div key={category} className="team-details-card">
-                                                {!isFreeFire && <h4 className="category-heading">{category}</h4>}
+                                        {selectedCategories.map(category => {
+                                            let min, max;
+                                            if (isAthletics) {
+                                                const eventName = category.replace(`${selectedGender} - `, '');
+                                                const eventData = Object.values(sportInfo.events).flatMap(events =>
+                                                    Object.entries(events)
+                                                ).find(([name]) => name === eventName)?.[1];
+                                                min = eventData?.min || 1;
+                                                max = eventData?.max || 1;
+                                            } else {
+                                                ({ min, max } = sportInfo.categories[category]);
+                                            }
 
-                                                <div className="form-group">
-                                                    <label htmlFor={`teamName-${category}`}>Team Name</label>
-                                                    <input
-                                                        id={`teamName-${category}`}
-                                                        type="text"
-                                                        value={teamData[category]?.teamName || ''}
-                                                        onChange={(e) => handleTeamNameChange(category, e.target.value)}
-                                                        placeholder="Enter team name"
-                                                        disabled={isSubmitting}
-                                                        className={errors[`${category}_teamName`] ? 'error' : ''}
-                                                    />
-                                                    {errors[`${category}_teamName`] && (
-                                                        <span className="error-message">{errors[`${category}_teamName`]}</span>
-                                                    )}
-                                                </div>
+                                            return (
+                                                <div key={category} className="team-details-card">
+                                                    {!isFreeFire && <h4 className="category-heading">{category}</h4>}
 
-                                                {!isFreeFire && (
                                                     <div className="form-group">
-                                                        <label htmlFor={`teamSize-${category}`}>
-                                                            Team Size (Min: {sportInfo.categories[category].min}, Max: {sportInfo.categories[category].max})
-                                                        </label>
+                                                        <label htmlFor={`teamName-${category}`}>Team Name</label>
                                                         <input
-                                                            id={`teamSize-${category}`}
-                                                            type="number"
-                                                            min={sportInfo.categories[category].min}
-                                                            max={sportInfo.categories[category].max}
-                                                            value={teamData[category]?.teamSize || ''}
-                                                            onChange={(e) => handleTeamSizeChange(category, e.target.value)}
-                                                            placeholder="Enter team size"
+                                                            id={`teamName-${category}`}
+                                                            type="text"
+                                                            value={teamData[category]?.teamName || ''}
+                                                            onChange={(e) => handleTeamNameChange(category, e.target.value)}
+                                                            placeholder="Enter team name"
                                                             disabled={isSubmitting}
-                                                            className={errors[`${category}_teamSize`] ? 'error' : ''}
+                                                            className={errors[`${category}_teamName`] ? 'error' : ''}
                                                         />
-                                                        {errors[`${category}_teamSize`] && (
-                                                            <span className="error-message">{errors[`${category}_teamSize`]}</span>
+                                                        {errors[`${category}_teamName`] && (
+                                                            <span className="error-message">{errors[`${category}_teamName`]}</span>
                                                         )}
                                                     </div>
-                                                )}
 
-                                                {isFreeFire && (
-                                                    <div className="player-ids-section">
-                                                        <h5 className="player-ids-heading">Player IDs</h5>
-                                                        {['id1', 'id2', 'id3', 'id4'].map((idKey, i) => (
-                                                            <div key={idKey} className="form-group">
-                                                                <label htmlFor={`${category}-${idKey}`}>
-                                                                    Player {i + 1}
-                                                                </label>
-                                                                <input
-                                                                    id={`${category}-${idKey}`}
-                                                                    type="text"
-                                                                    value={playerIds[category]?.[idKey] || ''}
-                                                                    onChange={(e) => handlePlayerIdChange(category, idKey, e.target.value)}
-                                                                    placeholder={`Enter player ${i + 1} ID`}
-                                                                    disabled={isSubmitting}
-                                                                    className={errors[`${category}_${idKey}`] ? 'error' : ''}
-                                                                />
-                                                                {errors[`${category}_${idKey}`] && (
-                                                                    <span className="error-message">{errors[`${category}_${idKey}`]}</span>
-                                                                )}
-                                                            </div>
-                                                        ))}
-                                                    </div>
-                                                )}
-                                            </div>
-                                        ))}
+                                                    {!isFreeFire && (
+                                                        <div className="form-group">
+                                                            <label htmlFor={`teamSize-${category}`}>
+                                                                Team Size (Min: {min}, Max: {max})
+                                                            </label>
+                                                            <input
+                                                                id={`teamSize-${category}`}
+                                                                type="number"
+                                                                min={min}
+                                                                max={max}
+                                                                value={teamData[category]?.teamSize || ''}
+                                                                onChange={(e) => handleTeamSizeChange(category, e.target.value)}
+                                                                placeholder="Enter team size"
+                                                                disabled={isSubmitting}
+                                                                className={errors[`${category}_teamSize`] ? 'error' : ''}
+                                                            />
+                                                            {errors[`${category}_teamSize`] && (
+                                                                <span className="error-message">{errors[`${category}_teamSize`]}</span>
+                                                            )}
+                                                        </div>
+                                                    )}
+
+                                                    {isFreeFire && (
+                                                        <div className="player-ids-section">
+                                                            <h5 className="player-ids-heading">Player IDs</h5>
+                                                            {['id1', 'id2', 'id3', 'id4'].map((idKey, i) => (
+                                                                <div key={idKey} className="form-group">
+                                                                    <label htmlFor={`${category}-${idKey}`}>
+                                                                        Player {i + 1}
+                                                                    </label>
+                                                                    <input
+                                                                        id={`${category}-${idKey}`}
+                                                                        type="text"
+                                                                        value={playerIds[category]?.[idKey] || ''}
+                                                                        onChange={(e) => handlePlayerIdChange(category, idKey, e.target.value)}
+                                                                        placeholder={`Enter player ${i + 1} ID`}
+                                                                        disabled={isSubmitting}
+                                                                        className={errors[`${category}_${idKey}`] ? 'error' : ''}
+                                                                    />
+                                                                    {errors[`${category}_${idKey}`] && (
+                                                                        <span className="error-message">{errors[`${category}_${idKey}`]}</span>
+                                                                    )}
+                                                                </div>
+                                                            ))}
+                                                        </div>
+                                                    )}
+                                                </div>
+                                            );
+                                        })}
                                     </div>
                                 )}
 
