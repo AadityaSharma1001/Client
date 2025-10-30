@@ -65,13 +65,70 @@ const Discount = () => {
               </table>
             </div>
 
+            <div className="accommodation-details">
+              <h4>What's Included in Your Stay</h4>
+              <div className="features-grid">
+                <div className="feature-card">
+                  <div className="feature-icon">🏨</div>
+                  <h5>3-Day Comfortable Stay</h5>
+                  <p>Enjoy hassle-free accommodation at IIT Jodhpur campus</p>
+                </div>
+                
+                <div className="feature-card">
+                  <div className="feature-icon">🍽️</div>
+                  <h5>8 Meals Included</h5>
+                  <p>Breakfast & lunch each day, plus dinner on 6th and breakfast on 10th</p>
+                </div>
+                
+                <div className="feature-card">
+                  <div className="feature-icon">🎫</div>
+                  <h5>Pro Event Passes</h5>
+                  <p>Exclusive access to all pro events included in your package</p>
+                </div>
+                
+                <div className="feature-card">
+                  <div className="feature-icon">🚌</div>
+                  <h5>Bus Service</h5>
+                  <p>Free transport from railway station to campus for your entire contingent</p>
+                </div>
+              </div>
+            </div>
+
+            <div className="meal-schedule">
+              <h4>Meal Schedule</h4>
+              <div className="schedule-grid">
+                <div className="schedule-item">
+                  <span className="meal-icon">☀️</span>
+                  <div className="meal-info">
+                    <strong>Breakfast</strong>
+                    <p>Daily + 10th morning</p>
+                  </div>
+                </div>
+                <div className="schedule-item">
+                  <span className="meal-icon">🌤️</span>
+                  <div className="meal-info">
+                    <strong>Lunch</strong>
+                    <p>All 3 days</p>
+                  </div>
+                </div>
+                <div className="schedule-item">
+                  <span className="meal-icon">🌙</span>
+                  <div className="meal-info">
+                    <strong>Dinner</strong>
+                    <p>6th evening included</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+
             <div className="conditions">
               <h4>Important Notes</h4>
               <ul>
                 <li>Offers apply only to registered participants with accommodation at IIT Jodhpur.</li>
                 <li>All participants must present valid student ID proof during check-in.</li>
                 <li>Discounts apply automatically based on group size at registration.</li>
-                <li className="warning">⚠️ Charges are non-refundable once accommodation is confirmed.</li>
+                <li>Hassle-free check-in and on-ground assistance provided throughout your stay.</li>
+                <li className="warning">Charges are non-refundable once accommodation is confirmed.</li>
               </ul>
             </div>
           </div>
