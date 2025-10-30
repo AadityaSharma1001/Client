@@ -12,6 +12,7 @@
   min-height: 100vh;
   position: relative;
   overflow-x: hidden;
+  overflow-y: hidden;
   background: var(--bg);
   font-family: 'Cinzel', serif;
 }
@@ -29,7 +30,6 @@
   position: relative;
   z-index: 2;
   padding: 2rem;
-  min-height: 100vh;
   display: flex;
   align-items: center;
   justify-content: center;
