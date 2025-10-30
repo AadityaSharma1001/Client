@@ -1,5 +1,5 @@
-import React, { useState } from 'react'
-import { Link } from "react-router-dom"
+import React, { useState, useEffect } from 'react'
+import { Link, useLocation } from "react-router-dom"
 import { FiMail, FiLock, FiEye, FiEyeOff, FiCheckCircle, FiAlertCircle } from "react-icons/fi"
 import '../styles/Register.css'
 import Particles from '../components/Particles'
@@ -46,6 +46,7 @@ const STATES = [
 
 
 const UserRegister = () => {
+    const location = useLocation()
     const [step, setStep] = useState(1)
     const [form1, setForm1] = useState({ email: "", password: "", confirm: "" })
     const [errors1, setErrors1] = useState({})
@@ -66,6 +67,15 @@ const UserRegister = () => {
     const [errors2, setErrors2] = useState({})
     const [popup, setPopup] = useState({ show: false, message: "", success: false })
     const backendUrl = import.meta.env.VITE_BACKEND_URL
+
+
+    // ✅ Check if redirected from login with profile_required
+    useEffect(() => {
+        if (location.state?.skipStep1 && location.state?.email) {
+            setForm2(prev => ({ ...prev, email: location.state.email }))
+            setStep(2)
+        }
+    }, [location.state])
 
 
     const validateField1 = (name, value) => {
@@ -177,7 +187,6 @@ const UserRegister = () => {
                 headers: { "Content-Type": "application/json" },
                 body: JSON.stringify(form2)
             })
-            console.log(JSON.stringify(form2));
             if (res.status === 201) {
                 setPopup({ show: true, message: "Registration Successful!", success: true })
                 setTimeout(() => {
