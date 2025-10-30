@@ -3,14 +3,16 @@ import Loader from "../components/loader";
 import useSessionStorage from "../hooks/useSessionStorage";
 import "../styles/Home.css";
 
+
 function Home({ setShowNavbar }) {
   const [hasLoaded, setHasLoaded] = useSessionStorage("hasLoaded", false);
   const [showCanvas, setShowCanvas] = useState(hasLoaded);
-  const [showContent, setShowContent] = useState(hasLoaded); // New state for content visibility
+  const [showContent, setShowContent] = useState(hasLoaded);
   const canvasRef = useRef(null);
   const loaderTextRef = useRef(null);
   const loaderBarRef = useRef(null);
   const contentRefs = useRef([]);
+
 
   const galleryImages = [
     "/images/image1.jpg",
@@ -22,20 +24,24 @@ function Home({ setShowNavbar }) {
     "/images/image0.jpg"
   ];
 
+
   useEffect(() => {
     if (!showCanvas) return;
 
-    const frameCount = 583;
+
+    const frameCount = 315;
     const prefix = 'frame_0';
-    const ext = '.png';
+    const ext = '.jpeg';
     const padding = 3;
-    const framesPath = '/frames/';
+    const framesPath = '/frames1/';
     const easing = 0.09;
+
 
     const canvas = canvasRef.current;
     const ctx = canvas.getContext("2d");
     const loaderText = loaderTextRef.current;
     const loaderBar = loaderBarRef.current;
+
 
     let images = new Array(frameCount);
     let loadedCount = 0;
@@ -44,13 +50,16 @@ function Home({ setShowNavbar }) {
     let firstFrameDrawn = false;
     let rafId = 0;
 
+
     function pad(num) {
       return String(num).padStart(padding, '0');
     }
 
+
     function frameUrl(i) {
       return framesPath + prefix + pad(i) + ext;
     }
+
 
     function resizeCanvas() {
       const dpr = window.devicePixelRatio || 1;
@@ -58,6 +67,7 @@ function Home({ setShowNavbar }) {
       canvas.height = Math.floor(window.innerHeight * dpr);
       ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
     }
+
 
     function drawImageToCover(img) {
       if (!img || !img.width) return;
@@ -74,6 +84,7 @@ function Home({ setShowNavbar }) {
       ctx.drawImage(img, x, y, w, h);
     }
 
+
     function computeScrollPercent() {
       const el = document.scrollingElement || document.documentElement;
       const docH = el.scrollHeight - el.clientHeight;
@@ -81,16 +92,19 @@ function Home({ setShowNavbar }) {
       return Math.max(0, Math.min(1, el.scrollTop / docH));
     }
 
+
     function animateContents() {
       const totalContents = contentRefs.current.length;
       const currentScrollPercent = computeScrollPercent();
 
+
       contentRefs.current.forEach((content, index) => {
         if (!content) return;
 
+
         // First item (logo) - visible at start, fades out on scroll
         if (index === 0) {
-          const fadeOutThreshold = 0.05; // Start fading out after 5% scroll
+          const fadeOutThreshold = 0.05;
           if (currentScrollPercent < fadeOutThreshold) {
             content.style.opacity = 1;
             content.style.transform = 'scale(1)';
@@ -105,15 +119,37 @@ function Home({ setShowNavbar }) {
           return;
         }
 
-        // Other items - start appearing after first scroll
+
+        // Last item (Gallery) - stays visible and at scale 1 once it appears
+        if (index === totalContents - 1) {
+          const startScroll = index / totalContents;
+          const contentScrollRange = 0.3; // Shortened range for faster appearance
+          
+          if (currentScrollPercent < startScroll) {
+            content.style.opacity = 0;
+            content.style.transform = 'scale(0.5)';
+          } else if (currentScrollPercent < startScroll + contentScrollRange) {
+            const progress = (currentScrollPercent - startScroll) / contentScrollRange;
+            content.style.opacity = progress;
+            content.style.transform = `scale(${0.5 + 0.5 * progress})`;
+          } else {
+            // Once fully visible, maintain these values
+            content.style.opacity = 1;
+            content.style.transform = 'scale(1)';
+          }
+          return;
+        }
+
+
+        // Other items - normal fade in/out behavior
         const startScroll = index / totalContents;
         let endScroll = (index + 1) / totalContents;
 
-        if (index === totalContents - 1) endScroll = 1.05;
 
         const contentScrollRange = endScroll - startScroll;
         let opacity = 0;
         let scale = 0.5;
+
 
         if (currentScrollPercent < startScroll) {
           opacity = 0;
@@ -122,7 +158,7 @@ function Home({ setShowNavbar }) {
           const progress = (currentScrollPercent - startScroll) / (contentScrollRange * 0.3);
           opacity = progress;
           scale = 0.5 + 0.5 * progress;
-        } else if (currentScrollPercent < startScroll + contentScrollRange * 0.7) {
+        } else if (currentScrollPercent < startScroll + contentScrollRange * 0.6) {
           opacity = 1;
           scale = 1.0;
         } else if (currentScrollPercent < endScroll) {
@@ -134,10 +170,12 @@ function Home({ setShowNavbar }) {
           scale = 1.5;
         }
 
+
         content.style.transform = `scale(${scale})`;
         content.style.opacity = opacity;
       });
     }
+
 
     async function preloadAll() {
       for (let i = 1; i <= frameCount; i++) {
@@ -156,20 +194,25 @@ function Home({ setShowNavbar }) {
       }
     }
 
+
     function loop() {
       smooth += (scrollTarget - smooth) * easing;
+
 
       const index = Math.floor(smooth * (frameCount - 1));
       let img = images[index] || images.find(Boolean);
       if (img) drawImageToCover(img);
 
+
       animateContents();
       rafId = requestAnimationFrame(loop);
     }
 
+
     function onScroll() {
       scrollTarget = computeScrollPercent();
     }
+
 
     function onResize() {
       resizeCanvas();
@@ -180,13 +223,16 @@ function Home({ setShowNavbar }) {
       }
     }
 
+
     resizeCanvas();
     preloadAll();
+
 
     rafId = requestAnimationFrame(loop);
     window.addEventListener("scroll", onScroll);
     onScroll();
     window.addEventListener("resize", onResize);
+
 
     return () => {
       cancelAnimationFrame(rafId);
@@ -195,19 +241,23 @@ function Home({ setShowNavbar }) {
     };
   }, [showCanvas]);
 
+
   useEffect(() => {
     if (!showCanvas) return;
+
 
     const observerOptions = {
       threshold: 0.5,
       rootMargin: "0px",
     };
 
+
     const animateCounter = (element, target) => {
       let current = 0;
       const increment = target / 80;
       const duration = 2000;
       const stepTime = duration / 80;
+
 
       const timer = setInterval(() => {
         current += increment;
@@ -219,6 +269,7 @@ function Home({ setShowNavbar }) {
         }
       }, stepTime);
     };
+
 
     const observer = new IntersectionObserver((entries) => {
       entries.forEach((entry) => {
@@ -233,11 +284,14 @@ function Home({ setShowNavbar }) {
       });
     }, observerOptions);
 
+
     const statNumbers = document.querySelectorAll(".stat-number");
     statNumbers.forEach((stat) => observer.observe(stat));
 
+
     return () => observer.disconnect();
   }, [showCanvas]);
+
 
   useEffect(() => {
     if (!hasLoaded && !showCanvas) {
@@ -246,6 +300,7 @@ function Home({ setShowNavbar }) {
       document.documentElement.style.overflowY = "auto";
     }
   }, [hasLoaded, showCanvas]);
+
 
   return (
     <>
@@ -256,7 +311,6 @@ function Home({ setShowNavbar }) {
             setHasLoaded(true);
             setShowNavbar(true);
             
-            // Delay showing content by 0.5 seconds
             setTimeout(() => {
               setShowContent(true);
             }, 500);
@@ -264,10 +318,12 @@ function Home({ setShowNavbar }) {
         />
       )}
 
+
       {showCanvas && (
         <>
           <canvas id="canvas" ref={canvasRef} aria-hidden="true" />
           <div className="canvas-overlay"></div>
+
 
           <div className={`content-wrapper ${showContent ? 'content-visible' : ''}`}>
             {/* Content 1: Logo */}
@@ -277,6 +333,7 @@ function Home({ setShowNavbar }) {
             >
               <img src="/var.png" alt="Varchas Logo" className="logo-image" />
             </div>
+
 
             {/* Content 2: Theme */}
             <div
@@ -303,6 +360,7 @@ function Home({ setShowNavbar }) {
               </div>
             </div>
 
+
             {/* Content 3: About and Aftermovies */}
             <div
               className="content-item"
@@ -326,7 +384,9 @@ function Home({ setShowNavbar }) {
                   </div>
                 </div>
 
+
                 <div className="divider"></div>
+
 
                 <div className="about-section">
                   <h2 className="section-title">ABOUT Varchas</h2>
@@ -363,6 +423,7 @@ function Home({ setShowNavbar }) {
               </div>
             </div>
 
+
             {/* Content 4: Gallery */}
             <div
               className="content-item"
@@ -370,6 +431,7 @@ function Home({ setShowNavbar }) {
             >
               <div className="oraculum-container">
                 <h1 className="oraculum-title">GALLERY</h1>
+
 
                 <div className="oraculum-gallery">
                   <div className="gallery-row">
@@ -414,6 +476,7 @@ function Home({ setShowNavbar }) {
                   </div>
                 </div>
 
+
                 <div className="button-group">
                   <a href="/gallery" className="oraculum-btn">
                     View More
@@ -422,8 +485,9 @@ function Home({ setShowNavbar }) {
               </div>
             </div>
 
+
             {/* Content 5: Join Community */}
-            <div
+            {/* <div
               className="content-item"
               ref={(el) => (contentRefs.current[4] = el)}
             >
@@ -445,8 +509,9 @@ function Home({ setShowNavbar }) {
                   </a>
                 </div>
               </div>
-            </div>
+            </div> */}
           </div>
+
 
           <div className="scroll-spacer"></div>
         </>
@@ -454,5 +519,6 @@ function Home({ setShowNavbar }) {
     </>
   );
 }
+
 
 export default Home;
