@@ -1,26 +1,27 @@
-import { Canvas, useFrame, useLoader } from '@react-three/fiber';
+import { Canvas, useFrame, useThree } from '@react-three/fiber';
 import { OrbitControls } from '@react-three/drei';
 import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader';
+import { useLoader } from '@react-three/fiber';
 import { useState, useRef, useEffect } from 'react';
-import clgModel from '../assets/clgmodel10.glb'; // ✅ Correct import from src/assets
 
 function Model({ url, setIsHovering }) {
   const gltf = useLoader(GLTFLoader, url);
   const groupRef = useRef();
+  const { raycaster } = useThree();
 
-  // Continuous model rotation
   useFrame(() => {
     if (groupRef.current) {
+      // Rotate the model continuously
       groupRef.current.rotation.y -= 0.002;
+      
+      // Check if mouse is hovering over the model
+      const intersects = raycaster.intersectObject(groupRef.current, true);
+      setIsHovering(intersects.length > 0);
     }
   });
 
   return (
-    <group
-      ref={groupRef}
-      onPointerOver={() => setIsHovering(true)}
-      onPointerOut={() => setIsHovering(false)}
-    >
+    <group ref={groupRef}>
       <primitive object={gltf.scene} />
     </group>
   );
@@ -29,10 +30,12 @@ function Model({ url, setIsHovering }) {
 function Lights() {
   return (
     <>
-      <ambientLight intensity={1.2} />
-      <directionalLight position={[50, 100, 50]} intensity={1.2} />
-      <directionalLight position={[-50, 100, 50]} intensity={1} />
-      <hemisphereLight intensity={0.6} groundColor="#ffffff" />
+      <ambientLight intensity={1.5} />
+      <directionalLight position={[100, 100, 50]} intensity={1} />
+      <directionalLight position={[-100, 100, 50]} intensity={1} />
+      <directionalLight position={[100, -100, 50]} intensity={1} />
+      <directionalLight position={[-100, -100, 50]} intensity={1} />
+      <hemisphereLight intensity={0.5} groundColor="#ffffff" />
     </>
   );
 }
@@ -45,8 +48,10 @@ export default function CollegeModel() {
     const checkMobile = () => {
       setIsMobile(window.innerWidth <= 768);
     };
+    
     checkMobile();
     window.addEventListener('resize', checkMobile);
+    
     return () => window.removeEventListener('resize', checkMobile);
   }, []);
 
@@ -56,22 +61,22 @@ export default function CollegeModel() {
         height: isMobile ? '40vh' : '100vh',
         width: '100%',
       }}
-      className="bg-black my-0"
+      className='bg-black my-0'
       camera={{
         fov: 50,
         near: 0.1,
         far: 50000,
-        position: [150, 100, 150],
+        position: [110, 60, 50],
       }}
       gl={{ antialias: true }}
       onWheel={(event) => event.stopPropagation()}
     >
       <Lights />
-      <Model url={clgModel} setIsHovering={setIsHovering} />
+      <Model url="/models/clgmodel10.glb" setIsHovering={setIsHovering} />
       <OrbitControls
         enableZoom={isHovering}
-        minDistance={100}
-        maxDistance={300}
+        minDistance={120}
+        maxDistance={180}
         maxPolarAngle={Math.PI / 2}
         minPolarAngle={Math.PI / 6}
         enableDamping={true}
