@@ -1,0 +1,108 @@
+{
+  "Athletics": {
+    "no": "1",
+    "categories": {
+      "Men": { "min": 1, "max": 42 },
+      "Women": { "min": 1, "max": 42 }
+    }
+  },
+  "Badminton": {
+    "no": "2",
+    "categories": {
+      "Men": { "min": 3, "max": 5 },
+      "Women": { "min": 2, "max": 3 },
+      "Mixed": { "min": 2, "max": 2 }
+    }
+  },
+  "Basketball": {
+    "no": "3",
+    "categories": {
+      "Men": { "min": 5, "max": 12 },
+      "Women": { "min": 5, "max": 12 }
+    }
+  },
+  "Cricket": {
+    "no": "4",
+    "categories": {
+      "Men": { "min": 11, "max": 16 }
+    }
+  },
+  "Football": {
+    "no": "5",
+    "categories": {
+      "Men": { "min": 11, "max": 16 }
+    }
+  },
+  "Table Tennis": {
+    "no": "6",
+    "categories": {
+      "Men Singles": { "min": 1, "max": 1 },
+      "Women Singles": { "min": 1, "max": 1 },
+      "Men Team": { "min": 3, "max": 4 },
+      "Women Team": { "min": 2, "max": 3 }
+    }
+  },
+  "Lawn Tennis": {
+    "no": "7",
+    "categories": {
+      "Men": { "min": 1, "max": 1 }
+    }
+  },
+  "Volleyball": {
+    "no": "8",
+    "categories": {
+      "Men": { "min": 6, "max": 12 },
+      "Women": { "min": 6, "max": 12 }
+    }
+  },
+  "Kabaddi": {
+    "no": "9",
+    "categories": {
+      "Men": { "min": 7, "max": 12 }
+    }
+  },
+  "Hockey": {
+    "no": "10",
+    "categories": {
+      "Men": { "min": 11, "max": 14 }
+    }
+  },
+  "Squash": {
+    "no": "11",
+    "categories": {
+      "Men": { "min": 3, "max": 4 },
+      "Women": { "min": 3, "max": 4 }
+    }
+  },
+  "Chess": {
+    "no": "12",
+    "categories": {
+      "Men": { "min": 4, "max": 5 }
+    }
+  },
+  "ESports": {
+    "no": "13",
+    "categories": {
+      "BGMI": { "min": 4, "max": 5 },
+      "Free Fire": { "min": 4, "max": 5 }
+    }
+  },
+  "Valorant": {
+    "no": "14",
+    "categories": {
+      "Men": { "min": 1, "max": 1 }
+    }
+  },
+  "Clash Royale": {
+    "no": "15",
+    "categories": {
+      "Men": { "min": 1, "max": 1 }
+    }
+  },
+  "Powerlifting": {
+    "no": "1",
+    "categories": {
+      "Men": { "min": 4, "max": 8 }
+    }
+  }
+}
