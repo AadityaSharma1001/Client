@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { BrowserRouter as Router, Routes, Route, useLocation } from "react-router-dom";
 import Home from "./pages/Home.jsx";
 import Gallery from "./pages/gallery.jsx";
@@ -17,6 +17,12 @@ import "./index.css";
 
 function AppContent({ showNavbar, setShowNavbar }) {
   const location = useLocation();
+
+  useEffect(() => {
+    if (typeof window !== "undefined") {
+      window.scrollTo({ top: 0, left: 0, behavior: "instant" });
+    }
+  }, [location.pathname]);
 
   return (
     <>
