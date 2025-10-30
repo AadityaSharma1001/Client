@@ -75,7 +75,6 @@ const UserProfile = () => {
             </div>
         )
     }
-
     return (
         <div className="profile-page">
             <div className="particles-background">
@@ -98,9 +97,9 @@ const UserProfile = () => {
                         <p className="profile-subtitle"><FiMail /> {profile.email}</p>
                         <div className="profile-badges">
                             <span className="badge"><FiHash /> ID: {uniqueId}</span>
-                            <span className={`badge ${profile.accommodation === 'Y' ? 'ok' : 'muted'}`}>
-                                {profile.accommodation === 'Y' ? <FiCheckCircle /> : <FiXCircle />}
-                                {profile.accommodation === 'Y' ? 'Accommodation' : 'No Accommodation'}
+                            <span className={`badge ${profile.accommodation === "Y" ? 'ok' : 'muted'}`}>
+                                {profile.accommodation === "Y" ? <FiCheckCircle /> : <FiXCircle />}
+                                {profile.accommodation === "Y" ? 'Accommodation' : 'No Accommodation'}
                             </span>
                         </div>
                     </div>
@@ -117,7 +116,7 @@ const UserProfile = () => {
                     </div>
                     <div className="info-card">
                         <div className="info-title"><FiHome /> Accommodation</div>
-                        <div className="info-value">{profile.accommodation === 'Y' ? 'Yes' : 'No'}</div>
+                        <div className="info-value">{profile.accommodation === "Y" ? 'Yes' : 'No'}</div>
                     </div>
                     <div className="info-card">
                         <div className="info-title"><FiHash /> Unique ID</div>
