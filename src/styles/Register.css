@@ -30,7 +30,6 @@ body {
     gap: 2rem;
 }
 
-/* card */
 .register-card {
     width: 100%;
     max-width: 420px;
@@ -372,28 +371,232 @@ body {
 }
 
 @media (max-width: 600px) {
-  body .popup {
-    bottom: 15px !important;
-    font-size: 0.9rem !important;
-    padding: 6px 12px !important;
-    border-radius: 8px !important;
-  }
+    body .popup {
+        bottom: 15px !important;
+        font-size: 0.9rem !important;
+        padding: 6px 12px !important;
+        border-radius: 8px !important;
+    }
 }
 
 .login-redirect {
-  margin-top: 1rem;
-  text-align: center;
-  color: #d4af37;
-  font-size: 0.95rem;
+    margin-top: 1rem;
+    text-align: center;
+    color: #d4af37;
+    font-size: 0.95rem;
 }
 
 .login-redirect a {
-  color: #fff;
-  text-decoration: underline;
-  font-weight: 500;
-  transition: color 0.3s;
+    color: #fff;
+    text-decoration: underline;
+    font-weight: 500;
+    transition: color 0.3s;
 }
 
 .login-redirect a:hover {
-  color: #d4af37;
+    color: #d4af37;
+}
+
+
+.security-warning-banner {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    background: linear-gradient(135deg, #fff3cd 0%, #ffe69c 100%);
+    border-left: 4px solid #ff6b6b;
+    padding: 14px 18px;
+    border-radius: 8px;
+    margin-bottom: 24px;
+    animation: slideIn 0.3s ease-out;
+}
+
+.security-warning-banner .warning-icon {
+    color: #ff6b6b;
+    font-size: 24px;
+    flex-shrink: 0;
+}
+
+.security-warning-banner .warning-text {
+    color: #333;
+    font-size: 14px;
+    line-height: 1.5;
+}
+
+.security-warning-banner strong {
+    color: #d63031;
+    font-weight: 600;
+}
+
+
+.secure-bank-input {
+    letter-spacing: 0.15em !important;
+    font-family: 'Courier New', monospace !important;
+}
+
+.secure-bank-input::-webkit-autofill {
+    -webkit-box-shadow: 0 0 0 1000px white inset !important;
+    -webkit-text-fill-color: #333 !important;
+}
+
+
+.terms-section {
+    background: #f8f9fa;
+    border: 1px solid #e0e0e0;
+    border-radius: 10px;
+    padding: 18px;
+    margin: 24px 0;
+    animation: fadeIn 0.4s ease-out;
+}
+
+.terms-checkbox {
+    display: flex;
+    align-items: flex-start;
+    gap: 12px;
+    margin-bottom: 14px;
+}
+
+.terms-checkbox:last-child {
+    margin-bottom: 0;
+}
+
+.checkbox-input {
+    width: 20px;
+    height: 20px;
+    cursor: pointer;
+    margin-top: 2px;
+    accent-color: #d4af37;
+    flex-shrink: 0;
+    border: 2px solid #d0d0d0;
+    border-radius: 4px;
+    transition: all 0.2s ease;
+}
+
+.checkbox-input:hover {
+    border-color: #d4af37;
+}
+
+.checkbox-input:checked {
+    background-color: #d4af37;
+    border-color: #d4af37;
+}
+
+.terms-label {
+    font-size: 13px;
+    line-height: 1.6;
+    color: #333;
+    cursor: pointer;
+    margin: 0;
+    user-select: none;
+}
+
+.terms-label strong {
+    color: #d63031;
+    font-weight: 600;
+}
+
+.warning-icon-small {
+    margin-right: 4px;
+    font-size: 14px;
+}
+
+
+.submit-btn:disabled {
+    background-color: #ccc !important;
+    cursor: not-allowed !important;
+    opacity: 0.6;
+}
+
+.submit-btn:disabled:hover {
+    background-color: #ccc !important;
+    transform: none;
+}
+
+
+.input-group.error .form-input {
+    border-color: #ff6b6b;
+    background-color: #fff5f5;
+}
+
+.input-group.error .error-message {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    color: #d63031;
+    font-size: 12px;
+    margin-top: 6px;
+    animation: shake 0.3s ease;
+}
+
+@keyframes slideIn {
+    from {
+        opacity: 0;
+        transform: translateY(-10px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+    }
+
+    to {
+        opacity: 1;
+    }
+}
+
+@keyframes shake {
+
+    0%,
+    100% {
+        transform: translateX(0);
+    }
+
+    25% {
+        transform: translateX(-5px);
+    }
+
+    75% {
+        transform: translateX(5px);
+    }
+}
+
+.form-input.readonly {
+    background-color: #f0f0f0;
+    cursor: not-allowed;
+    color: #666;
+}
+
+.form-input.readonly:focus {
+    border-color: #bbb;
+    box-shadow: none;
+}
+
+
+@media (max-width: 768px) {
+    .security-warning-banner {
+        flex-direction: column;
+        text-align: center;
+    }
+
+    .security-warning-banner .warning-icon {
+        order: -1;
+    }
+
+    .terms-checkbox {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+
+    .checkbox-input {
+        margin-top: 0;
+    }
+
+    .terms-section {
+        padding: 14px;
+    }
 }

@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react'
 import { Link, useLocation } from "react-router-dom"
-import { FiMail, FiLock, FiEye, FiEyeOff, FiCheckCircle, FiAlertCircle } from "react-icons/fi"
+import { FiMail, FiLock, FiEye, FiEyeOff, FiCheckCircle, FiAlertCircle, FiAlertTriangle } from "react-icons/fi"
 import '../styles/Register.css'
 import Particles from '../components/Particles'
 
@@ -62,14 +62,15 @@ const UserRegister = () => {
         accommodation_required: "",
         account_holder_name: "",
         ifsc_code: "",
-        bank_account_number: ""
+        bank_account_number: "",
+        confirm_bank_account: ""
     })
     const [errors2, setErrors2] = useState({})
     const [popup, setPopup] = useState({ show: false, message: "", success: false })
+    const [termsChecked, setTermsChecked] = useState(false)
     const backendUrl = import.meta.env.VITE_BACKEND_URL
 
 
-    // ✅ Check if redirected from login with profile_required
     useEffect(() => {
         if (location.state?.skipStep1 && location.state?.email) {
             setForm2(prev => ({ ...prev, email: location.state.email }))
@@ -123,6 +124,9 @@ const UserRegister = () => {
             case "bank_account_number":
                 if (!/^\d{9,18}$/.test(value)) error = "Must be 9–18 digits"
                 break
+            case "confirm_bank_account":
+                if (value !== form2.bank_account_number) error = "Bank accounts do not match"
+                break
             default:
                 break
         }
@@ -135,6 +139,11 @@ const UserRegister = () => {
         setFunc(prev => ({ ...prev, [name]: value }))
         const error = validateFunc(name, value)
         setErr(prev => ({ ...prev, [name]: error }))
+    }
+
+
+    const handleBankFieldEvent = (e) => {
+        e.preventDefault()
     }
 
 
@@ -174,19 +183,32 @@ const UserRegister = () => {
         e.preventDefault()
         const newErrors = {}
         Object.keys(form2).forEach(k => {
-            const err = validateField2(k, form2[k])
-            if (err) newErrors[k] = err
+            if (k !== "confirm_bank_account") {
+                const err = validateField2(k, form2[k])
+                if (err) newErrors[k] = err
+            }
         })
+        const confirmErr = validateField2("confirm_bank_account", form2.confirm_bank_account)
+        if (confirmErr) newErrors.confirm_bank_account = confirmErr
+
+        if (!termsChecked) {
+            setPopup({ show: true, message: "Please accept the terms and conditions", success: false })
+            setTimeout(() => setPopup({ show: false, message: "", success: false }), 2500)
+            return
+        }
+
         setErrors2(newErrors)
         if (Object.keys(newErrors).length > 0) return
 
 
         try {
+            const { confirm_bank_account, ...dataToSend } = form2
             const res = await fetch(`${backendUrl}/account/updateInfo/`, {
                 method: "PUT",
                 headers: { "Content-Type": "application/json" },
-                body: JSON.stringify(form2)
+                body: JSON.stringify(dataToSend)
             })
+            console.log(JSON.stringify(dataToSend))
             if (res.status === 201) {
                 setPopup({ show: true, message: "Registration Successful!", success: true })
                 setTimeout(() => {
@@ -214,6 +236,15 @@ const UserRegister = () => {
                 {step === 1 && (
                     <div className="form-card">
                         <h1 className="form-title">User Registration</h1>
+
+                        {/* ✅ Password Warning Banner */}
+                        <div className="security-warning-banner">
+                            <FiAlertTriangle className="warning-icon" />
+                            <div className="warning-text">
+                                <strong>Important:</strong> Passwords cannot be retrieved or reset later. Please save it carefully in a secure location.
+                            </div>
+                        </div>
+
                         <form onSubmit={registerUser} className="form">
                             <div className={`input-group ${errors1.email ? 'error' : ''}`}>
                                 <label><FiMail className="label-icon" /> Email</label>
@@ -336,8 +367,7 @@ const UserRegister = () => {
                             </div>
 
 
-                            {[["account_holder_name", "Account Holder Name"], ["ifsc_code", "IFSC Code"],
-                            ["bank_account_number", "Bank Account Number"]
+                            {[["account_holder_name", "Account Holder Name"], ["ifsc_code", "IFSC Code"]
                             ].map(([name, placeholder]) => (
                                 <div key={name} className={`input-group ${errors2[name] ? 'error' : ''}`}>
                                     <input
@@ -352,7 +382,73 @@ const UserRegister = () => {
                             ))}
 
 
-                            <button type="submit" className="submit-btn"><FiCheckCircle /> Submit</button>
+                            {/* ✅ Bank Account Number - Shows dots, no copy/paste */}
+                            <div className={`input-group ${errors2.bank_account_number ? 'error' : ''}`}>
+                                <label>Bank Account Number</label>
+                                <input
+                                    type="password"
+                                    name="bank_account_number"
+                                    placeholder="Enter bank account number"
+                                    value={form2.bank_account_number}
+                                    onChange={e => handleChange(e, setForm2, validateField2, setErrors2)}
+                                    onCopy={handleBankFieldEvent}
+                                    onPaste={handleBankFieldEvent}
+                                    onCut={handleBankFieldEvent}
+                                    className="form-input secure-bank-input"
+                                />
+                                {errors2.bank_account_number && <span className="error-message"><FiAlertCircle /> {errors2.bank_account_number}</span>}
+                            </div>
+
+
+                            {/* ✅ Confirm Bank Account Number - Shows dots, no copy/paste */}
+                            <div className={`input-group ${errors2.confirm_bank_account ? 'error' : ''}`}>
+                                <label>Confirm Bank Account Number</label>
+                                <input
+                                    type="password"
+                                    name="confirm_bank_account"
+                                    placeholder="Confirm bank account number"
+                                    value={form2.confirm_bank_account}
+                                    onChange={e => handleChange(e, setForm2, validateField2, setErrors2)}
+                                    onCopy={handleBankFieldEvent}
+                                    onPaste={handleBankFieldEvent}
+                                    onCut={handleBankFieldEvent}
+                                    className="form-input secure-bank-input"
+                                />
+                                {errors2.confirm_bank_account && <span className="error-message"><FiAlertCircle /> {errors2.confirm_bank_account}</span>}
+                            </div>
+
+
+                            {/* ✅ Terms and Conditions */}
+                            <div className="terms-section">
+                                <div className="terms-checkbox">
+                                    <input
+                                        type="checkbox"
+                                        id="terms-check"
+                                        checked={termsChecked}
+                                        onChange={e => setTermsChecked(e.target.checked)}
+                                        className="checkbox-input"
+                                    />
+                                    <label htmlFor="terms-check" className="terms-label">
+                                        <span className="warning-icon-small">⚠️</span>
+                                        I understand that the information provided above <strong>cannot be edited after account creation</strong>. I have carefully reviewed all details.
+                                    </label>
+                                </div>
+
+                                <div className="terms-checkbox">
+                                    <input
+                                        type="checkbox"
+                                        id="password-warning-check"
+                                        defaultChecked={false}
+                                        className="checkbox-input"
+                                    />
+                                    <label htmlFor="password-warning-check" className="terms-label">
+                                        I understand that my <strong>password cannot be retrieved or reset</strong> later. I have saved it securely.
+                                    </label>
+                                </div>
+                            </div>
+
+
+                            <button type="submit" className="submit-btn" disabled={!termsChecked}><FiCheckCircle /> Submit</button>
                         </form>
                     </div>
                 )}
