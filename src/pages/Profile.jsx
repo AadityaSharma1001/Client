@@ -117,7 +117,7 @@ const UserProfile = () => {
                     </div>
                     <div className="info-card">
                         <div className="info-title"><FiHome /> Accommodation</div>
-                        <div className="info-value">{profile.accommodation_required === 'Y' ? 'Yes' : 'No'}</div>
+                        <div className="info-value">{profile.accommodation === 'Y' ? 'Yes' : 'No'}</div>
                     </div>
                     <div className="info-card">
                         <div className="info-title"><FiHash /> Unique ID</div>
