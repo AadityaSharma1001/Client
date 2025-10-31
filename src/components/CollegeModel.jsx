@@ -166,7 +166,7 @@ export default function CollegeModel() {
           onClick={resetCamera}
           style={{
             padding: '10px 15px',
-            background: '#10b981',
+            background: 'linear-gradient(135deg, #facc15, #fbbf24, #f59e0b)',
             color: 'white',
             border: 'none',
             borderRadius: '5px',
@@ -175,31 +175,31 @@ export default function CollegeModel() {
             fontWeight: '500',
             transition: 'background 0.2s',
           }}
-          onMouseEnter={(e) => e.target.style.background = '#059669'}
-          onMouseLeave={(e) => e.target.style.background = '#10b981'}
+          onMouseEnter={(e) => e.target.style.background = 'linear-gradient(135deg, #927b20ff, #b49034ff, #b98d40ff)'}
+          onMouseLeave={(e) => e.target.style.background = 'linear-gradient(135deg, #facc15, #fbbf24, #f59e0b)'}
         >
           Reset View
         </button>
 
         <div style={{ color: 'white', fontSize: '12px', marginTop: '5px', fontWeight: '600' }}>
-          📷 Quick Views:
+          Quick Views:
         </div>
         
         <button 
           onClick={() => changeCameraView('perspective')} 
-          style={{...buttonStyle, background: viewMode === 'perspective' ? '#1e40af' : '#4b5563'}}
+          style={{...buttonStyle, background: viewMode === 'perspective' ? 'linear-gradient(135deg, #facc15, #fbbf24, #f59e0b)' : '#4b5563'}}
         >
           Default
         </button>
         <button 
           onClick={() => changeCameraView('top')} 
-          style={{...buttonStyle, background: viewMode === 'top' ? '#1e40af' : '#4b5563'}}
+          style={{...buttonStyle, background: viewMode === 'top' ? 'linear-gradient(135deg, #facc15, #fbbf24, #f59e0b)' : '#4b5563'}}
         >
           Top View
         </button>
         <button 
           onClick={() => changeCameraView('aerial')} 
-          style={{...buttonStyle, background: viewMode === 'aerial' ? '#1e40af' : '#4b5563'}}
+          style={{...buttonStyle, background: viewMode === 'aerial' ? 'linear-gradient(135deg, #facc15, #fbbf24, #f59e0b)' : '#4b5563'}}
         >
           Aerial
         </button>
@@ -219,12 +219,12 @@ export default function CollegeModel() {
         pointerEvents: 'none',
       }}>
         <div style={{ marginBottom: '4px' }}>
-          🖱️ Rotation: <span style={{ color: isHovering ? '#10b981' : '#6b7280', fontWeight: '600' }}>
+          Rotation: <span style={{ color: isHovering ? '#10b981' : '#6b7280', fontWeight: '600' }}>
             {isHovering ? 'Enabled' : 'Hover to Enable'}
           </span>
         </div>
         <div>
-          🔍 Zoom: <span style={{ color: isHovering ? '#10b981' : '#6b7280', fontWeight: '600' }}>
+          Zoom: <span style={{ color: isHovering ? '#10b981' : '#6b7280', fontWeight: '600' }}>
             {isHovering ? 'Active' : 'Inactive'}
           </span>
         </div>

@@ -49,12 +49,12 @@ const Map = () => {
         transition={{ duration: 0.6, delay: 0.2 }}
       >
         <div className="control-card p-6 bg-gradient-to-br from-gray-800 to-gray-900 rounded-xl border border-gray-700 hover:border-blue-500 transition-all duration-300 hover:shadow-lg hover:shadow-blue-500/20">
-          <div className="text-4xl mb-3">🖱️</div>
+          {/* <div className="text-4xl mb-3">🖱️</div> */}
           <div className="font-semibold text-lg mb-2 text-white">Rotate</div>
           <div className="text-sm text-gray-400">Left Click + Drag</div>
         </div>
         <div className="control-card p-6 bg-gradient-to-br from-gray-800 to-gray-900 rounded-xl border border-gray-700 hover:border-purple-500 transition-all duration-300 hover:shadow-lg hover:shadow-purple-500/20">
-          <div className="text-4xl mb-3">🔍</div>
+          {/* <div className="text-4xl mb-3">🔍</div> */}
           <div className="font-semibold text-lg mb-2 text-white">Zoom</div>
           <div className="text-sm text-gray-400">Scroll (Hover First)</div>
         </div>
@@ -92,7 +92,7 @@ const Map = () => {
           </div>
           <span className="hidden sm:inline text-gray-600">•</span>
           <div className="text-gray-500 text-xs">
-            Built with React Three Fiber
+            Built with 💓 by Team Varchas
           </div>
         </div>
       </motion.div>
