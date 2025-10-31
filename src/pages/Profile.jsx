@@ -31,6 +31,7 @@ const UserProfile = () => {
                     }
                 })
                 const data = await res.json()
+                console.log(data)
                 setProfile(data)
             } catch (error) {
                 console.error("Failed to fetch profile:", error)
@@ -227,6 +228,7 @@ const UserProfile = () => {
                 </section>
 
 
+
                 {/* Profile Info Grid */}
                 <section className="profile-grid">
                     <div className="info-card">
@@ -239,7 +241,14 @@ const UserProfile = () => {
                     </div>
                     <div className="info-card">
                         <div className="info-title"><FiHome /> Accommodation</div>
-                        <div className="info-value">{profile.accommodation === "Y" ? 'Yes' : 'No'}</div>
+                        <div className="info-value">
+                            {profile.accommodation === "Y" ? 'Yes' : 'No'}
+                            {profile.accommodation === "Y" && (
+                                <span className={`payment-badge-mini ${profile.accommodation_payment === 'Yes' ? 'paid' : 'pending'}`}>
+                                    {profile.accommodation_payment === 'Yes' ? '✓ Paid' : '⏳ Payment Pending'}
+                                </span>
+                            )}
+                        </div>
                     </div>
                     <div className="info-card">
                         <div className="info-title"><FiHash /> Unique ID</div>
@@ -355,7 +364,7 @@ const UserProfile = () => {
                                         </div>
 
 
-                                       
+
                                     </div>
 
 
