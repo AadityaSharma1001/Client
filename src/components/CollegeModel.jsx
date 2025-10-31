@@ -11,28 +11,23 @@ function Annotation({ position, text, onClick }) {
       <div 
         onClick={onClick}
         style={{
-          background: 'linear-gradient(135deg, rgba(0, 0, 0, 0.95), rgba(20, 20, 20, 0.95))',
-          color: '#FFD700',
+          background: 'rgba(0, 0, 0, 0.8)',
+          color: 'white',
           padding: '8px 12px',
           borderRadius: '8px',
           fontSize: '14px',
           cursor: 'pointer',
-          border: '2px solid #FFD700',
+          border: '2px solid #3b82f6',
           transition: 'all 0.3s ease',
           whiteSpace: 'nowrap',
-          boxShadow: '0 0 20px rgba(255, 215, 0, 0.3)',
         }}
         onMouseEnter={(e) => {
           e.target.style.transform = 'scale(1.1)';
-          e.target.style.borderColor = '#FFA500';
-          e.target.style.boxShadow = '0 0 30px rgba(255, 165, 0, 0.6)';
-          e.target.style.color = '#FFA500';
+          e.target.style.borderColor = '#60a5fa';
         }}
         onMouseLeave={(e) => {
           e.target.style.transform = 'scale(1)';
-          e.target.style.borderColor = '#FFD700';
-          e.target.style.boxShadow = '0 0 20px rgba(255, 215, 0, 0.3)';
-          e.target.style.color = '#FFD700';
+          e.target.style.borderColor = '#3b82f6';
         }}
       >
         {text}
@@ -48,10 +43,10 @@ function Model({ url, setIsHovering, resetView }) {
   
   // Define campus locations (adjust positions based on your model)
   const landmarks = [
-    { position: [0, 20, 0], name: 'Main Building', cameraPos: [50, 30, 50] },
-    { position: [40, 20, -40], name: 'Library', cameraPos: [70, 40, -20] },
-    { position: [-40, 20, 40], name: 'Hostel Block', cameraPos: [-70, 40, 70] },
-    { position: [40, 20, 40], name: 'Academic Block', cameraPos: [80, 50, 80] },
+    // { position: [0, 20, 0], name: 'Main Building', cameraPos: [50, 30, 50] },
+    // { position: [40, 20, -40], name: 'Library', cameraPos: [70, 40, -20] },
+    // { position: [-40, 20, 40], name: 'Hostel Block', cameraPos: [-70, 40, 70] },
+    // { position: [40, 20, 40], name: 'Academic Block', cameraPos: [80, 50, 80] },
   ];
 
   useFrame(() => {
@@ -89,12 +84,11 @@ function Model({ url, setIsHovering, resetView }) {
 
   return (
     <group ref={groupRef}>
-      <ambientLight intensity={1.2} color="#FFE5B4" />
-      <directionalLight position={[100, 100, 50]} intensity={1.2} color="#FFD700" />
-      <directionalLight position={[-100, 100, 50]} intensity={0.8} color="#FFA500" />
-      <directionalLight position={[100, -100, 50]} intensity={0.8} color="#FFD700" />
-      <directionalLight position={[-100, -100, 50]} intensity={0.6} color="#FFA500" />
-      <pointLight position={[0, 50, 0]} intensity={0.5} color="#FFD700" />
+      <ambientLight intensity={1.5} />
+      <directionalLight position={[100, 100, 50]} intensity={1} />
+      <directionalLight position={[-100, 100, 50]} intensity={1} />
+      <directionalLight position={[100, -100, 50]} intensity={1} />
+      <directionalLight position={[-100, -100, 50]} intensity={1} />
       
       <primitive object={gltf.scene} />
       
@@ -161,48 +155,29 @@ export default function CollegeModel() {
         top: '20px',
         right: '20px',
         zIndex: 1000,
-        background: 'linear-gradient(135deg, rgba(0, 0, 0, 0.95), rgba(20, 20, 20, 0.9))',
+        background: 'rgba(0, 0, 0, 0.8)',
         padding: '15px',
         borderRadius: '10px',
         display: 'flex',
         flexDirection: 'column',
         gap: '10px',
-        border: '1px solid rgba(255, 215, 0, 0.3)',
-        boxShadow: '0 0 30px rgba(255, 215, 0, 0.2)',
       }}>
         <button
           onClick={resetCamera}
           style={{
             padding: '10px 15px',
-            background: 'linear-gradient(135deg, #FFD700, #FFA500)',
-            color: '#000',
+            background: '#10b981',
+            color: 'white',
             border: 'none',
             borderRadius: '5px',
             cursor: 'pointer',
             fontSize: '14px',
-            fontWeight: 'bold',
-            transition: 'all 0.3s ease',
-            boxShadow: '0 4px 15px rgba(255, 215, 0, 0.4)',
-          }}
-          onMouseEnter={(e) => {
-            e.target.style.transform = 'translateY(-2px)';
-            e.target.style.boxShadow = '0 6px 20px rgba(255, 215, 0, 0.6)';
-          }}
-          onMouseLeave={(e) => {
-            e.target.style.transform = 'translateY(0)';
-            e.target.style.boxShadow = '0 4px 15px rgba(255, 215, 0, 0.4)';
           }}
         >
-          🔄 Reset View
+          Reset View
         </button>
 
-        <div style={{ 
-          color: '#FFD700', 
-          fontSize: '12px', 
-          marginTop: '5px',
-          fontWeight: 'bold',
-          textShadow: '0 0 10px rgba(255, 215, 0, 0.5)',
-        }}>
+        <div style={{ color: 'white', fontSize: '12px', marginTop: '5px' }}>
           📷 Quick Views:
         </div>
         
@@ -223,31 +198,21 @@ export default function CollegeModel() {
         bottom: '20px',
         left: '20px',
         zIndex: 1000,
-        background: 'linear-gradient(135deg, rgba(0, 0, 0, 0.95), rgba(20, 20, 20, 0.9))',
+        background: 'rgba(0, 0, 0, 0.8)',
         padding: '10px 15px',
         borderRadius: '8px',
-        color: '#FFD700',
+        color: 'white',
         fontSize: '12px',
-        border: '1px solid rgba(255, 215, 0, 0.3)',
-        boxShadow: '0 0 30px rgba(255, 215, 0, 0.2)',
       }}>
-        <div style={{ textShadow: '0 0 10px rgba(255, 215, 0, 0.5)' }}>
-          🖱️ Rotation: <span style={{ color: isHovering ? '#FFA500' : '#FFD700', fontWeight: 'bold' }}>
-            {isHovering ? 'Enabled' : 'Hover to Enable'}
-          </span>
-        </div>
-        <div style={{ textShadow: '0 0 10px rgba(255, 215, 0, 0.5)' }}>
-          🔍 Zoom: <span style={{ color: isHovering ? '#FFA500' : '#FFD700', fontWeight: 'bold' }}>
-            {isHovering ? 'Active' : 'Inactive'}
-          </span>
-        </div>
+        <div>🖱️ Rotation: {isHovering ? 'Enabled' : 'Hover to Enable'}</div>
+        <div>🔍 Zoom: {isHovering ? 'Active' : 'Inactive'}</div>
       </div>
 
       <Canvas
         style={{
           height: isMobile ? '40vh' : '100vh',
           width: '100%',
-          background: 'radial-gradient(ellipse at center, #1a1a1a 0%, #000000 100%)',
+          background: 'linear-gradient(to bottom, #0a0a0a, #1a1a2e)',
         }}
         camera={{
           far: 50000,
@@ -297,13 +262,11 @@ export default function CollegeModel() {
 
 const buttonStyle = {
   padding: '8px 12px',
-  background: 'linear-gradient(135deg, rgba(255, 215, 0, 0.2), rgba(255, 165, 0, 0.2))',
-  color: '#FFD700',
-  border: '1px solid rgba(255, 215, 0, 0.5)',
+  background: '#4b5563',
+  color: 'white',
+  border: 'none',
   borderRadius: '5px',
   cursor: 'pointer',
   fontSize: '12px',
-  transition: 'all 0.3s ease',
-  fontWeight: '500',
-  boxShadow: '0 2px 10px rgba(255, 215, 0, 0.2)',
+  transition: 'background 0.2s',
 };

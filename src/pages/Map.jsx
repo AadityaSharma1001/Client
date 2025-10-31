@@ -4,21 +4,11 @@ import '../styles/Map.css';
 import { motion, useAnimationControls, useInView } from 'framer-motion';
 
 const LoadingFallback = () => (
-  <div className="loading-screen" style={{ background: '#000' }}>
-    <div className="loader">
-      <div className="spinner" style={{ 
-        borderColor: 'rgba(255, 215, 0, 0.2)',
-        borderTopColor: '#FFD700',
-      }}></div>
-      <p className="loading-text" style={{ 
-        color: '#FFD700',
-        textShadow: '0 0 20px rgba(255, 215, 0, 0.5)',
-      }}>
-        Loading 3D Campus Model...
-      </p>
-      <p className="loading-subtext" style={{ color: '#FFA500' }}>
-        Preparing interactive features...
-      </p>
+  <div className="loading-screen fixed inset-0 flex items-center justify-center bg-black z-50">
+    <div className="loader flex flex-col items-center gap-4">
+      <div className="spinner w-16 h-16 border-4 border-gray-700 border-t-blue-500 rounded-full animate-spin"></div>
+      <p className="loading-text text-xl font-semibold text-white">Loading 3D Campus Model...</p>
+      <p className="loading-subtext text-sm text-gray-400">Preparing interactive features...</p>
     </div>
   </div>
 );
@@ -26,97 +16,82 @@ const LoadingFallback = () => (
 const Map = () => {
   const ref = useRef();
   const controls = useAnimationControls();
-  const isInView = useInView(ref);
+  const isInView = useInView(ref, { once: true, amount: 0.2 });
 
   useEffect(() => {
     if (isInView) {
-      controls.start({ opacity: 1, transition: { duration: 2 } });
+      controls.start({ opacity: 1, y: 0, transition: { duration: 0.8, ease: "easeOut" } });
     }
   }, [isInView, controls]);
 
   return (
-    <motion.div
-      className="map-page min-h-screen flex flex-col items-center"
-      style={{ background: 'radial-gradient(ellipse at top, #1a1a1a 0%, #000000 100%)' }}
-      initial={{ opacity: 0 }}
-      animate={controls}
-      ref={ref}
-    >
+    <div className="map-page bg-gradient-to-b from-gray-900 via-black to-gray-900 text-white min-h-screen flex flex-col">
       {/* HEADER */}
-      <div className="map-header text-center mt-10">
-        <h1 
-          className="map-title text-4xl font-bold mb-2"
-          style={{ 
-            background: 'linear-gradient(135deg, #FFD700, #FFA500)',
-            WebkitBackgroundClip: 'text',
-            WebkitTextFillColor: 'transparent',
-            textShadow: '0 0 30px rgba(255, 215, 0, 0.3)',
-          }}
-        >
-          Interactive Campus Map 🎓
+      <motion.div
+        className="map-header text-center pt-16 pb-8 px-4"
+        initial={{ opacity: 0, y: -20 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.6 }}
+      >
+        <h1 className="map-title text-5xl md:text-6xl font-bold mb-4 bg-gradient-to-r from-blue-400 to-purple-500 bg-clip-text text-transparent">
+          Interactive Campus Map
         </h1>
-        <p className="map-subtitle" style={{ color: '#D4AF37' }}>
-          Explore IIT Jodhpur in immersive 3D • Click landmarks to fly to locations
+        <p className="map-subtitle text-base md:text-lg text-gray-300 max-w-2xl mx-auto">
+          Explore IIT Jodhpur in immersive 3D
         </p>
-      </div>
+      </motion.div>
 
       {/* ENHANCED CONTROLS INFO */}
-      <div className="map-controls-info mt-6 grid grid-cols-1 md:grid-cols-3 gap-4 text-center text-sm max-w-4xl px-4">
-        <div 
-          className="control-card p-4 rounded-lg"
-          style={{
-            background: 'linear-gradient(135deg, rgba(0, 0, 0, 0.8), rgba(20, 20, 20, 0.8))',
-            border: '1px solid rgba(255, 215, 0, 0.3)',
-            boxShadow: '0 0 20px rgba(255, 215, 0, 0.1)',
-          }}
-        >
-          <div className="text-2xl mb-2">🖱️</div>
-          <div className="font-semibold mb-1" style={{ color: '#FFD700' }}>Rotate</div>
-          <div className="text-xs" style={{ color: '#D4AF37' }}>Left Click + Drag</div>
+      <motion.div
+        className="map-controls-info mb-8 grid grid-cols-1 sm:grid-cols-2 gap-4 text-center max-w-4xl mx-auto px-4 w-full"
+        initial={{ opacity: 0, y: 20 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.6, delay: 0.2 }}
+      >
+        <div className="control-card p-6 bg-gradient-to-br from-gray-800 to-gray-900 rounded-xl border border-gray-700 hover:border-blue-500 transition-all duration-300 hover:shadow-lg hover:shadow-blue-500/20">
+          <div className="text-4xl mb-3">🖱️</div>
+          <div className="font-semibold text-lg mb-2 text-white">Rotate</div>
+          <div className="text-sm text-gray-400">Left Click + Drag</div>
         </div>
-        <div 
-          className="control-card p-4 rounded-lg"
-          style={{
-            background: 'linear-gradient(135deg, rgba(0, 0, 0, 0.8), rgba(20, 20, 20, 0.8))',
-            border: '1px solid rgba(255, 215, 0, 0.3)',
-            boxShadow: '0 0 20px rgba(255, 215, 0, 0.1)',
-          }}
-        >
-          <div className="text-2xl mb-2">🔍</div>
-          <div className="font-semibold mb-1" style={{ color: '#FFD700' }}>Zoom</div>
-          <div className="text-xs" style={{ color: '#D4AF37' }}>Scroll (Hover First)</div>
+        <div className="control-card p-6 bg-gradient-to-br from-gray-800 to-gray-900 rounded-xl border border-gray-700 hover:border-purple-500 transition-all duration-300 hover:shadow-lg hover:shadow-purple-500/20">
+          <div className="text-4xl mb-3">🔍</div>
+          <div className="font-semibold text-lg mb-2 text-white">Zoom</div>
+          <div className="text-sm text-gray-400">Scroll (Hover First)</div>
         </div>
-        <div 
-          className="control-card p-4 rounded-lg"
-          style={{
-            background: 'linear-gradient(135deg, rgba(0, 0, 0, 0.8), rgba(20, 20, 20, 0.8))',
-            border: '1px solid rgba(255, 215, 0, 0.3)',
-            boxShadow: '0 0 20px rgba(255, 215, 0, 0.1)',
-          }}
-        >
-          <div className="text-2xl mb-2">🏷️</div>
-          <div className="font-semibold mb-1" style={{ color: '#FFD700' }}>Navigate</div>
-          <div className="text-xs" style={{ color: '#D4AF37' }}>Click Labels to Fly</div>
-        </div>
-      </div>
+      </motion.div>
 
-      {/* MODEL */}
-      <div className="model-container w-full h-[80vh] mt-10">
-        <Suspense fallback={<LoadingFallback />}>
-          <CollegeModel />
-        </Suspense>
-      </div>
+      {/* MODEL CONTAINER */}
+      <motion.div
+        className="model-container flex-1 w-full px-4 pb-8"
+        ref={ref}
+        initial={{ opacity: 0, y: 30 }}
+        animate={controls}
+      >
+        <div className="w-full h-full min-h-[70vh] md:min-h-[75vh] rounded-2xl overflow-hidden border border-gray-800 shadow-2xl bg-gray-900">
+          <Suspense fallback={<LoadingFallback />}>
+            <CollegeModel />
+          </Suspense>
+        </div>
+      </motion.div>
 
       {/* ENHANCED FOOTER */}
-      <div className="map-footer mt-10 mb-10 text-center">
-        <div className="text-sm mb-2" style={{ color: '#FFD700' }}>
-          💡 Pro Tip: Click building labels for automatic camera flight
+      <motion.div
+        className="map-footer py-8 text-center px-4 border-t border-gray-800 bg-black/50 backdrop-blur-sm"
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
+        transition={{ duration: 0.6, delay: 0.4 }}
+      >
+        <div className="flex flex-col sm:flex-row items-center justify-center gap-4 text-sm">
+          <div className="text-gray-400">
+            Best viewed on desktop
+          </div>
+          <span className="hidden sm:inline text-gray-600">•</span>
+          <div className="text-gray-500 text-xs">
+            Built with React Three Fiber
+          </div>
         </div>
-        <div className="text-xs" style={{ color: '#D4AF37' }}>
-          Best viewed on desktop • Built with React Three Fiber
-        </div>
-      </div>
-    </motion.div>
+      </motion.div>
+    </div>
   );
 };
 
