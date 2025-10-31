@@ -355,16 +355,7 @@ const UserProfile = () => {
                                         </div>
 
 
-                                        <div className="team-info-row">
-                                            <span className="team-label">Score</span>
-                                            <span className="team-value">
-                                                {team.score >= 0 ? (
-                                                    <span className="score-badge">
-                                                        <FiTrendingUp /> {team.score}
-                                                    </span>
-                                                ) : 'N/A'}
-                                            </span>
-                                        </div>
+                                       
                                     </div>
 
 
