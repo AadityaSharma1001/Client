@@ -277,3 +277,45 @@
   85% { opacity: 1; transform: translate(-50%, 0); }
   100% { opacity: 0; transform: translate(-50%, 30px); }
 }
+
+/* --- Fix input visibility and error styling for dark theme --- */
+.form-input {
+    background: rgba(255, 255, 255, 0.05);
+    border: 1.5px solid rgba(212, 175, 55, 0.25);
+    color: #fff;
+    transition: all 0.3s ease;
+  }
+  
+  .form-input:focus {
+    border-color: #d4af37;
+    background: rgba(255, 255, 255, 0.1);
+    color: #fff;
+    box-shadow: 0 0 10px rgba(212, 175, 55, 0.25);
+  }
+  
+  .form-input::placeholder {
+    color: rgba(255, 255, 255, 0.5);
+  }
+  
+  /* --- Error state (clean dark look) --- */
+  .input-group.error .form-input {
+    border-color: #ff4d4d !important;
+    background-color: rgba(255, 0, 0, 0.08) !important;
+    color: #fff !important;
+    box-shadow: 0 0 8px rgba(255, 77, 77, 0.25);
+  }
+  
+  .input-group.error .form-input:focus {
+    background-color: rgba(255, 0, 0, 0.1) !important;
+    box-shadow: 0 0 10px rgba(255, 77, 77, 0.35);
+  }
+  
+  .input-group.error .error-message {
+    color: #ff7070;
+    font-size: 0.85rem;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    margin-top: 6px;
+  }
+  

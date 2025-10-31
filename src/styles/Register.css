@@ -600,3 +600,41 @@ body {
         padding: 14px;
     }
 }
+
+/* --- Better Dark Theme Error State --- */
+.input-group.error .form-input {
+    border-color: #ff4d4d !important;
+    background-color: rgba(255, 0, 0, 0.08) !important;
+    color: #fff !important;
+    transition: all 0.3s ease;
+  }
+  
+  .input-group.error .form-input:focus {
+    box-shadow: 0 0 10px rgba(255, 77, 77, 0.3) !important;
+    background-color: rgba(255, 0, 0, 0.1) !important;
+  }
+  
+  .input-group.error .error-message {
+    color: #ff7070 !important;
+    font-size: 13px;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    margin-top: 6px;
+    animation: shake 0.3s ease;
+  }
+  
+  .form-input {
+    background-color: rgba(255, 255, 255, 0.05);
+    color: #fff;
+    border: 1px solid rgba(255, 255, 255, 0.15);
+    transition: all 0.3s ease;
+  }
+  
+  .form-input:focus {
+    background-color: rgba(255, 255, 255, 0.1);
+    border-color: #d4af37;
+    color: #fff;
+    box-shadow: 0 0 10px rgba(212, 175, 55, 0.2);
+  }
+  
