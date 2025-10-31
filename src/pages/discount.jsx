@@ -1,8 +1,14 @@
 import React from 'react';
 import Particles from '../components/Particles';
 import '../styles/discount.css';
+import useLocalStorage from "../hooks/useLocalStorage";
 
 const Discount = () => {
+  const [token] = useLocalStorage("token", "");
+  const [uniqueId] = useLocalStorage("uniqueId", "");
+
+  const isLoggedIn = !!token && !!uniqueId;
+
   return (
     <div className="discount-page">
       <div className="particles-background">
@@ -63,9 +69,17 @@ const Discount = () => {
                   </tr>
                 </tbody>
               </table>
-            </div>
 
-            {/* Verification section moved to Profile page */}
+              {/* Show this button only when logged in */}
+              {isLoggedIn && (
+                <a
+                  href="https://form.qfixonline.com/varsports"
+                  className="cta-button payment-btn"
+                >
+                  Make Payment
+                </a>
+              )}
+            </div>
 
             <div className="accommodation-details">
               <h4>What's Included in Your Stay</h4>

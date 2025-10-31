@@ -74,11 +74,6 @@ const Navbar = () => {
             </ul>
           </div>
           <div className="nav-right">
-            {isLoggedIn && (
-              <a href="https://form.qfixonline.com/varsports" className="cta-button payment-btn" style={{ marginRight: "0.5rem" }}>
-                Make Payment
-              </a>
-            )}
             {!isLoggedIn ? (
               <Link to="/register" className="cta-button">
                 Register / Login
