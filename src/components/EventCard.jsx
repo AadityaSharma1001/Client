@@ -23,8 +23,9 @@ const easeInOutCubic = x => (x < 0.5 ? 4 * x * x * x : 1 - Math.pow(-2 * x + 2, 
 const EventCardComponent = ({
   imageUrl,
   eventName,
-  description,
   eventNumber,
+  fee,
+  fees,
   registerLink = '#',
   rulebookLink = '#',
   enableTilt = true,
@@ -217,7 +218,24 @@ const EventCardComponent = ({
             <div className="ec-content">
               <div className="ec-details">
                 <h3 className="ec-event-name">{eventName}</h3>
-                <p className="ec-description">{description}</p>
+                {fees && Object.keys(fees || {}).length > 0 ? (
+                  <div className="ec-fees">
+                    <p className="ec-fee-title">
+                      {eventName.toLowerCase().includes('athletics') 
+                        ? 'Registration Fee (Per Head)' 
+                        : 'Registration Fee'}
+                    </p>
+                    <ul className="ec-fee-list">
+                      {Object.entries(fees).map(([category, amount]) => (
+                        <li key={category} className="ec-fee-item">
+                          {category}: ₹{amount}
+                        </li>
+                      ))}
+                    </ul>
+                  </div>
+                ) : (
+                  fee && <p className="ec-fee">Registration Fee: {fee}</p>
+                )}
               </div>
 
               <div className="ec-buttons">

@@ -68,6 +68,7 @@ const UserRegister = () => {
     const [errors2, setErrors2] = useState({})
     const [popup, setPopup] = useState({ show: false, message: "", success: false })
     const [termsChecked, setTermsChecked] = useState(false)
+    const [passwordWarningChecked, setPasswordWarningChecked] = useState(false)
     const backendUrl = import.meta.env.VITE_BACKEND_URL
 
 
@@ -191,8 +192,8 @@ const UserRegister = () => {
         const confirmErr = validateField2("confirm_bank_account", form2.confirm_bank_account)
         if (confirmErr) newErrors.confirm_bank_account = confirmErr
 
-        if (!termsChecked) {
-            setPopup({ show: true, message: "Please accept the terms and conditions", success: false })
+        if (!termsChecked || !passwordWarningChecked) {
+            setPopup({ show: true, message: "Please accept all terms and conditions", success: false })
             setTimeout(() => setPopup({ show: false, message: "", success: false }), 2500)
             return
         }
@@ -438,7 +439,8 @@ const UserRegister = () => {
                                     <input
                                         type="checkbox"
                                         id="password-warning-check"
-                                        defaultChecked={false}
+                                        checked={passwordWarningChecked}
+                                        onChange={e => setPasswordWarningChecked(e.target.checked)}
                                         className="checkbox-input"
                                     />
                                     <label htmlFor="password-warning-check" className="terms-label">
@@ -448,7 +450,7 @@ const UserRegister = () => {
                             </div>
 
 
-                            <button type="submit" className="submit-btn" disabled={!termsChecked}><FiCheckCircle /> Submit</button>
+                            <button type="submit" className="submit-btn" disabled={!termsChecked || !passwordWarningChecked}><FiCheckCircle /> Submit</button>
                         </form>
                     </div>
                 )}

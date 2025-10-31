@@ -428,11 +428,11 @@ const UserProfile = () => {
                                                 <div className="player-info">
                                                     <h4 className="player-name">{player.name}</h4>
                                                     <p className="player-email">
-                                                        <FiMail /> {player.email}
+                                                        <FiMail /> <span>{player.email}</span>
                                                     </p>
                                                     {player.phone && (
                                                         <p className="player-phone">
-                                                            <FiPhone /> {player.phone}
+                                                            <FiPhone /> <span>{player.phone}</span>
                                                         </p>
                                                     )}
                                                 </div>
@@ -506,11 +506,11 @@ const UserProfile = () => {
                                                 <div className="player-info">
                                                     <h4 className="player-name">{player.name}</h4>
                                                     <p className="player-email">
-                                                        <FiMail /> {player.email}
+                                                        <FiMail /> <span>{player.email}</span>
                                                     </p>
                                                     {player.phone && (
                                                         <p className="player-phone">
-                                                            <FiPhone /> {player.phone}
+                                                            <FiPhone /> <span>{player.phone}</span>
                                                         </p>
                                                     )}
                                                 </div>

@@ -116,9 +116,6 @@ const Navbar = () => {
           </ul>
           {isLoggedIn ? (
             <>
-              <a href="https://form.qfixonline.com/varsports" className="mobile-cta payment-btn" onClick={() => setIsMenuOpen(false)}>
-                Make Payment
-              </a>
               <Link to='/profile'>
                 <div className="mobile-user-info">
                   <FiUser className="mobile-user-icon" />
