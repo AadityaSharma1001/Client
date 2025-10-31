@@ -29,11 +29,11 @@ function Home({ setShowNavbar }) {
     if (!showCanvas) return;
 
 
-    const frameCount = 315;
+    const frameCount = 532;
     const prefix = 'frame_0';
-    const ext = '.jpeg';
+    const ext = '.png';
     const padding = 3;
-    const framesPath = '/frames1/';
+    const framesPath = '/frames3/';
     const easing = 0.09;
 
 
