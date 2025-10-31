@@ -111,8 +111,7 @@ export default function CollegeModel() {
   const cameraRef = useRef();
   const controlsRef = useRef();
   
-  const isMobile =
-    typeof window !== 'undefined' && window.matchMedia('(max-width: 768px)').matches;
+  const isMobile = typeof window !== 'undefined' && window.matchMedia('(max-width: 768px)').matches;
 
   const resetCamera = () => {
     if (cameraRef.current && controlsRef.current) {
@@ -154,13 +153,14 @@ export default function CollegeModel() {
         position: 'absolute',
         top: '20px',
         right: '20px',
-        zIndex: 1000,
+        zIndex: 10,
         background: 'rgba(0, 0, 0, 0.8)',
         padding: '15px',
         borderRadius: '10px',
         display: 'flex',
         flexDirection: 'column',
         gap: '10px',
+        pointerEvents: 'auto',
       }}>
         <button
           onClick={resetCamera}
@@ -172,23 +172,36 @@ export default function CollegeModel() {
             borderRadius: '5px',
             cursor: 'pointer',
             fontSize: '14px',
+            fontWeight: '500',
+            transition: 'background 0.2s',
           }}
+          onMouseEnter={(e) => e.target.style.background = '#059669'}
+          onMouseLeave={(e) => e.target.style.background = '#10b981'}
         >
           Reset View
         </button>
 
-        <div style={{ color: 'white', fontSize: '12px', marginTop: '5px' }}>
+        <div style={{ color: 'white', fontSize: '12px', marginTop: '5px', fontWeight: '600' }}>
           📷 Quick Views:
         </div>
         
-        <button onClick={() => changeCameraView('perspective')} style={buttonStyle}>
-          🎯 Default
+        <button 
+          onClick={() => changeCameraView('perspective')} 
+          style={{...buttonStyle, background: viewMode === 'perspective' ? '#1e40af' : '#4b5563'}}
+        >
+          Default
         </button>
-        <button onClick={() => changeCameraView('top')} style={buttonStyle}>
-          ⬇️ Top View
+        <button 
+          onClick={() => changeCameraView('top')} 
+          style={{...buttonStyle, background: viewMode === 'top' ? '#1e40af' : '#4b5563'}}
+        >
+          Top View
         </button>
-        <button onClick={() => changeCameraView('aerial')} style={buttonStyle}>
-          🚁 Aerial
+        <button 
+          onClick={() => changeCameraView('aerial')} 
+          style={{...buttonStyle, background: viewMode === 'aerial' ? '#1e40af' : '#4b5563'}}
+        >
+          Aerial
         </button>
       </div>
 
@@ -197,15 +210,24 @@ export default function CollegeModel() {
         position: 'absolute',
         bottom: '20px',
         left: '20px',
-        zIndex: 1000,
+        zIndex: 10,
         background: 'rgba(0, 0, 0, 0.8)',
         padding: '10px 15px',
         borderRadius: '8px',
         color: 'white',
         fontSize: '12px',
+        pointerEvents: 'none',
       }}>
-        <div>🖱️ Rotation: {isHovering ? 'Enabled' : 'Hover to Enable'}</div>
-        <div>🔍 Zoom: {isHovering ? 'Active' : 'Inactive'}</div>
+        <div style={{ marginBottom: '4px' }}>
+          🖱️ Rotation: <span style={{ color: isHovering ? '#10b981' : '#6b7280', fontWeight: '600' }}>
+            {isHovering ? 'Enabled' : 'Hover to Enable'}
+          </span>
+        </div>
+        <div>
+          🔍 Zoom: <span style={{ color: isHovering ? '#10b981' : '#6b7280', fontWeight: '600' }}>
+            {isHovering ? 'Active' : 'Inactive'}
+          </span>
+        </div>
       </div>
 
       <Canvas
@@ -262,11 +284,11 @@ export default function CollegeModel() {
 
 const buttonStyle = {
   padding: '8px 12px',
-  background: '#4b5563',
   color: 'white',
   border: 'none',
   borderRadius: '5px',
   cursor: 'pointer',
   fontSize: '12px',
-  transition: 'background 0.2s',
+  transition: 'all 0.2s',
+  fontWeight: '500',
 };

@@ -60,14 +60,18 @@ const Map = () => {
         </div>
       </motion.div>
 
-      {/* MODEL CONTAINER */}
+      {/* MODEL CONTAINER - Added position: relative and z-index */}
       <motion.div
         className="model-container flex-1 w-full px-4 pb-8"
         ref={ref}
         initial={{ opacity: 0, y: 30 }}
         animate={controls}
+        style={{ position: 'relative', zIndex: 1 }}
       >
-        <div className="w-full h-full min-h-[70vh] md:min-h-[75vh] rounded-2xl overflow-hidden border border-gray-800 shadow-2xl bg-gray-900">
+        <div 
+          className="w-full h-full min-h-[70vh] md:min-h-[75vh] rounded-2xl overflow-hidden border border-gray-800 shadow-2xl bg-gray-900"
+          style={{ position: 'relative', isolation: 'isolate' }}
+        >
           <Suspense fallback={<LoadingFallback />}>
             <CollegeModel />
           </Suspense>
@@ -80,6 +84,7 @@ const Map = () => {
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
         transition={{ duration: 0.6, delay: 0.4 }}
+        style={{ position: 'relative', zIndex: 1 }}
       >
         <div className="flex flex-col sm:flex-row items-center justify-center gap-4 text-sm">
           <div className="text-gray-400">
