@@ -15,13 +15,13 @@ function Home({ setShowNavbar }) {
 
 
   const galleryImages = [
-    "/images/image1.jpg",
-    "/images/image2.jpg",
-    "/images/image3.jpg",
-    "/images/image4.jpg",
-    "/images/image5.jpg",
-    "/images/image6.jpg",
-    "/images/image0.jpg"
+    "https://res.cloudinary.com/dvz8vitos/image/upload/v1761935728/images/image1.jpg",
+    "https://res.cloudinary.com/dvz8vitos/image/upload/v1761935737/images/image2.jpg",
+    "https://res.cloudinary.com/dvz8vitos/image/upload/v1761936434/images/image3.jpg",
+    "https://res.cloudinary.com/dvz8vitos/image/upload/v1761936436/images/image4.jpg",
+    "https://res.cloudinary.com/dvz8vitos/image/upload/v1761936436/images/image5.jpg",
+    "https://res.cloudinary.com/dvz8vitos/image/upload/v1761936438/images/image6.jpg",
+    "https://res.cloudinary.com/dvz8vitos/image/upload/v1761935726/images/image0.jpg"
   ];
 
 
