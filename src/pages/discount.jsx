@@ -65,6 +65,20 @@ const Discount = () => {
               </table>
             </div>
 
+            <div className="verification-section">
+              <a
+                className="verify-button"
+                href="https://docs.google.com/forms/d/e/1FAIpQLSdWIu1JGUVuYJyzmDLEmmxsX29eq7G4RMkgD9fJNWb_sxFmUQ/viewform"
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                Verify Participants
+              </a>
+              <p className="mandatory-note">
+                Verification of participants via the above form is mandatory.
+              </p>
+            </div>
+
             <div className="accommodation-details">
               <h4>What's Included in Your Stay</h4>
               <div className="features-grid">

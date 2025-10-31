@@ -172,6 +172,20 @@ const Referee = () => {
             <button type="submit" className="submit-btn">
               <FiCheckCircle /> Register as Referee
             </button>
+            
+            <div className="verification-section">
+              <a
+                className="verify-button"
+                href="https://docs.google.com/forms/d/e/1FAIpQLSfK-MDeVnOrkhx9bYlOypCcoCTzKjc6an72q3B4CrW-YtOV4A/viewform"
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                Verify Referees
+              </a>
+              <p className="mandatory-note">
+                Verification via the above form is mandatory.
+              </p>
+            </div>
           </form>
         </div>
       </div>
