@@ -256,6 +256,31 @@ const UserProfile = () => {
                 </section>
 
 
+                {/* Verify Participants Section */}
+                <section className="verify-participants-section">
+                    <div className="verify-participants-card">
+                        <div className="verify-participants-content">
+                            <div className="verify-participants-text">
+                                <h3 className="verify-participants-title">
+                                    <FiCheckCircle /> Verify Participants
+                                </h3>
+                                <p className="verify-participants-mandatory">
+                                    <strong>Mandatory:</strong> All team participants must be verified through the official verification form.
+                                </p>
+                            </div>
+                            <a
+                                href="https://docs.google.com/forms/d/e/1FAIpQLSdWIu1JGUVuYJyzmDLEmmxsX29eq7G4RMkgD9fJNWb_sxFmUQ/viewform"
+                                target="_blank"
+                                rel="noopener noreferrer"
+                                className="verify-participants-btn"
+                            >
+                                Verify Participants
+                            </a>
+                        </div>
+                    </div>
+                </section>
+
+
                 {/* Teams Section */}
                 <section className="teams-details-section">
                     <div className="teams-section-header">
