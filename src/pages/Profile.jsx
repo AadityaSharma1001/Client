@@ -105,6 +105,8 @@ const UserProfile = () => {
                     </div>
                 </section>
 
+                {/* Verification CTA moved into grid below for natural placement */}
+
                 <section className="profile-grid">
                     <div className="info-card">
                         <div className="info-title"><FiUser /> Full Name</div>
@@ -114,10 +116,7 @@ const UserProfile = () => {
                         <div className="info-title"><FiPhone /> Phone</div>
                         <div className="info-value">{profile.phone || '—'}</div>
                     </div>
-                    <div className="info-card">
-                        <div className="info-title"><FiHome /> Accommodation</div>
-                        <div className="info-value">{profile.accommodation === "Y" ? 'Yes' : 'No'}</div>
-                    </div>
+                    {/* Accommodation card removed as requested; keeping accommodation badge above */}
                     <div className="info-card">
                         <div className="info-title"><FiHash /> Unique ID</div>
                         <div className="info-value">{uniqueId}</div>
@@ -136,6 +135,20 @@ const UserProfile = () => {
                                     ))}
                                 </div>
                             ) : 'NA'}
+                        </div>
+                    </div>
+                    <div className="info-card span-2 verification-card">
+                        <div className="info-title"><FiCheckCircle /> Participants Verification</div>
+                        <div className="verification-section left">
+                            <a
+                                className="verify-button"
+                                href="https://docs.google.com/forms/d/e/1FAIpQLSdWIu1JGUVuYJyzmDLEmmxsX29eq7G4RMkgD9fJNWb_sxFmUQ/viewform"
+                                target="_blank"
+                                rel="noopener noreferrer"
+                            >
+                                Verify Participants
+                            </a>
+                            <p className="mandatory-note">Verification via the above form is mandatory.</p>
                         </div>
                     </div>
                 </section>

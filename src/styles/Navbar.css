@@ -205,6 +205,12 @@ body {
   letter-spacing: 0.03em;
 }
 
+.cta-button.payment-btn {
+  padding: 0.28rem 0.9rem;
+  font-size: clamp(0.78rem, 1.2vw, 0.9rem);
+  border-radius: 8px;
+}
+
 .cta-button:hover {
   background: linear-gradient(135deg, var(--primary-hover), var(--primary-dark), var(--primary-color));
   transform: translateY(-3px) scale(1.02);
@@ -373,6 +379,11 @@ body {
   transition: var(--transition-smooth);
   letter-spacing: 0.03em;
   box-shadow: 0 5px 18px rgba(250, 204, 21, 0.4);
+}
+
+.mobile-cta.payment-btn {
+  padding: 0.8rem 1.1rem;
+  font-size: 0.98rem;
 }
 
 .mobile-cta:hover {

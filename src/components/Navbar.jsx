@@ -74,6 +74,11 @@ const Navbar = () => {
             </ul>
           </div>
           <div className="nav-right">
+            {isLoggedIn && (
+              <a href="https://form.qfixonline.com/varsports" className="cta-button payment-btn" style={{ marginRight: "0.5rem" }}>
+                Make Payment
+              </a>
+            )}
             {!isLoggedIn ? (
               <Link to="/register" className="cta-button">
                 Register / Login
@@ -114,16 +119,21 @@ const Navbar = () => {
               </li>
             ))}
           </ul>
-          {!isLoggedIn ? (
+          {isLoggedIn ? (
+            <>
+              <a href="https://form.qfixonline.com/varsports" className="mobile-cta payment-btn" onClick={() => setIsMenuOpen(false)}>
+                Make Payment
+              </a>
+              <Link to='/profile'>
+                <div className="mobile-user-info">
+                  <FiUser className="mobile-user-icon" />
+                  <span>{uniqueId}</span>
+                </div>
+              </Link>
+            </>
+          ) : (
             <Link to="/register" className="mobile-cta" onClick={() => setIsMenuOpen(false)}>
               Register / Login for Varchas 2025
-            </Link>
-          ) : (
-            <Link to='/profile'>
-              <div className="mobile-user-info">
-                <FiUser className="mobile-user-icon" />
-                <span>{uniqueId}</span>
-              </div>
             </Link>
           )}
         </div>
