@@ -42,7 +42,7 @@ function AppContent({ showNavbar, setShowNavbar }) {
           path="/payment"
           element={
             <ProtectedRoute>
-              <Payment />
+              <Discount />
             </ProtectedRoute>
           }
         />

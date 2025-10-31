@@ -14,7 +14,7 @@ const Discount = () => {
       <div className="particles-background">
         <Particles
           particleColors={['#d4af37', '#b78f28']}
-          particleCount={200}
+          particleCount={4000}
           particleSpread={10}
           speed={0.1}
           particleBaseSize={100}
