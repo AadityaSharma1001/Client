@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { BrowserRouter as Router, Routes, Route, useLocation } from "react-router-dom";
+import { Analytics } from "@vercel/analytics/react"
 import Home from "./pages/Home.jsx";
 import Gallery from "./pages/gallery.jsx";
 import Events from "./pages/Events.jsx";
@@ -27,6 +28,7 @@ function AppContent({ showNavbar, setShowNavbar }) {
 
   return (
     <>
+      <Analytics />
       {showNavbar && <Navbar />}
       <Routes>
         <Route path="/" element={<Home setShowNavbar={setShowNavbar} />} />

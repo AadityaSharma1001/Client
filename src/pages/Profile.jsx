@@ -31,10 +31,8 @@ const UserProfile = () => {
                     }
                 })
                 const data = await res.json()
-                console.log(data)
                 setProfile(data)
             } catch (error) {
-                console.error("Failed to fetch profile:", error)
                 setProfile({ error: true })
             }
         }
@@ -55,7 +53,6 @@ const UserProfile = () => {
                 const data = await res.json()
                 setAllTeams(Array.isArray(data.team_data) ? data.team_data : [])
             } catch (error) {
-                console.error("Failed to fetch teams:", error)
                 setAllTeams([])
             } finally {
                 setTeamsLoading(false)
@@ -147,11 +144,9 @@ const UserProfile = () => {
                 // Close confirmation modal
                 handleCloseConfirmModal()
             } else {
-                console.error("Failed to remove player:", res.statusText)
                 alert("Failed to remove player. Try again later.")
             }
         } catch (error) {
-            console.error("Error removing player:", error)
             alert("Error removing player. Try again later.")
         }
     }
