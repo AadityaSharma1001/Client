@@ -313,7 +313,7 @@ const UserProfile = () => {
                                             <span className="sport-name">
                                                 {team.sport === "Athletics" && team.athletics_events?.length > 0
                                                     ? `${team.sport} (${team.athletics_events.join(", ")})`
-                                                    : team.sport
+                                                    : team.sport === "Valorant" ? "Free Fire" : team.sport
                                                 }
                                             </span>
                                         </div>
