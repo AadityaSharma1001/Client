@@ -73,7 +73,7 @@ const SPORTS_DATA = {
     "Powerlifting Championship": {
         "no": "16",
         "categories": {
-            "Men": { "min": 4, "max": 8 }
+            "Men": { "min": 1, "max": 4 }
         }
     },
     "Squash Championship": {
