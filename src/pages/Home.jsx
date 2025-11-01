@@ -31,7 +31,7 @@ function Home({ setShowNavbar }) {
 
     const frameCount = 532;
     const prefix = 'frame_0';
-    const ext = '.jpg';
+    const ext = '.webp';
     const padding = 3;
     const framesPath = '/frames/';
     const easing = 0.09;
