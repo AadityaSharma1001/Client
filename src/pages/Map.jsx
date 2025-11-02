@@ -26,7 +26,6 @@ const Map = () => {
 
   return (
     <div className="map-page bg-gradient-to-b from-gray-900 via-black to-gray-900 text-white min-h-screen flex flex-col">
-      {/* HEADER */}
       <motion.div
         className="map-header text-center pt-16 pb-8 px-4"
         initial={{ opacity: 0, y: -20 }}
@@ -41,7 +40,6 @@ const Map = () => {
         </p>
       </motion.div>
 
-      {/* ENHANCED CONTROLS INFO */}
       <motion.div
         className="map-controls-info mb-8 grid grid-cols-1 sm:grid-cols-2 gap-4 text-center max-w-4xl mx-auto px-4 w-full"
         initial={{ opacity: 0, y: 20 }}
@@ -49,18 +47,15 @@ const Map = () => {
         transition={{ duration: 0.6, delay: 0.2 }}
       >
         <div className="control-card p-6 bg-gradient-to-br from-gray-800 to-gray-900 rounded-xl border border-gray-700 hover:border-blue-500 transition-all duration-300 hover:shadow-lg hover:shadow-blue-500/20">
-          {/* <div className="text-4xl mb-3">🖱️</div> */}
           <div className="font-semibold text-lg mb-2 text-white">Rotate</div>
           <div className="text-sm text-gray-400">Left Click + Drag</div>
         </div>
         <div className="control-card p-6 bg-gradient-to-br from-gray-800 to-gray-900 rounded-xl border border-gray-700 hover:border-purple-500 transition-all duration-300 hover:shadow-lg hover:shadow-purple-500/20">
-          {/* <div className="text-4xl mb-3">🔍</div> */}
           <div className="font-semibold text-lg mb-2 text-white">Zoom</div>
           <div className="text-sm text-gray-400">Scroll (Hover First)</div>
         </div>
       </motion.div>
 
-      {/* MODEL CONTAINER - Added position: relative and z-index */}
       <motion.div
         className="model-container flex-1 w-full px-4 pb-8"
         ref={ref}
@@ -78,7 +73,6 @@ const Map = () => {
         </div>
       </motion.div>
 
-      {/* ENHANCED FOOTER */}
       <motion.div
         className="map-footer py-8 text-center px-4 border-t border-gray-800 bg-black/50 backdrop-blur-sm"
         initial={{ opacity: 0 }}

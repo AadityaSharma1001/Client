@@ -14,7 +14,6 @@ const Payment = () => {
             <p className="form-subtitle">Proceed to complete your registration payment securely.</p>
             <hr className="form-divider" />
           </div>
-          {/* Placeholder content - integrate gateway here */}
           <div style={{ textAlign: "center", color: "#ddd" }}>
             Payment portal coming soon.
           </div>

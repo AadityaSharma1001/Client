@@ -8,7 +8,6 @@
   overflow-x: hidden;
 }
 
-/* Header Styles */
 .events-header {
   text-align: center;
   margin-bottom: 80px;
@@ -34,7 +33,6 @@
   line-height: 1.6;
 }
 
-/* Grid Layout */
 .events-grid {
   max-width: 1400px;
   margin: 0 auto;
@@ -44,7 +42,6 @@
   padding: 0 20px;
 }
 
-/* Event Card */
 .event-card {
   background: #0a0a0a;
   border: 1px solid #222;
@@ -64,7 +61,6 @@
   opacity: 0.3;
 }
 
-/* Image Container */
 .event-image-container {
   position: relative;
   width: 100%;
@@ -114,7 +110,6 @@
   z-index: 2;
 }
 
-/* Event Content */
 .event-content {
   padding: 30px;
 }
@@ -137,7 +132,6 @@
   min-height: 48px;
 }
 
-/* Buttons */
 .event-buttons {
   display: flex;
   gap: 12px;
@@ -182,7 +176,6 @@
   border-color: #666;
 }
 
-/* Footer */
 .events-footer {
   text-align: center;
   margin-top: 80px;
@@ -196,7 +189,6 @@
   font-style: italic;
 }
 
-/* Responsive Design */
 @media (max-width: 768px) {
   .events-page {
     padding: 80px 15px 60px;
@@ -258,12 +250,10 @@
   }
 }
 
-/* Smooth Scroll */
 html {
   scroll-behavior: smooth;
 }
 
-/* Custom Scrollbar */
 .events-page::-webkit-scrollbar {
   width: 8px;
 }

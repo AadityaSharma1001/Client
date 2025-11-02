@@ -5,14 +5,10 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  /* prevent inner scrollbar */
   overflow-x: hidden;
   overflow-y: hidden;
-  /* dynamic gradient background */
   --accent: #d4af37;
-  /* gold */
   --accent-3: #06b6d4;
-  /* cyan */
   --bg-deep: #050510;
   background: radial-gradient(60% 80% at 20% 10%, rgba(212, 175, 55, .10), transparent),
     radial-gradient(60% 80% at 80% 90%, rgba(6, 182, 212, .10), transparent),
@@ -21,9 +17,6 @@
   padding: 2rem;
 }
 
-/* removed animated pseudo glow to avoid inner scrollbar */
-
-/* container */
 .profile-container {
   position: relative;
   z-index: 2;
@@ -34,7 +27,6 @@
   gap: 1.75rem;
 }
 
-/* hero */
 .profile-hero {
   display: grid;
   grid-template-columns: auto 1fr;
@@ -147,7 +139,6 @@
   background: rgba(255, 255, 255, .06);
 }
 
-/* grid */
 .profile-grid {
   display: grid;
   grid-template-columns: repeat(12, 1fr);
@@ -191,7 +182,6 @@
   word-break: break-word;
 }
 
-/* Emphasize college text size */
 .college-card .info-title {
   font-size: 1.05rem;
 }
@@ -200,7 +190,6 @@
   font-size: 1.25rem;
 }
 
-/* Teams list styling */
 .teams-list {
   display: flex;
   flex-wrap: wrap;
@@ -212,7 +201,6 @@
   font-size: .85rem;
 }
 
-/* legacy classes removed in favor of cards */
 
 .profile-loading,
 .profile-error {
@@ -225,7 +213,6 @@
   font-size: 1.5rem;
 }
 
-/* skeleton state */
 .profile-skeleton {
   position: relative;
   z-index: 2;
@@ -374,7 +361,6 @@
   }
 }
 
-/* reduced motion */
 @media (prefers-reduced-motion: reduce) {
 
   .profile-page::before,
@@ -387,7 +373,6 @@
   }
 }
 
-/* Logout Button */
 .logout-button {
   position: absolute;
   top: 1rem;
@@ -412,14 +397,12 @@
   box-shadow: 0 0 10px rgba(212, 175, 55, 0.3);
 }
 
-/* 🧠 Responsive fix — prevent overlap with avatar on small screens */
 @media (max-width: 640px) {
   .logout-button {
     position: static;
     align-self: last baseline;
     margin-bottom: 0.75rem;
     order: -1;
-    /* puts logout button above everything else */
   }
 
   .profile-container {
@@ -427,7 +410,6 @@
   }
 }
 
-/* Verify Participants Section */
 .verify-participants-section {
   margin-top: 3rem;
   width: 100%;
@@ -527,7 +509,6 @@
   }
 }
 
-/* Teams Details Section */
 .teams-details-section {
   margin-top: 3rem;
   width: 100%;
@@ -653,7 +634,6 @@
   transform: scale(0.98);
 }
 
-/* Teams Details Section */
 .teams-details-section {
   margin-top: 3rem;
   width: 100%;
@@ -912,7 +892,6 @@
   font-size: 1.1rem;
 }
 
-/* View Team Button */
 .view-team-button {
   flex: 1;
   padding: 0.9rem 1.2rem;
@@ -941,7 +920,6 @@
   transform: scale(0.98);
 }
 
-/* Modal Overlay */
 .modal-overlay {
   position: fixed;
   top: 0;
@@ -968,7 +946,6 @@
   }
 }
 
-/* Modal Content */
 .modal-content {
   background: linear-gradient(135deg, rgba(20, 20, 25, 0.95), rgba(30, 30, 40, 0.95));
   border: 1px solid rgba(212, 175, 55, 0.3);
@@ -1216,7 +1193,6 @@
   padding: 2rem;
 }
 
-/* Update team-card-footer for multiple buttons */
 .team-card-footer {
   margin-top: auto;
   padding-top: 1.2rem;
@@ -1226,7 +1202,6 @@
   justify-content: center;
 }
 
-/* When only one button (non-captain), center it */
 .team-card-footer:has(:only-child) .view-team-button {
   max-width: 100%;
 }
@@ -1259,7 +1234,6 @@
   transform: scale(0.98);
 }
 
-/* Scrollbar styling for modal */
 .modal-content::-webkit-scrollbar {
   width: 8px;
 }
@@ -1301,7 +1275,6 @@
   }
 }
 
-/* Manage Player Card */
 .manage-player-card {
   display: flex;
   align-items: center;
@@ -1328,7 +1301,6 @@
   overflow: hidden;
 }
 
-/* Remove Player Button */
 .remove-player-btn {
   flex-shrink: 0;
   background: rgba(255, 107, 107, 0.15);
@@ -1357,7 +1329,6 @@
   transform: scale(0.95);
 }
 
-/* Captain Icon Badge */
 .captain-icon-badge {
   flex-shrink: 0;
   background: linear-gradient(135deg, rgba(212, 175, 55, 0.2), rgba(183, 143, 40, 0.1));
@@ -1385,7 +1356,6 @@
   }
 }
 
-/* Confirmation Modal */
 .confirmation-modal {
   background: linear-gradient(135deg, rgba(20, 20, 25, 0.98), rgba(30, 30, 40, 0.98));
   border: 1px solid rgba(255, 107, 107, 0.3);
@@ -1500,7 +1470,6 @@
   transform: translateY(0);
 }
 
-/* Success Toast Notification */
 .success-toast {
   position: fixed;
   bottom: 2rem;
@@ -1589,7 +1558,6 @@
   }
 }
 
-/* Payment Badge Mini - Inline with Accommodation */
 .payment-badge-mini {
   display: inline-block;
   margin-left: 0.6rem;
@@ -1623,7 +1591,6 @@
   box-shadow: 0 4px 10px rgba(0, 0, 0, 0.25);
 }
 
-/* Responsive adjustment */
 @media (max-width: 640px) {
   .payment-badge-mini {
     display: block;

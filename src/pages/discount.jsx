@@ -70,7 +70,6 @@ const Discount = () => {
                 </tbody>
               </table>
 
-              {/* Show this button only when logged in */}
               {isLoggedIn && (
                 <a
                   href="https://form.qfixonline.com/varsports"

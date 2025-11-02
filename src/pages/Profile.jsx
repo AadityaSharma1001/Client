@@ -197,14 +197,10 @@ const UserProfile = () => {
 
             <div className="profile-container">
 
-
-                {/* Logout Button */}
                 <button className="logout-button" onClick={handleLogout}>
                     <FiLogOut /> Logout
                 </button>
 
-
-                {/* Profile Hero Section */}
                 <section className="profile-hero">
                     <div className="avatar-ring">
                         <div className="avatar-circle"><FiUser aria-label="User avatar" /></div>
@@ -222,9 +218,6 @@ const UserProfile = () => {
                     </div>
                 </section>
 
-
-
-                {/* Profile Info Grid */}
                 <section className="profile-grid">
                     <div className="info-card">
                         <div className="info-title"><FiUser /> Full Name</div>
@@ -259,8 +252,6 @@ const UserProfile = () => {
                     </div>
                 </section>
 
-
-                {/* Verify Participants Section */}
                 <section className="verify-participants-section">
                     <div className="verify-participants-card">
                         <div className="verify-participants-content">
@@ -284,8 +275,6 @@ const UserProfile = () => {
                     </div>
                 </section>
 
-
-                {/* Teams Section */}
                 <section className="teams-details-section">
                     <div className="teams-section-header">
                         <h2 className="teams-details-title">
@@ -390,8 +379,6 @@ const UserProfile = () => {
                 </section>
             </div>
 
-
-            {/* View Team Modal */}
             {showTeamModal && selectedTeam && (
                 <div className="modal-overlay" onClick={handleCloseTeamModal}>
                     <div className="modal-content" onClick={(e) => e.stopPropagation()}>
@@ -468,8 +455,6 @@ const UserProfile = () => {
                 </div>
             )}
 
-
-            {/* Manage Team Modal */}
             {showManageModal && selectedTeam && (
                 <div className="modal-overlay" onClick={handleCloseManageModal}>
                     <div className="modal-content" onClick={(e) => e.stopPropagation()}>
@@ -478,7 +463,7 @@ const UserProfile = () => {
                                 <h2 className="modal-title">
                                     Manage - {selectedTeam.sport === "Athletics" && selectedTeam.athletics_events?.length > 0
                                         ? `${selectedTeam.sport} (${selectedTeam.athletics_events.join(", ")})`
-                                        : selectedTeam.sport
+                                        : (selectedTeam.sport === "Valorant" ? "Free Fire" : selectedTeam.sport)
                                     }
                                 </h2>
                                 <p className="modal-subtitle">Team ID: {selectedTeam.team_id}</p>
@@ -559,8 +544,6 @@ const UserProfile = () => {
                 </div>
             )}
 
-
-            {/* Remove Player Confirmation Modal */}
             {showConfirmModal && playerToRemove && (
                 <div className="modal-overlay" onClick={handleCloseConfirmModal}>
                     <div className="confirmation-modal" onClick={(e) => e.stopPropagation()}>
@@ -586,8 +569,6 @@ const UserProfile = () => {
                 </div>
             )}
 
-
-            {/* Success Message Toast */}
             {showSuccessMessage && (
                 <div className="success-toast">
                     <div className="toast-content">

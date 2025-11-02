@@ -238,7 +238,6 @@ const UserRegister = () => {
                     <div className="form-card">
                         <h1 className="form-title">User Registration</h1>
 
-                        {/* ✅ Password Warning Banner */}
                         <div className="security-warning-banner">
                             <FiAlertTriangle className="warning-icon" />
                             <div className="warning-text">
@@ -315,8 +314,6 @@ const UserRegister = () => {
                                 </div>
                             ))}
 
-
-                            {/* Gender Dropdown */}
                             <div className={`input-group ${errors2.gender ? 'error' : ''}`}>
                                 <label>Gender</label>
                                 <select
@@ -332,8 +329,6 @@ const UserRegister = () => {
                                 {errors2.gender && <span className="error-message"><FiAlertCircle /> {errors2.gender}</span>}
                             </div>
 
-
-                            {/* State Dropdown */}
                             <div className={`input-group ${errors2.state ? 'error' : ''}`}>
                                 <label>State</label>
                                 <select
@@ -350,8 +345,6 @@ const UserRegister = () => {
                                 {errors2.state && <span className="error-message"><FiAlertCircle /> {errors2.state}</span>}
                             </div>
 
-
-                            {/* Accommodation Required Dropdown */}
                             <div className={`input-group ${errors2.accommodation_required ? 'error' : ''}`}>
                                 <label>Accommodation Required</label>
                                 <select
@@ -382,8 +375,6 @@ const UserRegister = () => {
                                 </div>
                             ))}
 
-
-                            {/* ✅ Bank Account Number - Shows dots, no copy/paste */}
                             <div className={`input-group ${errors2.bank_account_number ? 'error' : ''}`}>
                                 <label>Bank Account Number</label>
                                 <input
@@ -400,8 +391,6 @@ const UserRegister = () => {
                                 {errors2.bank_account_number && <span className="error-message"><FiAlertCircle /> {errors2.bank_account_number}</span>}
                             </div>
 
-
-                            {/* ✅ Confirm Bank Account Number - Shows dots, no copy/paste */}
                             <div className={`input-group ${errors2.confirm_bank_account ? 'error' : ''}`}>
                                 <label>Confirm Bank Account Number</label>
                                 <input
@@ -418,8 +407,6 @@ const UserRegister = () => {
                                 {errors2.confirm_bank_account && <span className="error-message"><FiAlertCircle /> {errors2.confirm_bank_account}</span>}
                             </div>
 
-
-                            {/* ✅ Terms and Conditions */}
                             <div className="terms-section">
                                 <div className="terms-checkbox">
                                     <input

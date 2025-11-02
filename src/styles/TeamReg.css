@@ -295,7 +295,6 @@
   cursor: not-allowed;
 }
 
-/* Mobile Responsive */
 @media (max-width: 768px) {
   .team-reg-modal {
     padding: 24px;
@@ -320,7 +319,6 @@
   }
 }
 
-/* Scrollbar Styling */
 .team-reg-modal::-webkit-scrollbar {
   width: 8px;
 }

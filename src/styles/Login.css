@@ -8,7 +8,6 @@
     --error-color: #ef4444;
 }
 
-/* --- Base & Page Layout --- */
 .registration-page {
     min-height: 100vh;
     position: relative;
@@ -36,7 +35,6 @@
     justify-content: center;
 }
 
-/* --- Form Card --- */
 .form-card {
     max-width: 600px;
     width: 100%;
@@ -56,7 +54,6 @@
     border-color: rgba(212, 175, 55, 0.5);
 }
 
-/* --- Form Header --- */
 .form-header {
     text-align: center;
     margin-bottom: 2rem;
@@ -95,7 +92,6 @@
     margin-top: 1.5rem;
 }
 
-/* --- Form Inputs & Labels --- */
 .input-group {
     margin-bottom: 1.5rem;
     position: relative;
@@ -151,7 +147,6 @@
     color: white;
 }
 
-/* --- Error Messages (for future use) --- */
 .error-message {
     display: flex;
     align-items: center;
@@ -173,7 +168,6 @@
     }
 }
 
-/* --- Submit Button --- */
 .submit-btn {
     width: 100%;
     background: linear-gradient(135deg, var(--gold), var(--gold-dark));
@@ -207,7 +201,6 @@
 }
 
 
-/* --- Responsive Design --- */
 @media (max-width: 768px) {
     .form-card {
         padding: 2rem;
@@ -278,7 +271,6 @@
   100% { opacity: 0; transform: translate(-50%, 30px); }
 }
 
-/* --- Fix input visibility and error styling for dark theme --- */
 .form-input {
     background: rgba(255, 255, 255, 0.05);
     border: 1.5px solid rgba(212, 175, 55, 0.25);
@@ -297,7 +289,6 @@
     color: rgba(255, 255, 255, 0.5);
   }
   
-  /* --- Error state (clean dark look) --- */
   .input-group.error .form-input {
     border-color: #ff4d4d !important;
     background-color: rgba(255, 0, 0, 0.08) !important;

@@ -326,7 +326,6 @@ function Home({ setShowNavbar }) {
 
 
           <div className={`content-wrapper ${showContent ? 'content-visible' : ''}`}>
-            {/* Content 1: Logo */}
             <div
               className="content-item content-initial-visible"
               ref={(el) => (contentRefs.current[0] = el)}
@@ -334,8 +333,6 @@ function Home({ setShowNavbar }) {
               <img src="/var.png" alt="Varchas Logo" className="logo-image" />
             </div>
 
-
-            {/* Content 2: Theme */}
             <div
               className="content-item"
               ref={(el) => (contentRefs.current[1] = el)}
@@ -360,8 +357,6 @@ function Home({ setShowNavbar }) {
               </div>
             </div>
 
-
-            {/* Content 3: About and Aftermovies */}
             <div
               className="content-item"
               ref={(el) => (contentRefs.current[2] = el)}
@@ -423,8 +418,6 @@ function Home({ setShowNavbar }) {
               </div>
             </div>
 
-
-            {/* Content 4: Gallery */}
             <div
               className="content-item"
               ref={(el) => (contentRefs.current[3] = el)}
@@ -484,32 +477,6 @@ function Home({ setShowNavbar }) {
                 </div>
               </div>
             </div>
-
-
-            {/* Content 5: Join Community */}
-            {/* <div
-              className="content-item"
-              ref={(el) => (contentRefs.current[4] = el)}
-            >
-              <div className="community-container">
-                <div className="community-content">
-                  <h1 className="community-title">JOIN THE ARENA</h1>
-                  <h2 className="community-subtitle">
-                    Welcome to Varchas - IIT Jodhpur's Sports Fest!
-                  </h2>
-                  <p className="community-text">
-                    Stay tuned for all the latest updates, match schedules, and exclusive highlights from our annual sporting extravaganza. Experience the adrenaline, teamwork, and passion as athletes from across the nation compete for glory. Join us in celebrating the spirit of sportsmanship and victory - this is where champions are made!
-                  </p>
-                  <p className="community-highlight">
-                    This is where champions rise!
-                  </p>
-                  <a href="https://whatsapp.com/channel/0029Vb6vtkHGJP8CBVHuJo0c" className="whatsapp-btn">
-                    <span className="whatsapp-icon"></span>
-                    Join WhatsApp Channel
-                  </a>
-                </div>
-              </div>
-            </div> */}
           </div>
 
 

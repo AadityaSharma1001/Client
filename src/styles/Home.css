@@ -734,7 +734,6 @@ body {
   }
 }
 
-/* Initial visibility - hide all content until delay completes */
 .content-wrapper {
   opacity: 0;
   transition: opacity 0.3s ease-in;
@@ -744,7 +743,6 @@ body {
   opacity: 1;
 }
 
-/* Hide non-logo items initially - REMOVED !important to allow JS override */
 .content-item:not(.content-initial-visible) {
   opacity: 0;
   transform: scale(0.5);

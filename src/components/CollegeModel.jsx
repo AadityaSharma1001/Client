@@ -148,7 +148,6 @@ export default function CollegeModel() {
 
   return (
     <div style={{ position: 'relative', width: '100%', height: '100%' }}>
-      {/* Control Panel */}
       <div style={{
         position: 'absolute',
         top: '20px',
@@ -205,7 +204,6 @@ export default function CollegeModel() {
         </button>
       </div>
 
-      {/* Stats Display */}
       <div style={{
         position: 'absolute',
         bottom: '20px',
@@ -261,7 +259,6 @@ export default function CollegeModel() {
           />
         </Suspense>
         
-        {/* OrbitControls with manual rotation only */}
         <OrbitControls 
           ref={controlsRef}
           enableZoom={isHovering}

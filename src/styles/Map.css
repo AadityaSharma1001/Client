@@ -150,7 +150,6 @@
   letter-spacing: 0.5px;
 }
 
-/* Mobile Responsive */
 @media (max-width: 768px) {
   .map-title {
     font-size: 2rem;
@@ -213,7 +212,6 @@
   }
 }
 
-/* Tablet Responsive */
 @media (min-width: 769px) and (max-width: 1024px) {
   .map-title {
     font-size: 2.5rem;
@@ -224,7 +222,6 @@
   }
 }
 
-/* High-resolution displays */
 @media (min-width: 1920px) {
   .map-title {
     font-size: 3.5rem;
