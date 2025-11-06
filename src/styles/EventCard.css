@@ -52,7 +52,7 @@
 }
 
 .ec-card {
-  height: 580px;
+  height: 480px;
   display: grid;
   border-radius: var(--card-radius);
   position: relative;
