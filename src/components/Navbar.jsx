@@ -19,7 +19,6 @@ const Navbar = () => {
     { path: "/team", label: "TEAM" },
     { path: "/gallery", label: "GALLERY" },
     { path: "/map", label: "MAP" },
-    { path: "/payment", label: "PAYMENT" },
     { path: "/referee", label: "REFEREE" }
   ]
 

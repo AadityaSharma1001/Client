@@ -35,19 +35,10 @@ function AppContent({ showNavbar, setShowNavbar }) {
         <Route path="/gallery" element={<Gallery />} />
         <Route path="/events" element={<Events />} />
         <Route path="/team" element={<Team />} />
-        <Route path="/discount" element={<Discount />} />
         <Route path="/referee" element={<Referee />} />
         <Route path="/register" element={<UserRegister />} />
         <Route path="/login" element={<UserLogin />} />
         <Route path="/map" element={<Map />} />
-        <Route
-          path="/payment"
-          element={
-            <ProtectedRoute>
-              <Discount />
-            </ProtectedRoute>
-          }
-        />
         <Route
           path="/profile"
           element={

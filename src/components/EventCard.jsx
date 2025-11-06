@@ -239,13 +239,13 @@ const EventCardComponent = ({
               </div>
 
               <div className="ec-buttons">
-                <button
+                {/* <button
                   className="ec-btn ec-btn-register"
                   onClick={handleRegisterClick}
                   disabled={!isAuthenticated}
                 >
                   Register
-                </button>
+                </button> */}
                 <a href={rulebookLink} target='_blank' rel="noopener noreferrer" className="ec-btn ec-btn-rulebook">
                   Rule Book
                 </a>
