@@ -17,17 +17,15 @@ const Pronite = () => {
   const isMobile = useIsMobile(768);
   const [timeLeft, setTimeLeft] = useState({ days: 0, hours: 0, minutes: 0, seconds: 0 });
   const [activeGallery, setActiveGallery] = useState(0);
-  
+
   const heroRef = useRef();
-  const experienceRef = useRef();
   const galleryRef = useRef();
   const artistRef = useRef();
   const statsRef = useRef();
   const highlightsRef = useRef();
   const faqRef = useRef();
-  
+
   const heroInView = useInView(heroRef, { once: true, amount: 0.2 });
-  const experienceInView = useInView(experienceRef, { once: true, amount: 0.2 });
   const galleryInView = useInView(galleryRef, { once: true, amount: 0.2 });
   const artistInView = useInView(artistRef, { once: true, amount: 0.2 });
   const statsInView = useInView(statsRef, { once: true, amount: 0.2 });
@@ -66,13 +64,6 @@ const Pronite = () => {
     { url: 'https://images.unsplash.com/photo-1514525253161-7a46d19cd819?w=900&h=600&fit=crop', title: 'Festival Atmosphere' }
   ];
 
-  const experiences = [
-    { title: 'World-Class Sound', desc: 'Premium 50,000W audio system for crystal clear music' },
-    { title: 'Visual Excellence', desc: 'Advanced LED and laser light show production' },
-    { title: 'Artist Lineup', desc: 'Top-tier EDM performers and special collaborations' },
-    { title: 'Food & Beverages', desc: '20+ premium food stalls and beverage counters' }
-  ];
-
   const highlights = [
     { num: '01', title: 'Live Performances', desc: '6+ hours of non-stop music' },
     { num: '02', title: 'Interactive Setup', desc: 'Photo booths and live streaming' },
@@ -85,7 +76,7 @@ const Pronite = () => {
   const faqs = [
     { q: 'When is Pronite happening?', a: 'November 9, 2025 at 8:00 PM at IIT Jodhpur Campus Ground' },
     { q: 'What is the ticket price?', a: '₹299 for general entry. Book now for the limited early bird pricing!' },
-    { q: 'Who are the performing artists?', a: 'Top EDM artists will be performing live. Full lineup announcement coming soon!' },
+    { q: 'Who are the performing artists?', a: 'The Lost FireFlies band will be performing live with their energetic music!' },
     { q: 'Is food available?', a: 'Yes, 20+ food and beverage stalls with various cuisines will be available.' },
     { q: 'Is parking available?', a: 'Yes, free parking with valet service available for VIP ticket holders.' },
     { q: 'What should I bring?', a: 'Valid ID, ticket confirmation, and yourself ready to celebrate!' }
@@ -93,7 +84,7 @@ const Pronite = () => {
 
   return (
     <div className="pronite-page-final">
-      <motion.section 
+      <motion.section
         ref={heroRef}
         className="hero-section-final"
         initial={{ opacity: 0 }}
@@ -107,7 +98,7 @@ const Pronite = () => {
           <div className="gradient-orb orb-2"></div>
           <div className="gradient-orb orb-3"></div>
         </div>
-        
+
         <div className="hero-content-final">
           <motion.div
             initial={{ opacity: 0, y: -20 }}
@@ -146,7 +137,7 @@ const Pronite = () => {
             transition={{ delay: 0.8, duration: 0.8 }}
             className="tagline-final"
           >
-            An Unforgettable EDM Experience Awaits
+            An Unforgettable Music Experience Awaits
           </motion.p>
 
           <motion.div
@@ -217,43 +208,7 @@ const Pronite = () => {
           </motion.div>
         </div>
       </motion.section>
-      <motion.section
-        ref={experienceRef}
-        className="experience-section"
-        initial={{ opacity: 0 }}
-        animate={experienceInView ? { opacity: 1 } : {}}
-        transition={{ duration: 0.8 }}
-      >
-        <div className="exp-bg"></div>
 
-        <div className="section-container">
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            animate={experienceInView ? { opacity: 1, y: 0 } : {}}
-            transition={{ delay: 0.1, duration: 0.8 }}
-            className="section-header-final"
-          >
-            <h2 className="section-title-final">What Awaits You</h2>
-            <div className="section-line-final"></div>
-          </motion.div>
-
-          <div className="experience-grid">
-            {experiences.map((exp, idx) => (
-              <motion.div
-                key={idx}
-                initial={{ opacity: 0, y: 30 }}
-                animate={experienceInView ? { opacity: 1, y: 0 } : {}}
-                transition={{ delay: 0.2 + idx * 0.1, duration: 0.6 }}
-                className="exp-card"
-              >
-                <div className="exp-icon-box">{idx + 1}</div>
-                <h3 className="exp-title">{exp.title}</h3>
-                <p className="exp-desc">{exp.desc}</p>
-              </motion.div>
-            ))}
-          </div>
-        </div>
-      </motion.section>
       <motion.section
         ref={galleryRef}
         className="gallery-section-final"
@@ -274,6 +229,7 @@ const Pronite = () => {
             <div className="section-line-final"></div>
             <p className="section-subtitle">Moments from Previous Events</p>
           </motion.div>
+
           <motion.div
             initial={{ opacity: 0, scale: 0.95 }}
             animate={galleryInView ? { opacity: 1, scale: 1 } : {}}
@@ -283,6 +239,7 @@ const Pronite = () => {
             <img src={galleryImages[activeGallery].url} alt={galleryImages[activeGallery].title} className="main-img" />
             <div className="gallery-label">{galleryImages[activeGallery].title}</div>
           </motion.div>
+
           <div className="gallery-thumbnails">
             {galleryImages.map((img, idx) => (
               <motion.div
@@ -316,31 +273,34 @@ const Pronite = () => {
             transition={{ delay: 0.1, duration: 0.8 }}
             className="section-header-final"
           >
-            <h2 className="section-title-final">Artist Lineup</h2>
+            <h2 className="section-title-final">Featured Artist</h2>
             <div className="section-line-final"></div>
-            <p className="section-subtitle">Top EDM Performers Coming Soon</p>
+            <p className="section-subtitle">Get Ready for an Electrifying Performance</p>
           </motion.div>
 
           <div className="artist-grid">
-            {[
-              { name: 'DJ NUCLEYA', role: 'HEADLINER' },
-              { name: 'RITVIZ', role: 'SPECIAL GUEST' },
-              { name: 'SARTEK', role: 'OPENING ACT' }
-            ].map((artist, idx) => (
-              <motion.div
-                key={idx}
-                initial={{ opacity: 0, y: 30 }}
-                animate={artistInView ? { opacity: 1, y: 0 } : {}}
-                transition={{ delay: 0.2 + idx * 0.1, duration: 0.6 }}
-                className="artist-card-final"
-              >
-                <div className="artist-img-placeholder">
-                  <div className="placeholder-text">{artist.name.charAt(0)}</div>
-                </div>
-                <h3 className="artist-name">{artist.name}</h3>
-                <p className="artist-role">{artist.role}</p>
-              </motion.div>
-            ))}
+            <motion.div
+              initial={{ opacity: 0, y: 30 }}
+              animate={artistInView ? { opacity: 1, y: 0 } : {}}
+              transition={{ delay: 0.2, duration: 0.6 }}
+              className="artist-card-final"
+            >
+              <div className="artist-img-placeholder">
+                <img
+                  src="https://th.bing.com/th/id/OIP.0HuS1y1ik12-5LvPLsvMGgHaEK?w=313&h=180&c=7&r=0&o=7&dpr=1.3&pid=1.7&rm=3"
+                  alt="Lost FireFlies Band"
+                  style={{
+                    width: '100%',
+                    height: '100%',
+                    objectFit: 'cover',
+                    borderRadius: '50%'
+                  }}
+                />
+                {/* <div className="placeholder-text">LF</div> */}
+              </div>
+              <h3 className="artist-role">LOST FIREFLIES</h3>
+              <p className="artist-role"></p>
+            </motion.div>
           </div>
         </div>
       </motion.section>
@@ -394,7 +354,6 @@ const Pronite = () => {
           <div className="stats-grid">
             {[
               { num: '5000+', label: 'ATTENDEES' },
-              { num: '3+', label: 'ARTISTS' },
               { num: '6+', label: 'HOURS' },
               { num: '₹299', label: 'ONLY' }
             ].map((stat, idx) => (
