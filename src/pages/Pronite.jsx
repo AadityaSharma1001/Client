@@ -75,10 +75,9 @@ const Pronite = () => {
 
   const faqs = [
     { q: 'When is Pronite happening?', a: 'November 9, 2025 at 8:00 PM at IIT Jodhpur Campus Ground' },
-    { q: 'What is the ticket price?', a: '₹299 for general entry. Book now for the limited early bird pricing!' },
-    { q: 'Who are the performing artists?', a: 'The Lost FireFlies band will be performing live with their energetic music!' },
-    { q: 'Is food available?', a: 'Yes, 20+ food and beverage stalls with various cuisines will be available.' },
-    { q: 'Is parking available?', a: 'Yes, free parking with valet service available for VIP ticket holders.' },
+    { q: 'What is the ticket price?', a: '₹299 is the entry fees!!' },
+    { q: 'Who are the performing artists?', a: 'The Lost Stories band will be performing live with their energetic music!' },
+    { q: 'Is food available?', a: 'Yes, food and beverage stalls with various cuisines will be available.' },
     { q: 'What should I bring?', a: 'Valid ID, ticket confirmation, and yourself ready to celebrate!' }
   ];
 
@@ -100,16 +99,6 @@ const Pronite = () => {
         </div>
 
         <div className="hero-content-final">
-          <motion.div
-            initial={{ opacity: 0, y: -20 }}
-            animate={heroInView ? { opacity: 1, y: 0 } : {}}
-            transition={{ delay: 0.2, duration: 0.8 }}
-            className="badge-final"
-          >
-            <span className="badge-shine"></span>
-            <span className="badge-text">COMING SOON</span>
-          </motion.div>
-
           <motion.div
             initial={{ opacity: 0, scale: 0.7, y: 40 }}
             animate={heroInView ? { opacity: 1, scale: 1, y: 0 } : {}}
@@ -209,7 +198,7 @@ const Pronite = () => {
         </div>
       </motion.section>
 
-      <motion.section
+      {/* <motion.section
         ref={galleryRef}
         className="gallery-section-final"
         initial={{ opacity: 0 }}
@@ -219,16 +208,6 @@ const Pronite = () => {
         <div className="gallery-bg"></div>
 
         <div className="section-container">
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            animate={galleryInView ? { opacity: 1, y: 0 } : {}}
-            transition={{ delay: 0.1, duration: 0.8 }}
-            className="section-header-final"
-          >
-            <h2 className="section-title-final">Gallery</h2>
-            <div className="section-line-final"></div>
-            <p className="section-subtitle">Moments from Previous Events</p>
-          </motion.div>
 
           <motion.div
             initial={{ opacity: 0, scale: 0.95 }}
@@ -255,7 +234,7 @@ const Pronite = () => {
             ))}
           </div>
         </div>
-      </motion.section>
+      </motion.section> */}
 
       <motion.section
         ref={artistRef}
@@ -287,8 +266,8 @@ const Pronite = () => {
             >
               <div className="artist-img-placeholder">
                 <img
-                  src="https://th.bing.com/th/id/OIP.0HuS1y1ik12-5LvPLsvMGgHaEK?w=313&h=180&c=7&r=0&o=7&dpr=1.3&pid=1.7&rm=3"
-                  alt="Lost FireFlies Band"
+                  src="https://img.mensxp.com/media/content/2016/Nov/lost-stories-artist-profile-980x457-1478528496.jpg"
+                  alt="Lost Stories Band"
                   style={{
                     width: '100%',
                     height: '100%',
@@ -298,14 +277,14 @@ const Pronite = () => {
                 />
                 {/* <div className="placeholder-text">LF</div> */}
               </div>
-              <h3 className="artist-role">LOST FIREFLIES</h3>
+              <h3 className="artist-role">LOST STORIES</h3>
               <p className="artist-role"></p>
             </motion.div>
           </div>
         </div>
       </motion.section>
 
-      <motion.section
+      {/* <motion.section
         ref={highlightsRef}
         className="highlights-section"
         initial={{ opacity: 0 }}
@@ -341,7 +320,7 @@ const Pronite = () => {
             ))}
           </div>
         </div>
-      </motion.section>
+      </motion.section> */}
 
       <motion.section
         ref={statsRef}
