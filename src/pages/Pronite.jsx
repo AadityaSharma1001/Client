@@ -333,7 +333,7 @@ const Pronite = () => {
           <div className="stats-grid">
             {[
               { num: '5000+', label: 'ATTENDEES' },
-              { num: '6+', label: 'HOURS' },
+              { num: '2+', label: 'HOURS' },
               { num: '₹299', label: 'ONLY' }
             ].map((stat, idx) => (
               <motion.div
