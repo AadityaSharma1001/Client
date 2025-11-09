@@ -40,7 +40,7 @@ function AppContent({ showNavbar, setShowNavbar }) {
         <Route path="/register" element={<UserRegister />} />
         <Route path="/login" element={<UserLogin />} />
         <Route path="/map" element={<Map />} />
-        <Route path="/pronite" element={<Pronite />} />
+        {/* <Route path="/pronite" element={<Pronite />} /> */}
         <Route
           path="/profile"
           element={

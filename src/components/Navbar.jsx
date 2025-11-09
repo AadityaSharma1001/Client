@@ -18,9 +18,7 @@ const Navbar = () => {
     { path: "/events", label: "EVENTS" },
     { path: "/team", label: "TEAM" },
     { path: "/gallery", label: "GALLERY" },
-    { path: "/map", label: "MAP" },
-    { path: "/referee", label: "REFEREE" },
-    { path: "/pronite", label: "PRONITE" }
+    { path: "/map", label: "MAP" }
   ]
 
   useEffect(() => {
